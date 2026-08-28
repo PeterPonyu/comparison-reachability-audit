@@ -14,6 +14,7 @@ Rules are applied longest match first.
 |---|---|
 | the absolute filesystem prefix of the machine the runs executed on | removed |
 | the recorded path of an artifact that is archived here | the path it now has in this archive |
+| the home directory of the account the runs executed under | `~/` |
 | any remaining directory prefix belonging to the private source tree | `source-tree/` |
 
 ## What was checked
