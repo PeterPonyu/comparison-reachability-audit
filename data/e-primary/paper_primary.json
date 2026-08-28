@@ -1,0 +1,12 @@
+{
+  "direction": "002",
+  "tier": "paper_primary",
+  "name": "hybrid_tdoa_matlab",
+  "status": "blocked",
+  "source": "data/e-bridge/hybrid_tdoa_bridge.json",
+  "metrics": null,
+  "blocker": "MATLAB runtime required; official table missing_matlab.",
+  "note": null,
+  "not_official_sota": true,
+  "written_utc": "2026-08-20T13:15:27Z"
+}

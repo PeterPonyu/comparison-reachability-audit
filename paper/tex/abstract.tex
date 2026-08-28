@@ -1,0 +1,41 @@
+%% Self-contained. No \ref, no \cref, no section numbers, no "see above".
+%% One falsifiable question, the bounded answer, and the scope it does not leave.
+
+Computational work is usually described as reproducible or not, and artifact
+badges reinforce that binary by certifying that code was made available.
+Availability is not runnability, and a reader who cannot run an artifact is
+rarely told which specific step stopped them. This study proposes recording the
+stopping point itself as a checkable object, and applies the instrument to one
+published comparison in acoustic sensor calibration. The instrument is a ladder
+of \NRungs{} rungs, each an assertion that can be independently verified on a
+given machine: that a citable record exists, that the reference source can be
+obtained at a fixed revision, that the runtime the source requires is available,
+and that the published table can be recomputed. The ladder is monotone, so a
+break propagates to every rung above it, and the informative quantity is the
+index of the first break rather than a pass or fail verdict. A read-only probe
+re-checks every rung against the live machine instead of trusting a previously
+recorded status, and its output is what this study reports. On the machine
+audited, rungs one and two hold: the reference source is present at a revision
+matching its recorded pin, with all \EntryPoints{} of its entry points found.
+Rung \FirstBreak{} breaks, because the proprietary interpreter the source
+requires is not installed, and a frequently suggested free substitute is also
+absent and would not be treated as equivalent if it were. Rung \NRungs{} is
+therefore unreachable and no table is synthesised in its place. Corpus
+availability is tracked as a separate axis and behaves differently: the
+evaluation corpus is publicly archived and openly downloadable at roughly
+\CorpusGB{} gigabytes, and is nonetheless absent locally, so a resolvable link
+is recorded as distinct from a local asset. The locally reproducible part of the
+same project supplies a second, substantive result. A comparison of an
+offset-agnostic least-squares estimator against an offset-aware maximum a
+posteriori estimator over \NConditions{} conditions and \NTrials{} paired trials
+each supports the expected conclusion at every condition where unknown
+per-channel offsets are present, by median error and by paired signed-rank test.
+At the one condition where no offsets are present, the ordering reverses
+completely: the offset-aware estimator is worse by a factor of about
+\ZeroRatio{} in median error and wins \ZeroWins{} of \NTrials{} paired trials.
+The headline that the offset-aware method is better is therefore true on
+\NonZeroConditions{} of \NConditions{} conditions and severely false on the
+remaining one, which is the condition a comparison is least likely to report. No
+claim of novelty in acoustic localisation is made, no substitute runtime is
+treated as equivalent to the one required, and the audit describes one machine on
+one date rather than a permanent property of the work examined.

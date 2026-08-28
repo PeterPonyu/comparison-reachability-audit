@@ -1,0 +1,43 @@
+{
+  "package_id": "002-cpu-acoustic",
+  "tier": "ASSET_GATED",
+  "status": "blocker",
+  "component": "Hybrid-TDOA_MATLAB",
+  "hybrid_tdoa_vendor": {
+    "present": true,
+    "pin": "150df084e0cb3c390da0df765c61b0d637cbaf32",
+    "matlab_entrypoints": [
+      "DataAnalysis.m",
+      "GN_Solver.m",
+      "any2s.m",
+      "compute_CRLB.m",
+      "compute_J.m",
+      "compute_error.m",
+      "get_tdoa.m",
+      "gt_generation.m",
+      "high2low.m",
+      "init_generation1.m",
+      "init_generation2.m",
+      "low2high.m",
+      "plot_g.m",
+      "quick_start.m",
+      "real_main.m",
+      "sg_generation.m",
+      "sim_main.m",
+      "sound_gen.m",
+      "tdoa_detection.m"
+    ],
+    "execution": "requires MATLAB; not executed in this Linux pure-Python env"
+  },
+  "python_operational_core": {
+    "scripts_run_by_e2e": [
+      "01_simulate_room.py",
+      "02_localization_baseline_vs_offsetaware.py"
+    ],
+    "offset_sweep": true,
+    "sim_metadata": true,
+    "cpu_smoke": "scripts/cpu_gate.py --smoke"
+  },
+  "bridge_policy": "Treat Hybrid-TDOA as reference algorithm description; copy tables from pyroom suite until MATLAB runtime available. Do not invent a license or claim Octave equivalence.",
+  "written_utc": "2026-08-16T07:16:36Z"
+}

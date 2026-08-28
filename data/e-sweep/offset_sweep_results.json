@@ -1,0 +1,138 @@
+{
+  "script": "02_localization_baseline_vs_offsetaware.py",
+  "seed": 123,
+  "timestamp_utc": "2026-08-18T15:32:01Z",
+  "n_trials_per_condition": 40,
+  "sigma_prior_ms": 25.0,
+  "sigma_noise_ms": 0.05,
+  "n_restarts": 4,
+  "n_icm_iters": 15,
+  "results": [
+    {
+      "offset_std_ms": 0,
+      "naive_mean_err_m": 0.0015282948281899766,
+      "naive_std_err_m": 7.948615800341188e-11,
+      "naive_median_err_m": 0.0015282948388217225,
+      "aware_mean_err_m": 0.5059093312622396,
+      "aware_std_err_m": 0.21813958411330855,
+      "aware_median_err_m": 0.5100815761275405,
+      "n_trials": 40,
+      "paired_wilcoxon": {
+        "test": "scipy.stats.wilcoxon(naive_err, aware_err), two-sided, paired per trial",
+        "n_pairs": 40,
+        "statistic": 0.0,
+        "p_two_sided": 1.8189894035458565e-12,
+        "median_paired_diff_naive_minus_aware_m": -0.5085532812885436,
+        "n_trials_aware_better": 0
+      }
+    },
+    {
+      "offset_std_ms": 5,
+      "naive_mean_err_m": 0.9244488708877645,
+      "naive_std_err_m": 0.44607986053217047,
+      "naive_median_err_m": 0.8768742947123433,
+      "aware_mean_err_m": 0.7358004131860406,
+      "aware_std_err_m": 0.1871207108135597,
+      "aware_median_err_m": 0.7219150511573948,
+      "n_trials": 40,
+      "paired_wilcoxon": {
+        "test": "scipy.stats.wilcoxon(naive_err, aware_err), two-sided, paired per trial",
+        "n_pairs": 40,
+        "statistic": 255.0,
+        "p_two_sided": 0.0368489142110775,
+        "median_paired_diff_naive_minus_aware_m": 0.07414870831568654,
+        "n_trials_aware_better": 25
+      }
+    },
+    {
+      "offset_std_ms": 10,
+      "naive_mean_err_m": 1.3448070517389883,
+      "naive_std_err_m": 0.7576053990618346,
+      "naive_median_err_m": 1.113879932991897,
+      "aware_mean_err_m": 0.7253106065570724,
+      "aware_std_err_m": 0.1801772779876418,
+      "aware_median_err_m": 0.734454144842495,
+      "n_trials": 40,
+      "paired_wilcoxon": {
+        "test": "scipy.stats.wilcoxon(naive_err, aware_err), two-sided, paired per trial",
+        "n_pairs": 40,
+        "statistic": 117.0,
+        "p_two_sided": 3.061662209802307e-05,
+        "median_paired_diff_naive_minus_aware_m": 0.4384785814646185,
+        "n_trials_aware_better": 29
+      }
+    },
+    {
+      "offset_std_ms": 20,
+      "naive_mean_err_m": 1.9091872621481325,
+      "naive_std_err_m": 1.2804222937847767,
+      "naive_median_err_m": 1.3186207501116975,
+      "aware_mean_err_m": 0.7713049399329647,
+      "aware_std_err_m": 0.186892898674665,
+      "aware_median_err_m": 0.743286874299738,
+      "n_trials": 40,
+      "paired_wilcoxon": {
+        "test": "scipy.stats.wilcoxon(naive_err, aware_err), two-sided, paired per trial",
+        "n_pairs": 40,
+        "statistic": 41.0,
+        "p_two_sided": 1.8109858501702547e-08,
+        "median_paired_diff_naive_minus_aware_m": 0.6300551458181955,
+        "n_trials_aware_better": 36
+      }
+    },
+    {
+      "offset_std_ms": 30,
+      "naive_mean_err_m": 2.2889868478849875,
+      "naive_std_err_m": 1.9478216062405687,
+      "naive_median_err_m": 1.379679242541346,
+      "aware_mean_err_m": 0.7903455913034708,
+      "aware_std_err_m": 0.22055143848879633,
+      "aware_median_err_m": 0.8352014636122276,
+      "n_trials": 40,
+      "paired_wilcoxon": {
+        "test": "scipy.stats.wilcoxon(naive_err, aware_err), two-sided, paired per trial",
+        "n_pairs": 40,
+        "statistic": 47.0,
+        "p_two_sided": 3.9488440961577e-08,
+        "median_paired_diff_naive_minus_aware_m": 0.6493703397759314,
+        "n_trials_aware_better": 35
+      }
+    },
+    {
+      "offset_std_ms": 50,
+      "naive_mean_err_m": 2.949161154912622,
+      "naive_std_err_m": 2.9941955984779707,
+      "naive_median_err_m": 1.3899862803953518,
+      "aware_mean_err_m": 0.6925152782629226,
+      "aware_std_err_m": 0.22641332964781452,
+      "aware_median_err_m": 0.6773307574630416,
+      "n_trials": 40,
+      "paired_wilcoxon": {
+        "test": "scipy.stats.wilcoxon(naive_err, aware_err), two-sided, paired per trial",
+        "n_pairs": 40,
+        "statistic": 100.0,
+        "p_two_sided": 8.152759619406424e-06,
+        "median_paired_diff_naive_minus_aware_m": 0.7272429654442238,
+        "n_trials_aware_better": 29
+      }
+    },
+    {
+      "offset_std_ms": 75,
+      "naive_mean_err_m": 4.554721732080675,
+      "naive_std_err_m": 5.394626230549142,
+      "naive_median_err_m": 1.6631036706187963,
+      "aware_mean_err_m": 0.7128273780090136,
+      "aware_std_err_m": 0.2665046641821225,
+      "aware_median_err_m": 0.7070404632888165,
+      "n_trials": 40,
+      "paired_wilcoxon": {
+        "test": "scipy.stats.wilcoxon(naive_err, aware_err), two-sided, paired per trial",
+        "n_pairs": 40,
+        "statistic": 43.0,
+        "p_two_sided": 2.3623215383850038e-08,
+        "median_paired_diff_naive_minus_aware_m": 0.8945368322505389,
+        "n_trials_aware_better": 36
+      }
+    }
+  ]
+}

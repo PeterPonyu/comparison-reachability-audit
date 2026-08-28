@@ -1,0 +1,12 @@
+{
+  "direction": "002",
+  "tier": "static",
+  "name": "srp_phat",
+  "status": "blocked",
+  "source": null,
+  "metrics": null,
+  "blocker": "No SRP-PHAT runner in this experiment. Script 01 persists TOA only (results/sim_data.npz holds mic_positions, source_pos, room_dim, tau_measured, tau_analytic, fs, c — no waveforms), so SRP-PHAT cannot be run. pyroomacoustics.doa.SRP is unused. A new SRP table would not be an existing-code result.",
+  "note": "Existing code is TOA LS / offset-aware MAP, not SRP-PHAT.",
+  "not_official_sota": true,
+  "written_utc": "2026-08-20T13:15:27Z"
+}

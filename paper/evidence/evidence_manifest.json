@@ -1,0 +1,108 @@
+{
+  "schema": "evidence-manifest/v1",
+  "state": "BOUND",
+  "bound_utc": "2026-08-28T11:46:33Z",
+  "allowed_roots": [
+    "data",
+    "paper/evidence"
+  ],
+  "allowed_roots_note": "Archived layout. Artifacts the paper produced itself stay beside the paper; everything else was copied into data/. Digests describe the archived bytes; files whose recorded paths were redacted are listed in REDACTION.md with both digests.",
+  "entries": [
+    {
+      "id": "E-PROBE",
+      "path": "paper/evidence/reachability_probe.json",
+      "role": "live_observation",
+      "note": "read-only re-check of every ladder rung on this machine, timestamped; produced for this manuscript, not an upstream artifact",
+      "bytes": 1839,
+      "sha256": "09a5c564f369cf30b0762e3e6ccbe5b3c6bde44a66f83c40f5130c8ff6fb3233"
+    },
+    {
+      "id": "E-SWEEP",
+      "path": "data/e-sweep/offset_sweep_results.json",
+      "role": "raw_sweep",
+      "note": "7 offset conditions x 40 paired trials, per-condition median and mean error and paired signed-rank",
+      "bytes": 4941,
+      "sha256": "bea4b6733963daddeb0bf6ff863887b4bffd88a187c6ff0ff71e5c7ebc677856"
+    },
+    {
+      "id": "E-PAIRED",
+      "path": "data/e-paired/offset_sweep_paired_test.json",
+      "role": "derived_table",
+      "note": "extracted paired test per condition, with the source script, seed and timestamp of the sweep",
+      "bytes": 3531,
+      "sha256": "e81e6d772d228d2d0639d86e3a139088fea2341bed7b036089e4ffcc521f293f"
+    },
+    {
+      "id": "E-INVENTORY",
+      "path": "data/e-inventory/inventory.json",
+      "role": "recorded_state",
+      "note": "what the project itself records as present, blocked, and why",
+      "bytes": 1934,
+      "sha256": "a08fc117afabc1715670b6d18b1a2b24fdde1e132b1f28c5f7be27c766133f6f"
+    },
+    {
+      "id": "E-BRIDGE",
+      "path": "data/e-bridge/hybrid_tdoa_bridge.json",
+      "role": "recorded_state",
+      "note": "reference-implementation entry points, revision pin, and the stated execution blocker",
+      "bytes": 1253,
+      "sha256": "42498d6f993ddc1dc37cc70410b594692ae18f889797edf4f63862badce2ed86"
+    },
+    {
+      "id": "E-PRIMARY",
+      "path": "data/e-primary/paper_primary.json",
+      "role": "recorded_state",
+      "note": "the published-table tier, recorded as blocked",
+      "bytes": 337,
+      "sha256": "1fb96a8e854c6f93a41f4c1dc0eeb8a27900b90095fdf861c49f122697d0892f"
+    },
+    {
+      "id": "E-SOTACOPY",
+      "path": "data/e-sotacopy/sota_copy.json",
+      "role": "recorded_state",
+      "note": "the full-replication tier, recorded as blocked on both runtime and corpus",
+      "bytes": 304,
+      "sha256": "ee61d33aa06acfa9935a8e7bdb448d8f2395a26d4ff692d7b8f0401bf8f20803"
+    },
+    {
+      "id": "E-STATIC",
+      "path": "data/e-static/static.json",
+      "role": "recorded_state",
+      "note": "a fourth tier blocked for an unrelated reason, kept to show the ladder is not one failure",
+      "bytes": 585,
+      "sha256": "a1c9a9f0fcb6a96e83902143396023ced29e2f93f138f4e9e205af9713b83563"
+    },
+    {
+      "id": "E-NAIVE",
+      "path": "data/e-naive/naive.json",
+      "role": "derived_table",
+      "note": "summary of the reproducible baseline arm at one condition",
+      "bytes": 357,
+      "sha256": "3dc6ad94eca0e9a00c4646e07f8a7ecf39b3b8b30d37c638a0293a7bb4b2c80d"
+    },
+    {
+      "id": "E-AWARE",
+      "path": "data/e-aware/simple.json",
+      "role": "derived_table",
+      "note": "summary of the reproducible treatment arm at the same condition",
+      "bytes": 382,
+      "sha256": "83aa34405d56a9392951676e67feb6f32111a1980c5185edb66751d21ffbcadc"
+    },
+    {
+      "id": "E-COMPLEMENT",
+      "path": "data/e-complement/hybrid_gn_python_vs_su.json",
+      "role": "derived_table",
+      "note": "independent re-implementation run, explicitly flagged as not the published table",
+      "bytes": 148676,
+      "sha256": "d240f0308b9526fb27c8b8e098a9dedc471110d4d9dc77334ed5f34bf5160e79"
+    },
+    {
+      "id": "E-WAREHOUSE",
+      "path": "data/e-warehouse/002-acoustic-field.md",
+      "role": "narrative_record",
+      "note": "the project's own record of display-metric rules, blockers and the archive disposition",
+      "bytes": 3943,
+      "sha256": "c27189a95b4f2b1cf8b6c09b5b8148c1a39fe4332a23b17dd40577711061c797"
+    }
+  ]
+}

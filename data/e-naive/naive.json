@@ -1,0 +1,16 @@
+{
+  "direction": "002",
+  "tier": "naive",
+  "name": "ls_offset_zero",
+  "status": "ok",
+  "source": "data/e-sweep/offset_sweep_results.json",
+  "metrics": {
+    "offset_std_ms": 20,
+    "n_trials": 40,
+    "naive_mean_err_m": 1.9091872621481325
+  },
+  "blocker": null,
+  "note": null,
+  "not_official_sota": true,
+  "written_utc": "2026-08-20T13:15:27Z"
+}

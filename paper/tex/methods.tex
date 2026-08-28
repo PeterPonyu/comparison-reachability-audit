@@ -1,0 +1,104 @@
+%% Independent methods file. Not woven into main.tex prose.
+%% Every quantity described here resolves to a hash-bound evidence entry.
+
+\subsection{The ladder}
+
+The instrument is a short ordered list of assertions, each of which can be
+checked on a given machine without asking the original authors anything. In
+increasing order of demand:
+
+\begin{enumerate}
+\item A citable published record for the work exists.
+\item The reference source can be obtained at a fixed, named revision.
+\item The runtime that the reference source requires is available on the machine.
+\item The published table can be recomputed on the machine.
+\end{enumerate}
+
+Three properties make this more useful than a pass-or-fail verdict. It is
+\emph{monotone}: a break at one rung makes every rung above it unreachable, so
+the informative quantity is the index of the first break and not a count of
+failures. It is \emph{machine-relative}: the same work can reach rung two on one
+machine and rung four on another, and the ladder records which machine and when
+rather than pretending to a universal property. And it is \emph{refutable}: each
+rung names the observation that would settle it, so a reader with a different
+machine can disagree with a specific line rather than with a conclusion.
+
+Two things are stipulated not to satisfy a rung, because both are common and
+both quietly convert a break into a false pass. A different interpreter that
+executes a similar language is not the required runtime; source written for one
+numerical environment may run, fail, or silently produce different results under
+another, and treating the substitute as equivalent is an assumption, not a
+reproduction. And a table produced by a re-implementation is not the published
+table, however carefully the re-implementation was written.
+
+Corpus availability is deliberately kept off the ladder and tracked as a separate
+axis. It does not behave like the rungs: a corpus can be perfectly public,
+openly licensed and permanently archived while still being absent from the
+machine, and calling that state either reachable or broken loses the distinction
+that matters. We record the public status and the local status as two separate
+facts.
+
+\subsection{The probe}
+
+The project being audited already carried a recorded status for each of these
+questions. That record is not what this study reports, because a recorded status
+ages: a runtime can be installed, a corpus can be fetched, a pinned revision can
+be moved. Instead a read-only probe re-checks each rung against the live machine
+and writes what it observed with a timestamp, and the manuscript binds the probe
+output.
+
+The probe resolves the required interpreter and the common substitute on the
+executable search path; confirms that the reference source directory exists,
+reads its revision identifier, compares it against the recorded pin, and counts
+how many of the recorded entry points are present; and checks a list of candidate
+locations for the evaluation corpus, including the location named by the
+project's own data-root environment variable. It installs nothing, downloads
+nothing, and executes no vendor code. Its output records the first broken rung
+directly, so the headline of the audit is a number the probe computed rather than
+a reading of prose.
+
+Reporting a probe of this kind is itself a design choice worth stating: an audit
+whose evidence is a recollection cannot be re-run, and an audit that cannot be
+re-run cannot be contradicted.
+
+\subsection{The comparison that does remain reproducible}
+
+The same project contains a fully local simulation study built on an open-source
+room-acoustics package~\cite{scheibler2018pyroomacoustics}, and it supplies the
+second half of this paper. Sources are localised from time-of-arrival
+measurements at a microphone array in which each channel carries an unknown
+constant timing offset. Two estimators are compared. The offset-agnostic
+estimator solves an ordinary least-squares problem with all offsets fixed at
+zero. The offset-aware estimator treats the offsets as unknown parameters with a
+prior and returns a maximum a posteriori estimate over source position and
+offsets jointly.
+
+The independent variable is the dispersion of the true per-channel offsets across
+\NConditions{} conditions, from a condition in which the offsets are exactly zero
+up to a condition in which they are large relative to the measurement noise. Each
+condition draws \NTrials{} trials, and both estimators are run on the same trial,
+so the comparison is paired within trial. The reported quantity is the median
+localisation error. That choice is inherited from the project's own display
+rule rather than made here, and it matters: the error distribution has a heavy
+upper tail, so the mean is pulled by outliers. Means are recorded in the
+underlying artifacts and are not deleted, but they are not promoted to the
+display quantity.
+
+Each condition is tested with a two-sided Wilcoxon signed-rank
+test~\cite{wilcoxon1945individual} from a standard scientific computing
+library~\cite{virtanen2020scipy}, paired per trial. Alongside the test we report
+the count of trials on which the offset-aware estimator was the better of the
+two, because a count of \NTrials{} paired outcomes distinguishes a small
+consistent advantage from a large but mixed one in a way a $p$ value does not.
+The simulation was run once at a recorded seed and is not re-run here; this study
+reads its output rather than regenerating it.
+
+\subsection{Evidence discipline}
+
+No number in this manuscript is typed by hand. Every artifact it rests on,
+including the probe output, is recorded with its SHA-256 digest in a manifest
+that accompanies the manuscript source. The figure and table code verifies each
+digest against the bytes on disk before reading them and aborts on any mismatch,
+and it emits both the figures and the numeric macros that the text prints. Even
+the corpus size quoted above is extracted from the bound project record rather
+than retyped, so the manuscript cannot disagree with the record it cites.

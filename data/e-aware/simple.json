@@ -1,0 +1,16 @@
+{
+  "direction": "002",
+  "tier": "simple",
+  "name": "offset_aware_map",
+  "status": "ok",
+  "source": "data/e-sweep/offset_sweep_results.json",
+  "metrics": {
+    "offset_std_ms": 20,
+    "aware_mean_err_m": 0.7713049399329647,
+    "map_err_m_mean": 0.6887016447339274
+  },
+  "blocker": null,
+  "note": null,
+  "not_official_sota": true,
+  "written_utc": "2026-08-20T13:15:27Z"
+}

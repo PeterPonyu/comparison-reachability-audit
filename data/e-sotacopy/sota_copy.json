@@ -1,0 +1,12 @@
+{
+  "direction": "002",
+  "tier": "sota_copy",
+  "name": "hybrid_bcrb_bo",
+  "status": "blocked",
+  "source": null,
+  "metrics": null,
+  "blocker": "Depends on MATLAB official Hybrid-TDOA table; LOCATA not on disk.",
+  "note": null,
+  "not_official_sota": true,
+  "written_utc": "2026-08-20T13:15:27Z"
+}

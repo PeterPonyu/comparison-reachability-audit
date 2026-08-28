@@ -1,0 +1,59 @@
+{
+  "direction": "002",
+  "package_id": "002-cpu-acoustic",
+  "disposition": "S4_ARCHIVE",
+  "disposition_note": "Localization claim scooped (async-array / TDOA self-calibration). Copy workflow may keep the Python SSL suite; do not reopen as novelty.",
+  "cpu_only": true,
+  "sku_4090": false,
+  "matlab_runtime": false,
+  "octave_present": false,
+  "present": {
+    "identifiability": true,
+    "offset_sweep": true,
+    "naive_ls": true,
+    "aware_map": true,
+    "joint_posterior": true,
+    "sim_data_npz": true,
+    "hybrid_tdoa_vendor": true,
+    "hybrid_tdoa_pin": "150df084e0cb3c390da0df765c61b0d637cbaf32"
+  },
+  "blockers": {
+    "srp_phat": "No SRP-PHAT runner in this experiment. Script 01 persists TOA only (sim_data.npz has no waveforms). pyroomacoustics.doa.SRP is unused. A new SRP table would not be an existing-code result.",
+    "hybrid_tdoa_matlab": "MATLAB runtime required; official Hybrid-TDOA table missing_matlab. Vendor is reference-only. Do not invent a license or Octave substitute.",
+    "locata": "LOCATA (~19GB) is not on disk; S4 ARCHIVE (localization scooped)."
+  },
+  "hybrid_tdoa_vendor": {
+    "present": true,
+    "pin": "150df084e0cb3c390da0df765c61b0d637cbaf32",
+    "matlab_entrypoints": [
+      "DataAnalysis.m",
+      "GN_Solver.m",
+      "any2s.m",
+      "compute_CRLB.m",
+      "compute_J.m",
+      "compute_error.m",
+      "get_tdoa.m",
+      "gt_generation.m",
+      "high2low.m",
+      "init_generation1.m",
+      "init_generation2.m",
+      "low2high.m",
+      "plot_g.m",
+      "quick_start.m",
+      "real_main.m",
+      "sg_generation.m",
+      "sim_main.m",
+      "sound_gen.m",
+      "tdoa_detection.m"
+    ],
+    "execution": "blocked"
+  },
+  "entrypoints": {
+    "01_simulate_room.py": true,
+    "02_localization_baseline_vs_offsetaware.py": true,
+    "cpu_gate.py": true,
+    "run_cpu_smoke.sh": true,
+    "selftest_cpu.sh": true
+  },
+  "written_utc": "2026-08-16T07:16:36Z"
+}

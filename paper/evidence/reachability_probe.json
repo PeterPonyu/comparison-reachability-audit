@@ -1,0 +1,62 @@
+{
+  "probe": "reachability_of_a_published_comparison",
+  "observed_utc": "2026-08-28T11:45:13Z",
+  "read_only": true,
+  "platform": "linux",
+  "rungs": [
+    {
+      "rung": 1,
+      "assertion": "the work has a citable published record",
+      "reachable": true,
+      "observed": "an identifier for the reference implementation's paper is recorded in the project's own artifacts; the probe does not fetch the network"
+    },
+    {
+      "rung": 2,
+      "assertion": "the reference source can be obtained at a fixed revision",
+      "reachable": true,
+      "observed": {
+        "present": true,
+        "path_checked": "source-tree/002-acoustic-field/vendor/Hybrid-TDOA-Calib",
+        "head": "150df084e0cb3c390da0df765c61b0d637cbaf32",
+        "head_matches_recorded_pin": true,
+        "entrypoints_recorded": 19,
+        "entrypoints_found": 19,
+        "entrypoints_missing": []
+      }
+    },
+    {
+      "rung": 3,
+      "assertion": "the runtime the reference source needs is available here",
+      "reachable": false,
+      "observed": {
+        "searched": [
+          "matlab",
+          "octave",
+          "octave-cli"
+        ],
+        "resolved": {
+          "matlab": false,
+          "octave": false,
+          "octave-cli": false
+        },
+        "any_available": false
+      }
+    },
+    {
+      "rung": 4,
+      "assertion": "the published table can be recomputed here",
+      "reachable": false,
+      "observed": "unreachable as a consequence of rung 3; no substitute interpreter is treated as equivalent and no table is synthesised"
+    }
+  ],
+  "corpus": {
+    "paths_checked": {
+      "data/locata": false,
+      "source-tree/002-acoustic-field/data/locata": false,
+      "source-tree/_fire_data/locata": false
+    },
+    "env_data_root": "",
+    "present_anywhere_checked": false
+  },
+  "first_break": 3
+}

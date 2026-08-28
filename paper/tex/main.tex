@@ -1,0 +1,342 @@
+%% Working draft. Structure is generated; prose is authored here.
+%% Build from the repository root with: bash scripts/build_paper.sh <this paper dir>
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage[margin=1in]{geometry}
+\usepackage[hidelinks]{hyperref}
+
+\graphicspath{{../figs/out/}}
+
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.7}
+\renewcommand{\textfraction}{0.08}
+\renewcommand{\floatpagefraction}{0.8}
+\setcounter{topnumber}{2}
+\setcounter{totalnumber}{3}
+
+%% Numbers and tables are emitted by the figure code from hash-bound evidence.
+\input{generated_numbers}
+\input{captions}
+
+\title{Citable, obtainable, unrunnable: recording where the reconstruction of a
+published comparison actually stops}
+\author{Working draft --- author list not yet fixed}
+\date{Working draft. Not submitted to any venue.}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\input{abstract}
+\end{abstract}
+
+\section{Introduction}
+
+Computational research is routinely sorted into reproducible and not
+reproducible, and artifact-evaluation programmes reinforce the binary by awarding
+badges that certify code and data were made available~\cite{acmbadging2020}. The
+binary is convenient and it is also the wrong shape. Reproduction is a sequence
+of steps that can each succeed or fail for unrelated reasons, and a reader who
+gets stuck is almost never told which step stopped them. Large-scale attempts to
+build the code accompanying published papers have found the sticking points to be
+mundane and specific, and to sit at very different depths for different
+papers~\cite{collberg2016repeatability}. The literature on the reproducibility of
+computational work has argued for a decade that the useful unit is a gradation
+rather than a verdict~\cite{peng2011reproducible,baker2016reproducibility}.
+
+This study takes that argument literally and treats the stopping point as the
+object to be recorded. The instrument is a ladder of \NRungs{} rungs, described
+in the methods, on which each rung is an assertion checkable on a given machine
+without contacting anyone: a citable record exists; the source is obtainable at a
+fixed revision; the runtime that source requires is present; the published table
+recomputes. Because a break makes everything above it unreachable, the reportable
+quantity is the index of the first break. An audit result is therefore a small
+integer plus the observation that justifies it, and it is refutable line by line
+rather than in aggregate.
+
+We apply the ladder to one published comparison in acoustic sensor calibration
+and report what a read-only probe observed. The result is that the break is
+neither at the top nor at the bottom. The source is present at exactly the
+revision recorded for it, with every one of its \EntryPoints{} entry points on
+disk, so the availability that a badge would certify is genuinely there. What is
+missing is the commercial numerical environment the source is written for. That
+single absence is sufficient, and everything above it follows.
+
+Corpus availability turns out not to fit on the ladder at all, and we report it
+as a separate axis for a reason worth stating plainly. The evaluation corpus for
+this line of work is publicly archived, openly downloadable and about
+\CorpusGB{} gigabytes, and it is not on the machine. Calling that a satisfied
+requirement misdescribes the situation, and calling it a broken one blames the
+wrong party. A resolvable link is not a local asset, and an audit that collapses
+the two will systematically overstate how close a reader is to a reproduction.
+
+The audit leaves a large part of the project fully reproducible, and that part
+supplies a second result which is not about reproducibility at all. A local
+simulation compares an offset-agnostic estimator against an offset-aware one
+across \NConditions{} conditions. At every condition where the unknown offsets it
+models are actually present, the offset-aware estimator wins, as expected. At the
+single condition where the offsets are zero, it loses by a factor of about
+\ZeroRatio{} in median error and loses on every one of \NTrials{} paired trials.
+That condition is the one a method paper is least likely to include, and its
+omission would leave a headline that is true six times and badly false once.
+
+\section{Methods}
+\input{methods}
+
+\section{Where the reconstruction stops}
+
+\subsection{The observed ladder}
+
+Figure~\ref{fig:ladder} and Table~\ref{tab:ladder} give the probe's observation.
+Rung one holds: the audited comparison has a citable record~\cite{hybridtdoa2024}.
+Rung two holds and holds precisely: the reference source is present, its revision
+identifier matches the pin recorded for it, and all \EntryPoints{} recorded entry
+points are on disk. Nothing about the availability of this work is deficient, and
+an artifact badge asserting availability would be accurate.
+
+Rung \FirstBreak{} breaks. The source is written for a commercial numerical
+computing environment that is not installed on this machine, and the free
+interpreter most often proposed in its place is not installed either. We note the
+second fact only for completeness, because as stated in the methods a substitute
+interpreter would not have satisfied the rung: running source written for one
+numerical environment under another is a claim about equivalence that would have
+to be established, not assumed. Rung \NRungs{} is then unreachable, and the
+audit's outcome is the integer \FirstBreak{} together with the observation
+justifying it.
+
+The project's own recorded state agrees, and it records \BlockedTiers{} distinct
+blocked tiers for three unrelated reasons: one blocked by the missing runtime,
+one blocked by a dependency on both that runtime and the absent corpus, and one
+blocked because the simulation retains only derived timing measurements and no
+waveforms, so a whole family of signal-domain baselines cannot be run from the
+stored data at all. That third blocker is instructive precisely because it has
+nothing to do with licensing. Reachability fails for boring, various and specific
+reasons, which is the argument for recording the specific reason rather than a
+verdict.
+
+\begin{table}[tbp]
+\centering
+\caption{The reachability ladder as observed on one machine on \ProbeDate{} by a
+read-only probe. The ladder is monotone, so the first broken rung determines
+every rung above it.}
+\label{tab:ladder}
+\small
+\input{generated_table_ladder}
+\end{table}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{fig1_reachability_ladder.pdf}
+\caption{\CapLadder}
+\label{fig:ladder}
+\end{figure}
+
+\subsection{Why the corpus is a separate axis}
+
+The evaluation corpus used by this line of work~\cite{locata} is deposited in a
+public archive with a permanent identifier and is roughly \CorpusGB{} gigabytes.
+The probe
+checked the locations where the project would keep it, including the one named by
+its own data-root environment variable, and found nothing.
+
+The temptation is to score this as reachable, on the grounds that anyone can
+download it. Resisting that temptation is the point. A reproduction attempt that
+requires tens of gigabytes of transfer, disk, and time is in a materially
+different state from one that does not, and the difference is invisible to any
+scheme that records only whether an asset is public. The two facts we record,
+publicly archived and not locally present, are both true, and neither one implies
+the other.
+
+\section{What remains reproducible, and the condition it exposes}
+
+\subsection{The expected result, and its exception}
+
+The locally reproducible comparison behaves as the literature would predict over
+most of its range. Table~\ref{tab:sweep} and Figure~\ref{fig:sweep} show that as
+the dispersion of the unknown per-channel offsets grows, the offset-agnostic
+estimator degrades steadily, from a median error of \NaiveRangeLow{} m to
+\NaiveRangeHigh{} m, while the offset-aware estimator stays nearly flat between
+\AwareFloorLow{} m and \AwareFloorHigh{} m. At every one of the
+\NonZeroConditions{} conditions with offsets present the paired signed-rank test
+favours the offset-aware estimator.
+
+The exception is the condition where the offsets are exactly zero. There the
+offset-agnostic estimator is almost exact, with a median error of
+\ZeroNaiveMedian{} m, while the offset-aware estimator returns
+\ZeroAwareMedian{} m. The ratio is about \ZeroRatio{} to one and the paired test
+gives $p = \ZeroP{}$ in the opposite direction to every other condition.
+
+Figure~\ref{fig:wins} makes the shape of that reversal clearer than the medians
+can. Where offsets are present the offset-aware estimator wins a majority of
+trials but never all of them, reaching \MaxOffsetWins{} of \NTrials{} at the
+largest dispersion; the advantage is consistent, not absolute. Where offsets are
+absent it wins \ZeroWins{} of \NTrials{}. A unanimous loss is a different and
+more informative object than a significant one: it says the reversal is a
+property of the estimator rather than a tail of its distribution.
+
+\begin{table}[tbp]
+\centering
+\caption{Median localisation error by offset dispersion, over \NTrials{} paired
+trials per condition at a fixed recorded seed. The paired difference is stated as
+agnostic minus aware, so a positive value favours the offset-aware estimator. The
+final columns give the count of trials on which the offset-aware estimator was
+better and the two-sided paired signed-rank $p$ value.}
+\label{tab:sweep}
+\small
+\input{generated_table_sweep}
+\end{table}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.88\linewidth]{fig2_offset_sweep.pdf}
+\caption{\CapSweep}
+\label{fig:sweep}
+\end{figure}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.88\linewidth]{fig3_paired_wins.pdf}
+\caption{\CapWins}
+\label{fig:wins}
+\end{figure}
+
+\subsection{Why the reversal happens, and why it is not a bug}
+
+The mechanism is not mysterious and that is what makes it worth reporting. The
+offset-aware estimator always estimates the per-channel offsets, because it
+cannot know they are zero. Estimating parameters that carry no signal costs
+variance, and that cost does not shrink as the true offsets shrink; it is a floor
+the estimator pays for its own generality. The offset-agnostic estimator has no
+such floor because it assumes the answer, and when the assumption is exactly
+right the assumption is free. The near-flat aware curve and the near-exact
+agnostic point at zero are two views of the same fact.
+
+Read that way, the comparison is not evidence that one estimator is better. It is
+evidence that the two estimators have different failure modes, and that the
+experiment which distinguishes them is the one at the boundary of the modelled
+effect. A study that swept only conditions with substantial offsets, which is the
+natural design if the offsets are the phenomenon of interest, would have observed
+a clean monotone advantage and reported it in good faith.
+
+We think this generalises past acoustics into a small norm. When a method adds
+parameters to absorb a nuisance, the condition worth reporting is the one where
+the nuisance is absent, because that is where the price of the added generality
+is visible and nowhere else. It is also the condition most likely to be dropped
+from a sweep for looking uninformative.
+
+\section{Discussion}
+
+A reachability audit is cheap. The probe used here runs in well under a second,
+installs nothing and touches no network. What it buys is a statement with a
+falsifiable shape: not that the work is irreproducible, but that on a stated
+machine on a stated date the first break was at a stated rung for a stated
+reason. Anyone with a different machine can produce a different integer, and the
+disagreement is then about an observation rather than about a judgement.
+
+The audited work is not deficient in any way this instrument can detect other
+than its runtime requirement, and that requirement is a property of the
+scientific software ecosystem rather than of the authors. Writing numerical work
+for a widely licensed commercial environment was, and remains, an ordinary
+choice. The point of recording the break is not to attribute fault; it is that a
+reader deciding whether to attempt a reproduction currently has no cheap way to
+learn that a licence stands between them and rung four, and that the badge on the
+artifact will not tell them.
+
+Finally, the two halves of this paper are connected by more than a shared
+project. The reachability audit says which comparisons a reader can check, and
+the offset study says what a reader finds when they do check one: a headline that
+holds under the conditions its authors would naturally have swept, and reverses
+under the one they would naturally have omitted. Reproducibility infrastructure
+and honest condition coverage are the same problem approached from two ends.
+
+\section{What this study does not claim}
+
+No claim of novelty in acoustic localisation is made. That subject has an active
+literature and the comparison examined here is used as a worked example of an
+audit, not as a contribution to it.
+
+No substitute runtime is treated as equivalent to the required one. No attempt
+was made to execute the reference source under a different interpreter, and no
+number anywhere in this paper originates from such an attempt.
+
+No published table is reconstructed, approximated or synthesised. Rung
+\NRungs{} is reported as unreachable and left unreached; the local
+re-implementation that exists in the same project is not presented as a stand-in
+for it and none of its numbers appear here.
+
+No permanent property of the audited work is asserted. The audit is
+machine-relative and dated. Installing the required runtime, or fetching the
+corpus, changes the result, and the correct reading of a first break at rung
+\FirstBreak{} is a statement about a machine on a day.
+
+No misconduct or negligence is alleged, and nothing here should be read as an
+assessment of the quality of the audited work, which this study did not evaluate.
+
+\section{Conclusion}
+
+A published comparison was audited against a \NRungs{}-rung reachability ladder
+by a read-only probe. Its source is obtainable at exactly the revision recorded
+for it and all \EntryPoints{} entry points are present, so availability is not
+the problem; the first break is at rung \FirstBreak{}, the absence of the
+commercial numerical environment the source requires, and the published table is
+consequently out of reach. Corpus availability was tracked separately and shows
+why it must be: the evaluation corpus is public, permanently archived and about
+\CorpusGB{} gigabytes, and is absent locally, which is neither a satisfied nor a
+broken requirement.
+
+The reproducible remainder of the same project produced the paper's second
+result. Over \NConditions{} conditions at \NTrials{} paired trials each, an
+offset-aware estimator beat an offset-agnostic one wherever the offsets it models
+existed, and lost to it by a factor of about \ZeroRatio{} on every single trial
+of the one condition where they did not. Both results point the same way: the
+information a reader needs is the specific place where something stops holding,
+and both a reachability verdict and a method headline hide exactly that.
+
+\section*{Data and code availability}
+
+The probe, the derived tables, the recorded project state and the figure code
+that produces every number in this manuscript accompany the manuscript source.
+Each artifact is recorded with its SHA-256 digest in a manifest, and the figure
+code verifies those digests against the bytes on disk before reading them, so the
+build fails rather than silently reporting stale numbers. The reference source
+examined in the audit is third-party software, was not modified and is not
+redistributed here.
+\input{generated_availability}
+
+\section*{Ethics statement}
+
+This study is entirely computational and involves no human participants, no
+animal subjects and no personally identifying data. It reports on the
+reachability of third-party research software on one machine. It makes no
+assessment of the correctness or quality of that software and alleges no
+wrongdoing.
+
+\section*{Competing interests}
+
+Not yet declared. This is a working draft and the declaration is outstanding.
+
+\section*{Funding and author contributions}
+
+Not yet declared. This is a working draft; the author list is not fixed and
+contributions are therefore not yet attributable.
+
+\section*{Declaration of generative AI use}
+
+The probe, the analysis code, the figure code and the drafting of this manuscript
+were produced with substantial assistance from large language model agents
+working under human direction. One safeguard bears directly on what is reported:
+every number printed above is emitted programmatically from artifacts bound by
+cryptographic digest, including the audit's own headline integer, rather than
+transcribed by a model into prose. Responsibility for the content rests with the
+authors.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

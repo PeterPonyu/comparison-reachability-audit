@@ -1,0 +1,15 @@
+# Archived bindings. Tab-separated: id<TAB>path<TAB>role<TAB>note
+#
+# id	path	role	note
+E-PROBE	paper/evidence/reachability_probe.json	live_observation	read-only re-check of every ladder rung on this machine, timestamped; produced for this manuscript, not an upstream artifact
+E-SWEEP	data/e-sweep/offset_sweep_results.json	raw_sweep	7 offset conditions x 40 paired trials, per-condition median and mean error and paired signed-rank
+E-PAIRED	data/e-paired/offset_sweep_paired_test.json	derived_table	extracted paired test per condition, with the source script, seed and timestamp of the sweep
+E-INVENTORY	data/e-inventory/inventory.json	recorded_state	what the project itself records as present, blocked, and why
+E-BRIDGE	data/e-bridge/hybrid_tdoa_bridge.json	recorded_state	reference-implementation entry points, revision pin, and the stated execution blocker
+E-PRIMARY	data/e-primary/paper_primary.json	recorded_state	the published-table tier, recorded as blocked
+E-SOTACOPY	data/e-sotacopy/sota_copy.json	recorded_state	the full-replication tier, recorded as blocked on both runtime and corpus
+E-STATIC	data/e-static/static.json	recorded_state	a fourth tier blocked for an unrelated reason, kept to show the ladder is not one failure
+E-NAIVE	data/e-naive/naive.json	derived_table	summary of the reproducible baseline arm at one condition
+E-AWARE	data/e-aware/simple.json	derived_table	summary of the reproducible treatment arm at the same condition
+E-COMPLEMENT	data/e-complement/hybrid_gn_python_vs_su.json	derived_table	independent re-implementation run, explicitly flagged as not the published table
+E-WAREHOUSE	data/e-warehouse/002-acoustic-field.md	narrative_record	the project's own record of display-metric rules, blockers and the archive disposition

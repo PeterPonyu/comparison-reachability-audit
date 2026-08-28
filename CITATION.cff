@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+title: >-
+  Code and data for: Citable, obtainable, unrunnable: recording where the reconstruction of a published comparison actually stops
+message: If you use this code or data, please cite this archive and the manuscript.
+type: dataset
+authors:
+  - given-names: Zeyu
+    family-names: Fu
+    email: fuzeyu99@126.com
+    orcid: 'https://orcid.org/0009-0001-8329-0108'
+    affiliation: 'Army Medical University, Chongqing, China'
+abstract: >-
+  Probe code, probe output, sweep results, figure code and manuscript source for an audit that records, rung by rung, where the reconstruction of a published acoustic-localisation comparison stops on an ordinary machine.
+keywords:
+  - reproducibility
+  - computational reconstruction
+  - acoustic localisation
+  - artifact availability
+  - audit
+license: MIT
+version: 0.1.0
+date-released: '2026-08-28'
+# No DOI: this work has not been deposited in a public archive.
+# The field is added when the archive exists, not before.
