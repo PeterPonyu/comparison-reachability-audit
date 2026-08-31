@@ -13,3 +13,5 @@ E-NAIVE	data/e-naive/naive.json	derived_table	summary of the reproducible baseli
 E-AWARE	data/e-aware/simple.json	derived_table	summary of the reproducible treatment arm at the same condition
 E-COMPLEMENT	data/e-complement/hybrid_gn_python_vs_su.json	derived_table	independent re-implementation run, explicitly flagged as not the published table
 E-WAREHOUSE	data/e-warehouse/002-acoustic-field.md	narrative_record	the project's own record of display-metric rules, blockers and the archive disposition
+E-FINE	data/e-fine/breakeven_sweep_20260828T185258Z.json	live_observation	refined dispersion grid inside the interval the coarse sweep skipped, crossed with 6 geometries, 40 paired trials per cell, every trial stored; run for this manuscript
+E-CROSS	data/e-cross/breakeven_crossing.json	derived_table	per-cell summaries, the located sign change under two summary rules, and the check of the prediction the coarse record fixes in advance

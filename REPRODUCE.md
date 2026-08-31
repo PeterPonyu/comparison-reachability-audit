@@ -21,8 +21,10 @@ the build instead of producing a stale number.
 | `data/e-aware/simple.json` | derived_table | 382 | `83aa34405d56a939…` |
 | `data/e-complement/hybrid_gn_python_vs_su.json` | derived_table | 148676 | `d240f0308b9526fb…` |
 | `data/e-warehouse/002-acoustic-field.md` | narrative_record | 3943 | `c27189a95b4f2b1c…` |
+| `data/e-fine/breakeven_sweep_20260828T185258Z.json` | live_observation | 186240 | `2929cb29383960fd…` |
+| `data/e-cross/breakeven_crossing.json` | derived_table | 58959 | `c4d2e7891617aa1a…` |
 
-Some of these files recorded the paths of the machine that produced them. Those path strings were rewritten before deposit; `REDACTION.md` states the rules, lists every file touched with both digests, and describes the check that proves no number changed.
+Some of these files recorded the paths of the machine that produced them. Those path strings and source links were refreshed before deposit; `REDACTION.md` states the rules, lists every file touched with both digests, and describes the check that proves no number changed.
 
 ## Checking the archive without building it
 

@@ -1,0 +1,753 @@
+%% The manuscript body, shared by every binding of this paper.
+%% The class, the front matter and the bibliography style belong to the
+%% binding; everything a reader reads belongs here, once.
+\section{Introduction}
+
+Computational research is routinely sorted into reproducible and not
+reproducible, and artifact-evaluation programmes reinforce the binary by awarding
+badges that certify code and data were made available~\cite{acmbadging2020}. The
+binary is convenient and it is also the wrong shape. Reproduction is a sequence
+of steps that can each succeed or fail for unrelated reasons, and a reader who
+gets stuck is almost never told which step stopped them. Large-scale attempts to
+build the code accompanying published papers have found the sticking points to be
+mundane and specific, and to sit at very different depths for different
+papers~\cite{collberg2016repeatability}. The literature on the reproducibility of
+computational work has argued for a decade that the useful unit is a gradation
+rather than a verdict~\cite{peng2011reproducible,baker2016reproducibility}.
+
+This study takes that argument literally and treats the stopping point as the
+object to be recorded. The instrument is a ladder of \NRungs{} rungs, described
+in the methods, on which each rung is an assertion checkable on a given machine
+without contacting anyone: a citable record exists; the source is obtainable at a
+fixed revision; the runtime that source requires is present; the published table
+recomputes. Because a break makes everything above it unreachable, the reportable
+quantity is the index of the first break. An audit result is therefore a small
+integer plus the observation that justifies it, and it is refutable line by line
+rather than in aggregate.
+
+We apply the ladder to one published comparison in acoustic sensor calibration
+and report what a read-only probe observed. The result is that the break is
+neither at the top nor at the bottom. The source is present at exactly the
+revision recorded for it, with every one of its \EntryPoints{} entry points on
+disk, so the availability that a badge would certify is genuinely there. What is
+missing is the commercial numerical environment the source is written for. That
+single absence is sufficient, and everything above it follows.
+
+Corpus availability turns out not to fit on the ladder at all, and we report it
+as a separate axis for a reason worth stating plainly. The evaluation corpus for
+this line of work is publicly archived, openly downloadable and about
+\CorpusGB{} gigabytes, and it is not on the machine. Calling that a satisfied
+requirement misdescribes the situation, and calling it a broken one blames the
+wrong party. A resolvable link is not a local asset, and an audit that collapses
+the two will systematically overstate how close a reader is to a reproduction.
+
+The audit leaves a large part of the project fully reproducible, and that part
+supplies a second result which is not about reproducibility at all. A local
+simulation compares an offset-agnostic estimator against an offset-aware one
+across \NConditions{} conditions. At every condition where the unknown offsets it
+models are actually present, the offset-aware estimator wins, as expected. At the
+single condition where the offsets are zero, it loses by a factor of about
+\ZeroRatio{} in median error and loses on every one of \NTrials{} paired trials.
+That condition is the one a method paper is least likely to include, and its
+omission would leave a headline that is true at \NonZeroConditions{} of the
+\NConditions{} conditions and badly false at the remaining one.
+
+A third record in the same project is the one that changed what we think the
+ladder is for. It compares two locally written estimators over \CxPlanned{}
+paired trials, and it stores both the cell summary a paper would print and the
+individual trials behind it. Read through the mean, it names one estimator the
+better at \CxDisagreeing{} of \CxConditions{} conditions; read through the
+median, or through a paired test on the same trials, it names the other at all
+\CxConditions{}. At one of those conditions every planned trial completed in
+both arms, so no handling of missing runs is involved and the disagreement is
+the summary and nothing else. Setting aside \CxFlipDepth{} trial in
+\CxTrialsPerCondition{} is enough to make the mean agree.
+
+That is a reader's problem, not an authors' one, and it is invisible to the
+ladder. Rung \NRungs{} asks whether the published table recomputes; a reader who
+reaches it has reproduced a number, and the number does not determine the claim.
+Recomputing a table of means would faithfully reproduce a conclusion that the
+trials underneath it do not support. So we record a second off-ladder axis
+beside corpus availability --- whether the per-trial record is disclosed at all
+--- and we report what disclosure would have weighed here: fewer bytes than the
+summary it would have accompanied.
+
+The fourth result is the one that shows disclosure is not sufficient either, and
+it required an experiment rather than a re-reading. The offset study attaches
+its reversal to a single condition because its grid steps from zero to
+\CoarseGapHigh{} milliseconds in one move and has nothing in between. We reran
+that comparison on a grid refined inside the skipped interval and crossed with
+\FineRooms{} independently simulated arrays, \FinePairs{} paired trials in all,
+with the estimator code unchanged. The reversal is not a point. The
+offset-agnostic estimator holds the lower median error out to between
+\ReversalLow{} and \ReversalHigh{} milliseconds depending on the array, and at
+the original sweep's lowest non-zero condition it is still the better of the two
+in \AnchorAgnosticRooms{} of \FineRooms{} arrays. Where the ordering changes sign
+is therefore a joint property of the estimators and the grid, and no summary of
+the conditions a study ran can recover the conditions it did not. Disclosing
+trials cannot repair that, because the trials do not exist; what can is one more
+condition, and the record examined here contains enough to say where to put it.
+
+\section{Related work}
+
+\subsection{Reproducibility as a verdict, and the attempts to grade it}
+
+The position that computational claims should travel with the code and data that
+produced them is old enough to have infrastructure built around
+it~\cite{peng2011reproducible}. The infrastructure that arrived was largely
+binary. Artifact-evaluation programmes award badges for availability,
+functionality and reusability~\cite{acmbadging2020}, and each badge is a
+threshold: an artifact either clears it or it does not, and the reader who fails
+to reproduce something learns nothing about where they stopped. Surveys of
+researchers report a widespread sense that published results often cannot be
+reconstructed~\cite{baker2016reproducibility}, without saying at which step the
+reconstruction fails, because the survey instrument cannot ask that.
+
+The studies that did try to run the code found the answer to be specific and
+mundane. Collberg and Proebsting attempted to build the artifacts of several
+hundred systems papers and classified the outcomes by how far they
+got~\cite{collberg2016repeatability}; the classification is close in spirit to
+what we do here, and the difference is that we make the ordering a stated
+property of the instrument rather than a convenient way of presenting results,
+and we require each level to be an assertion refutable on a named machine on a
+named date. Proposition~\ref{prop:sufficient} is what that discipline buys: the
+observation collapses to an integer without loss, which a set of badges does
+not.
+
+Work on capturing the execution environment --- containers, declarative
+environment specifications, workflow systems --- attacks the same problem from
+the other end, by trying to make rung three hold by construction. It is
+complementary to an audit and does not replace one: a container image is itself
+an artifact that can be absent, stale, or built for an architecture the reader
+does not have, and the question of where a given reader stops remains
+empirical. The break we record here, a commercial numerical runtime the source
+is written for, is also the case those tools address least well, since the
+licence is not something an image can carry.
+
+\subsection{Availability, obtainability, and the distance between them}
+
+The distinction this paper draws between a resolvable identifier and a local
+asset has an analogue in data-management practice, where findability and
+accessibility are separated from actual retrieval. The corpus used by the
+audited line of work is deposited with a permanent identifier and is openly
+downloadable~\cite{locata}, and it is nonetheless absent here. What
+Proposition~\ref{prop:offladder} adds is a reason not to fold that fact into the
+ladder: an assertion that can hold when a lower rung fails, and fail when a
+higher one holds, destroys the property that makes the index sufficient.
+Instruments that score availability on a single scale are not merely coarse;
+they are measuring something that has no single scale.
+
+\subsection{Summaries, outliers, and paired designs}
+
+The second and third results of this paper join a much older discussion. That
+the arithmetic mean is not resistant to a single extreme observation, and that
+rank-based and median-based summaries are, is elementary; the paired signed-rank
+test we use throughout is one of the standard responses to
+it~\cite{wilcoxon1945individual}. What the literature has less to say about is
+the reporting question, which is not which summary is correct but what a reader
+can do when only one of them was printed.
+Proposition~\ref{prop:disclosure} states the gap, and the record examined in
+Section~\ref{sec:display} realises it: at a condition where every trial
+completed in both arms, the mean and the median of the same forty pairs name
+different estimators.
+
+Localisation studies routinely report error against the Cram\'er--Rao bound as a
+measure of how much of the available information an estimator recovers, and the
+comparison is usually made through a root-mean-square error. That choice
+inherits the sensitivity of the mean while appearing to be a property of the
+estimator, and Fig.~\ref{fig:efficiency} shows what it costs on this record: a
+factor of roughly eight between the two readings of the same trials against the
+same bound.
+
+Pre-registration and protocol-first reporting address a neighbouring failure, in
+which the summary is chosen after the data are seen. We do not allege that here
+and have no way to; the record we read declares its display rule in a field, and
+declares the median primary. The problem we describe survives an honest
+declaration, because the reader of a published table does not receive the trials
+the declaration was applied to.
+
+\section{Methods}
+\input{methods}
+
+\section{Where the reconstruction stops}
+
+\subsection{The observed ladder}
+
+Fig.~\ref{fig:ladder} and Table~\ref{tab:ladder} give the probe's observation.
+Rung one holds: the audited comparison has a citable record~\cite{hybridtdoa2024}.
+Rung two holds and holds precisely: the reference source is present, its revision
+identifier matches the pin recorded for it, and all \EntryPoints{} recorded entry
+points are on disk. Nothing about the availability of this work is deficient, and
+an artifact badge asserting availability would be accurate.
+
+Rung \FirstBreak{} breaks. The source is written for a commercial numerical
+computing environment that is not installed on this machine, and the free
+interpreter most often proposed in its place is not installed either. We note the
+second fact only for completeness, because as stated in the methods a substitute
+interpreter would not have satisfied the rung: running source written for one
+numerical environment under another is a claim about equivalence that would have
+to be established, not assumed. Rung \NRungs{} is then unreachable, and the
+audit's outcome is the integer \FirstBreak{} together with the observation
+justifying it.
+
+The project's own recorded state agrees, and it records \BlockedTiers{} distinct
+blocked tiers for three unrelated reasons: one blocked by the missing runtime,
+one blocked by a dependency on both that runtime and the absent corpus, and one
+blocked because the simulation retains only derived timing measurements and no
+waveforms, so a whole family of signal-domain baselines cannot be run from the
+stored data at all. That third blocker is instructive precisely because it has
+nothing to do with licensing. Reachability fails for boring, various and specific
+reasons, which is the argument for recording the specific reason rather than a
+verdict.
+
+\begin{table}[tbp]
+\centering
+\caption{The reachability ladder as observed on one machine on \ProbeDate{} by a
+read-only probe. The ladder is monotone, so the first broken rung determines
+every rung above it.}
+\label{tab:ladder}
+\small
+\input{generated_table_ladder}
+\end{table}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{fig1_reachability_ladder.pdf}
+\caption{\CapLadder}
+\label{fig:ladder}
+\end{figure}
+
+\subsection{Why the corpus is a separate axis}
+
+The evaluation corpus used by this line of work~\cite{locata} is deposited in a
+public archive with a permanent identifier and is roughly \CorpusGB{} gigabytes.
+The probe
+checked the locations where the project would keep it, including the one named by
+its own data-root environment variable, and found nothing.
+
+The temptation is to score this as reachable, on the grounds that anyone can
+download it. Resisting that temptation is the point. A reproduction attempt that
+requires tens of gigabytes of transfer, disk, and time is in a materially
+different state from one that does not, and the difference is invisible to any
+scheme that records only whether an asset is public. The two facts we record,
+publicly archived and not locally present, are both true, and neither one implies
+the other.
+
+\section{What remains reproducible, and the condition it exposes}
+
+\subsection{The expected result, and its exception}
+
+The locally reproducible comparison behaves as the literature would predict over
+most of its range. Table~\ref{tab:sweep} and Fig.~\ref{fig:sweep} show that as
+the dispersion of the unknown per-channel offsets grows, the offset-agnostic
+estimator degrades steadily, from a median error of \NaiveRangeLow{} m to
+\NaiveRangeHigh{} m, while the offset-aware estimator stays nearly flat between
+\AwareFloorLow{} m and \AwareFloorHigh{} m. At every one of the
+\NonZeroConditions{} conditions with offsets present the paired signed-rank test
+favours the offset-aware estimator.
+
+The exception is the condition where the offsets are exactly zero. There the
+offset-agnostic estimator is almost exact, with a median error of
+\ZeroNaiveMedian{} m, while the offset-aware estimator returns
+\ZeroAwareMedian{} m. The ratio is about \ZeroRatio{} to one and the paired test
+gives $p = \ZeroP{}$ in the opposite direction to every other condition.
+
+Fig.~\ref{fig:wins} makes the shape of that reversal clearer than the medians
+can. Where offsets are present the offset-aware estimator wins a majority of
+trials but never all of them, reaching \MaxOffsetWins{} of \NTrials{} at the
+largest dispersion; the advantage is consistent, not absolute. Where offsets are
+absent it wins \ZeroWins{} of \NTrials{}. A unanimous loss is a different and
+more informative object than a significant one: it says the reversal is a
+property of the estimator rather than a tail of its distribution.
+
+\begin{table}[tbp]
+\centering
+\caption{Median localisation error by offset dispersion, over \NTrials{} paired
+trials per condition at a fixed recorded seed. The paired difference is stated as
+agnostic minus aware, so a positive value favours the offset-aware estimator. The
+final columns give the count of trials on which the offset-aware estimator was
+better and the two-sided paired signed-rank $p$ value.}
+\label{tab:sweep}
+\small
+\input{generated_table_sweep}
+\end{table}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.88\linewidth]{fig2_offset_sweep.pdf}
+\caption{\CapSweep}
+\label{fig:sweep}
+\end{figure}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.88\linewidth]{fig3_paired_wins.pdf}
+\caption{\CapWins}
+\label{fig:wins}
+\end{figure}
+
+\subsection{Why the reversal happens, and why it is not a bug}
+
+The mechanism is not mysterious and that is what makes it worth reporting. The
+offset-aware estimator always estimates the per-channel offsets, because it
+cannot know they are zero. Estimating parameters that carry no signal costs
+variance, and that cost does not shrink as the true offsets shrink; it is a floor
+the estimator pays for its own generality. The offset-agnostic estimator has no
+such floor because it assumes the answer, and when the assumption is exactly
+right the assumption is free. The near-flat aware curve and the near-exact
+agnostic point at zero are two views of the same fact.
+
+Read that way, the comparison is not evidence that one estimator is better. It is
+evidence that the two estimators have different failure modes, and that the
+experiment which distinguishes them is the one at the boundary of the modelled
+effect. A study that swept only conditions with substantial offsets, which is the
+natural design if the offsets are the phenomenon of interest, would have observed
+a clean monotone advantage and reported it in good faith.
+
+We think this generalises past acoustics into a small norm. When a method adds
+parameters to absorb a nuisance, the condition worth reporting is the one where
+the nuisance is absent, because that is where the price of the added generality
+is visible and nowhere else. It is also the condition most likely to be dropped
+from a sweep for looking uninformative.
+
+\section{A comparison that runs, and still cannot be checked}
+\label{sec:display}
+
+\subsection{Three summaries, two answers}
+
+Everything so far has been about whether a reader can get a comparison to run.
+The third record in this project is one they can, and it is the more
+uncomfortable case. It puts two locally written estimators for the same
+calibration problem against each other at \CxConditions{} timing-noise levels,
+\CxTrialsPerCondition{} paired trials each, and it stores both the cell summary
+a paper would print and the \CxPlanned{} individual trials that summary came
+from. That second half is what makes the following possible at all.
+
+Fig.~\ref{fig:displayrule} and Table~\ref{tab:complement} read those trials
+three ways. The median names the estimator given both measurement sets at every
+condition. The paired test agrees at every condition, on
+\CxPairedWinsLow{} to \CxPairedWinsHigh{} of the usable trials, at
+$p \le \CxPairedPHigh{}$. The mean disagrees with both at \CxDisagreeing{} of
+the \CxConditions{} conditions. Nothing separates the three except the
+arithmetic applied at the end.
+
+The cleanest of the three conditions is the one to read first, because it admits
+no other explanation. At \CxCleanSigma{} microseconds of timing noise every
+planned trial returned an error in both arms: nothing is missing, nothing was
+dropped, no rule for handling failures is in play. The mean error is
+\CxCleanMeanFull{} m against \CxCleanMeanReduced{} m, which names the
+one-measurement estimator. The median is \CxCleanMedianFull{} m against
+\CxCleanMedianReduced{} m, which names the other. The paired test says the
+two-measurement estimator was better on \CxCleanWins{} of
+\CxTrialsPerCondition{} trials at $p = \CxCleanP{}$. Two sentences, both true, both
+computed from the same forty numbers, and they name different winners.
+
+\subsection{One trial in forty}
+
+Fig.~\ref{fig:pairedtrials} shows why, and it is the figure that makes the
+argument rather than the tables. At every condition the cloud of paired trials
+sits below the diagonal, which is the majority the paired test counts. Sitting
+apart from the cloud, two orders of magnitude away, are a handful of trials on
+which one estimator or the other went badly wrong. The mean is a statement about
+those, and the median is a statement about the cloud.
+
+Table~\ref{tab:influence} puts a size on it. The single largest trial of the
+two-measurement estimator at the clean condition is \CxCleanLeverage{} times
+that estimator's own median; removing it alone moves its mean from
+\CxCleanMeanFull{} m to \CxCleanMeanWithoutMax{} m. Fig.~\ref{fig:influence}
+turns that into a curve, and the curve is short. At every condition where the
+mean disagrees with the median, setting aside \CxFlipDepth{} trial per arm --- out
+of \CxTrialsPerCondition{} --- is enough for the mean to name the estimator the
+median and the paired test had named all along, while the gap between the
+medians barely moves.
+
+We are not proposing that anyone trim. The point is the leverage: a conclusion
+that one trial in \CxTrialsPerCondition{} can reverse is not a weaker version of
+a conclusion that survives, it is a different kind of object, and the printed
+row does not distinguish them.
+
+\subsection{Two runs that produced nothing}
+
+At two of the conditions one estimator diverged on one trial and returned no
+error at all. The record writes those \CxAbsentValues{} values as the bare token
+\texttt{NaN}, which the interchange format cannot express: a strict reader
+rejects the whole file, and a permissive one accepts something number-shaped
+that is not a number. Either way the failure stops being visible at the moment a
+consumer opens the file, which is a small and entirely mundane mechanism by
+which a summary loses the thing a reader most needs to know.
+
+What the cell summary then reports is an average over what remained. The two
+arms at those conditions are averaged over different numbers of trials, and the
+printed row does not say so. By
+Corollary~\ref{cor:completecase} that comparison is biased towards whichever arm
+failed, since the dropped run is one that was going badly. Here the bias runs
+against the conclusion we draw rather than for it: the arm that lost the trials
+is the one the paired test finds worse, so the test reaches its answer despite
+the drop. That is worth stating precisely because it is the direction in which
+we would not have noticed.
+
+\subsection{The same estimators against the same bound}
+
+Fig.~\ref{fig:efficiency} makes the last point without reference to which
+estimator wins. The Cram\'er--Rao bound for this problem is computed at each
+trial from the array geometry and the timing noise; it is a property of the
+problem, identical under either summary, and it is the natural yardstick for
+asking how good either estimator is in absolute terms.
+
+Read through the mean, the two estimators sit between \CxEffMeanLow{} and
+\CxEffMeanHigh{} times the bound, and which one sits closer changes with the
+noise level. Read through the median, they sit between \CxEffMedianLow{} and
+\CxEffMedianHigh{} times it at every condition. The first reading says the
+estimators are far from what the problem allows and behave erratically; the
+second says both are essentially at the limit. The numerator is the only thing
+that differs. A reader given the first number has no way to arrive at the
+second, and no way to know that there is a second.
+
+\subsection{What the disclosure would have cost}
+
+The obvious objection is that per-trial records are burdensome, so it is worth
+recording what this one weighs. The cell summaries in this record occupy
+\CxBytesCells{} bytes. The two paired error columns --- every trial, both
+estimators, full precision, and nothing else --- occupy \CxBytesMinimal{} bytes.
+The disclosure that changes the answer is smaller than the summary that hides
+it. The complete per-trial record, with every quantity each run reported and its
+bound, is about \CxBytesTrials{} kilobytes, which is \CxCorpusOrders{} orders of
+magnitude below the evaluation corpus this same project cannot fit on a laptop.
+The three sizes are produced by one serialiser at full precision and are
+comparable to each other rather than to any particular file format; the point is
+the order of magnitude, and it does not depend on the format.
+
+\begin{table}[tbp]
+\centering
+\caption{One record of \CxPlanned{} paired trials, read under \CxRules{}
+summaries. Columns are timing-noise levels; the estimator named by each summary
+is given in italics beneath the quantities that decide it. Trials returning an
+error can be fewer than trials run, because a diverged run reports none.}
+\label{tab:complement}
+\small
+\input{generated_table_complement}
+\end{table}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{fig4_display_rule.pdf}
+\caption{\CapDisplayRule}
+\label{fig:displayrule}
+\end{figure}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{fig5_paired_trials.pdf}
+\caption{\CapPairedTrials}
+\label{fig:pairedtrials}
+\end{figure}
+
+\begin{table}[tbp]
+\centering
+\caption{The largest single trial of each estimator at each timing-noise level,
+against that estimator's own median, and the mean recomputed without it. The
+final column is the factor by which one trial inflates the printed mean.}
+\label{tab:influence}
+\small
+\input{generated_table_influence}
+\end{table}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{fig6_influence.pdf}
+\caption{\CapInfluence}
+\label{fig:influence}
+\end{figure}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.88\linewidth]{fig7_efficiency.pdf}
+\caption{\CapEfficiency}
+\label{fig:efficiency}
+\end{figure}
+
+\section{A condition that was never run}
+\label{sec:breakeven}
+
+\subsection{The reversal is an interval, not a point}
+
+The offset study reports its reversal at a single condition, offsets exactly
+zero, and a single condition is easy to set aside. No array is perfectly
+synchronised, so a result that lives only at exactly zero describes a state no
+deployment is in. The objection is fair and it is answerable, because the reason
+the reversal looks like a point is visible in the design: between zero and the
+lowest non-zero condition of \CoarseGapHigh{} milliseconds, that sweep has no
+conditions at all.
+
+We reran the comparison inside that interval. The estimators are the same code,
+the trial count is the same \FineTrials{} paired trials, and the design is what
+changed: \FineLevels{} dispersions instead of two, of which \FineAdded{} are new,
+crossed with \FineRooms{} independently simulated arrays, for \FinePairs{} paired
+trials in total. The left panel of Fig.~\ref{fig:breakeven} shows what is in
+there. In every array the offset-agnostic estimator holds the lower median error
+across most of the interval, at between \ReversalLevelsLow{} and
+\ReversalLevelsHigh{} of the \FineNonzeroLevels{} non-zero dispersions, and up to
+between \ReversalLow{} and \ReversalHigh{} milliseconds depending on the array.
+The reversal is not a knife edge at zero. It is a region, and the coarse grid
+skipped over it in one step.
+
+\subsection{Where the sign changes, and where it has not}
+
+Table~\ref{tab:breakeven} and the right panel of Fig.~\ref{fig:breakeven}
+locate the change of sign. In \CrossedRooms{} of the \FineRooms{} arrays it falls
+inside the refined grid, between \CrossingLow{} and \CrossingHigh{} milliseconds
+--- a spread of \CrossingSpread{} milliseconds, which is tight enough to look
+like a property of the estimator pair. In the other \CensoredRooms{} it has not
+happened by the top of the grid, and we record those as censored rather than
+assigning them the last condition we ran, for the reason
+Definition~\ref{def:breakeven} makes explicit: a sweep that stops below a
+crossing has not measured one.
+
+That censoring is the finding, not a limitation of it. The top of our refined
+grid is the lowest non-zero condition the original sweep ever ran. At that
+condition, in \AnchorAgnosticRooms{} of \FineRooms{} arrays, the offset-agnostic
+estimator still has the lower median error. A study that had drawn a different
+room and started its grid where this one did would have read the opposite
+headline off its own lowest condition, with the same code, the same trials per
+condition and the same analysis.
+
+The two summaries of the last section reappear here in a new place. Read through
+the median of the trials and read through the count of paired wins, the same
+trials put the same sign change between \RuleSepLow{} and \RuleSepHigh{}
+milliseconds apart. In the last section the choice of summary decided which
+estimator was named; here it decides where the boundary between them is. The
+quantity has changed and the dependence has not.
+
+\subsection{The record knew where to look}
+
+One number was fixed before the sweep ran. Interpolating the original sweep's
+own printed medians between its two lowest conditions puts the break-even at
+\PredictedCrossing{} milliseconds. In the array that sweep was run on, the
+measured value is \MeasuredCrossing{} --- an error of \PredictionError{}
+milliseconds, well inside the \PredictionTolerance{} millisecond tolerance we
+agreed to in advance.
+
+This is the sharpest form of the paper's argument that we can state. The missing
+information was not expensive. It was not even missing: it is derivable from the
+numbers the record already prints. A reader holding the coarse table could have
+computed, to within a tenth of a millisecond, the condition whose absence made
+the headline read the way it does. What they could not do is run it, because
+Corollary~\ref{cor:onecondition} is not satisfiable by anything a reader has ---
+not the summary, not the per-trial record, not the code. The trials at a
+condition nobody ran do not exist.
+
+We take some care not to over-read the agreement. The prediction succeeds for
+the array the original sweep used, and \CensoredRooms{} of the other arrays have
+no measured crossing to test it against; the rule extrapolated from one room is
+not thereby established for rooms in general, and the honest summary is that the
+coarse record locates its own missing condition and says nothing about anyone
+else's.
+
+\begin{table}[tbp]
+\centering
+\caption{Where the ordering between the two estimators changes sign, by array
+and by summary rule, over a grid refined inside the interval the original design
+skipped. The first pair of columns counts the non-zero dispersions at which the
+offset-agnostic estimator holds the lower median error, and gives the highest of
+them. A sign change recorded as a bound is one that had not occurred by the top
+of the refined grid, which is the lowest non-zero condition the original sweep
+ran; the final column names the estimator with the lower median error at exactly
+that condition.}
+\label{tab:breakeven}
+\small
+\input{generated_table_breakeven}
+\end{table}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{fig8_breakeven.pdf}
+\caption{\CapBreakeven}
+\label{fig:breakeven}
+\end{figure}
+
+\section{Discussion}
+
+A reachability audit is cheap. The probe used here runs in well under a second,
+installs nothing and touches no network. What it buys is a statement with a
+falsifiable shape: not that the work is irreproducible, but that on a stated
+machine on a stated date the first break was at a stated rung for a stated
+reason. Anyone with a different machine can produce a different integer, and the
+disagreement is then about an observation rather than about a judgement.
+
+The audited work is not deficient in any way this instrument can detect other
+than its runtime requirement, and that requirement is a property of the
+scientific software ecosystem rather than of the authors. Writing numerical work
+for a widely licensed commercial environment was, and remains, an ordinary
+choice. The point of recording the break is not to attribute fault; it is that a
+reader deciding whether to attempt a reproduction currently has no cheap way to
+learn that a licence stands between them and rung four, and that the badge on the
+artifact will not tell them.
+
+The four parts of this paper are connected by more than a shared project, and
+the order they arrive in is the argument. The reachability audit says which
+comparisons a reader can check. The offset study says what a reader finds when
+they check one: a headline that holds under the conditions its authors would
+naturally have swept, and reverses under the one they would naturally have
+omitted. The third comparison says that checking is not finished when the code
+runs, because the summary a reader is handed does not determine the conclusion
+the trials support. The refined sweep says that disclosing the trials is not the
+end either, because a comparison also has conditions, and the ones a design
+skipped leave no trace in the ones it kept.
+
+Those last two are worth separating, because they ask for different things. A
+missing per-trial record is recoverable: the runs happened, the bytes exist, and
+releasing them costs less than the table they would accompany. A missing
+condition is not recoverable at any price a reader can pay. It has no trials, no
+summary and no residue in the record, and the only repair is to run it ---
+which, by Corollary~\ref{cor:onecondition}, is one condition, provided somebody
+knows where to put it. The uncomfortable part of Section~\ref{sec:breakeven} is
+that the record examined here did know: the position was computable from its own
+printed medians, to within a tenth of a millisecond, by anyone who thought to
+ask.
+
+The point about summaries is the one that changes what we would build next. A ladder whose
+top rung is ``the published table recomputes'' treats reproduction as the end of
+the road, and Proposition~\ref{prop:disclosure} says it is not: the rung
+certifies a number, and a claim is a number plus a rule for reading it. The
+missing axis is disclosure of the per-trial record, and the reason to insist on
+it is not that summaries are dishonest. The record examined here declares its
+display rule in a field, names the median primary, and annotates the mean as
+outlier-sensitive. Its authors did the careful thing. A reader holding only the
+printed table still cannot check the conclusion, because the declaration travels
+without the trials it was applied to.
+
+Disclosure is also the cheapest of the three things this paper asks for. A
+runtime licence costs money, a corpus costs tens of gigabytes, and the paired
+error columns for \CxPlanned{} trials cost \CxBytesMinimal{} bytes, which is
+less than the summary table that would sit beside them. We do not think the
+obstacle to per-trial reporting is cost, and the numbers here make it hard to
+argue that it is.
+
+\section{What this study does not claim}
+
+No claim of novelty in acoustic localisation is made, and no comparison here is
+a finding about a published method. The estimators in the second and third
+studies are local implementations written inside this project; they are named by
+what they are given rather than by whose method they resemble, and neither is
+anyone's released code. No substitute runtime is treated as equivalent to the
+required one, no published table is reconstructed, approximated or synthesised,
+and rung \NRungs{} is reported as unreachable and left unreached.
+
+No permanent property of the audited work is asserted. The audit is
+machine-relative and dated: installing the required runtime, or fetching the
+corpus, changes the result, and the correct reading of a first break at rung
+\FirstBreak{} is a statement about a machine on a day. No misconduct or
+negligence is alleged, and nothing here assesses the quality of the audited
+work, which this study did not evaluate.
+
+The refined sweep is a new run, made for this manuscript, and it is not part of
+the record being audited. It changes nothing in that record and reads nothing
+back into it: the estimator code is imported unmodified, and the sweep is stored
+as a separate artifact beside the existing ones. It is not part of any
+pre-registered plan for this study either, and is reported as an extension
+rather than as a confirmation of anything stated in advance. What was fixed in
+advance is narrower and is stated where it is used: the prediction the refined
+sweep is read against, and the tolerance for calling it successful, were both
+computed and written down before the sweep ran.
+
+Nothing in Section~\ref{sec:breakeven} is a claim about acoustic localisation or
+about how anyone should have designed a sweep. A grid placed where the modelled
+effect is expected to matter is a reasonable grid, and the point is not that its
+authors erred but that the sign it reports is not identified by the estimators
+alone. The break-even values are properties of these two implementations in
+simulated rooms at a fixed prior width and noise floor; they are not a
+recommendation for any array, and no claim is made that the prediction rule
+which located one array's crossing would locate another's, since
+\CensoredRooms{} of the arrays here have no measured crossing to test it
+against.
+
+The mean is not promoted anywhere in this paper, and neither is it discarded.
+Section~\ref{sec:display} reports what the mean says in order to show that it
+says something different from the trials it summarises, which is an argument for
+disclosing the trials rather than for choosing between summaries. No result
+reported here is computed from a trimmed sample; the trimming in
+Fig.~\ref{fig:influence} measures leverage and is not applied to any quantity
+stated as a finding.
+
+\section{Conclusion}
+
+A published comparison was audited against a \NRungs{}-rung reachability ladder
+by a read-only probe. Its source is obtainable at exactly the revision recorded
+for it and all \EntryPoints{} entry points are present, so availability is not
+the problem; the first break is at rung \FirstBreak{}, the absence of the
+commercial numerical environment the source requires, and the published table is
+consequently out of reach. Corpus availability was tracked separately and shows
+why it must be: the evaluation corpus is public, permanently archived and about
+\CorpusGB{} gigabytes, and is absent locally, which is neither a satisfied nor a
+broken requirement.
+
+The reproducible remainder of the same project produced two further results.
+Over \NConditions{} conditions at \NTrials{} paired trials each, an offset-aware
+estimator beat an offset-agnostic one wherever the offsets it models existed,
+and lost to it by a factor of about \ZeroRatio{} on every single trial of the
+one condition where they did not. And in a third comparison of \CxPlanned{}
+paired trials, the mean and the median of the same trials named different
+estimators at \CxDisagreeing{} of \CxConditions{} conditions, including one at
+which nothing was missing; a single trial in \CxTrialsPerCondition{} carried the
+difference, and the same trials read against the Cram\'er--Rao bound put the
+estimators at \CxEffMeanLow{} to \CxEffMeanHigh{} times it or at
+\CxEffMedianLow{} to \CxEffMedianHigh{} times it depending only on which summary
+is used.
+
+A fourth result asked where that reversal ends. Rerunning the same estimators on
+a grid refined inside the interval the original design stepped over, crossed
+with \FineRooms{} independently simulated arrays and \FinePairs{} paired trials,
+puts the offset-agnostic estimator ahead out to between \ReversalLow{} and
+\ReversalHigh{} milliseconds of dispersion depending on the array, and still
+ahead at the original sweep's lowest non-zero condition in
+\AnchorAgnosticRooms{} of \FineRooms{} arrays. The sign a sweep reports is
+therefore fixed by its grid as much as by its estimators, and the position of
+the missing condition was computable from the original record's own printed
+medians to within \PredictionError{} milliseconds.
+
+The four results point the same way: the information a reader needs is the
+specific place where something stops holding, and a reachability verdict, a
+method headline, a summary statistic and a grid each hide exactly that. Three of
+the four are cheap to fix. Record the rung where a reconstruction stops rather
+than a badge; publish the per-trial record beside the table, which here would
+have cost \CxBytesMinimal{} bytes, less than the table itself; and add the one
+condition on the far side of the break-even, which costs one row and which the
+table itself will tell you where to put.
+
+\section*{Data and code availability}
+
+The probe, the derived tables, the recorded project state and the figure code
+that produces every number in this manuscript accompany the manuscript source.
+Each artifact is recorded with its SHA-256 digest in a manifest, and the figure
+code verifies those digests against the bytes on disk before reading them, so the
+build fails rather than silently reporting stale numbers. The reference source
+examined in the audit is third-party software, was not modified and is not
+redistributed here.
+\input{generated_availability}
+
+\section*{Ethics statement}
+
+This study is entirely computational and involves no human participants, no
+animal subjects and no personally identifying data. It reports on the
+reachability of third-party research software on one machine. It makes no
+assessment of the correctness or quality of that software and alleges no
+wrongdoing.
+
+\section*{Competing interests}
+
+Not yet declared. This is a working draft and the declaration is outstanding.
+
+\section*{Funding and author contributions}
+
+Not yet declared. This is a working draft; the author list is not fixed and
+contributions are therefore not yet attributable.
+
+\section*{Declaration of generative AI use}
+
+The probe, the analysis code, the figure code and the drafting of this manuscript
+were produced with substantial assistance from large language model agents
+working under human direction. One safeguard bears directly on what is reported:
+every number printed above is emitted programmatically from artifacts bound by
+cryptographic digest, including the audit's own headline integer, rather than
+transcribed by a model into prose. Responsibility for the content rests with the
+authors.

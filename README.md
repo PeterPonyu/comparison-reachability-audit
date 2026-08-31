@@ -11,7 +11,7 @@ This repository has not been deposited in a public archive, so it has no persist
 - `paper/figs/` — the R code that draws every figure and emits every number the
   manuscript prints.
 - `paper/evidence/` — the manifest binding each artifact to its SHA-256 digest.
-- `data/` — the 12 artifacts the manifest names, at the bytes that
+- `data/` — the 14 artifacts the manifest names, at the bytes that
   were hashed.
 
 ## Rebuild
@@ -24,8 +24,8 @@ The build re-hashes every artifact before reading it and stops if any byte has
 moved. Figures and printed numbers are regenerated from those bytes rather than
 transcribed, so the manuscript cannot quietly disagree with its own data.
 
-Requires `python3`, `Rscript` with `digest`, `ggplot2` and `jsonlite`, and a
-TeX distribution with `latexmk`.
+Requires `python3`, `Rscript` with `digest`, `ggplot2`, `jsonlite`, `patchwork`
+and `systemfonts`, and a TeX distribution with `latexmk`.
 
 ## Status
 

@@ -31,12 +31,98 @@ another, and treating the substitute as equivalent is an assumption, not a
 reproduction. And a table produced by a re-implementation is not the published
 table, however carefully the re-implementation was written.
 
-Corpus availability is deliberately kept off the ladder and tracked as a separate
-axis. It does not behave like the rungs: a corpus can be perfectly public,
-openly licensed and permanently archived while still being absent from the
-machine, and calling that state either reachable or broken loses the distinction
-that matters. We record the public status and the local status as two separate
-facts.
+\subsection{What monotonicity buys, and what it costs}
+
+Monotonicity is stated above as a property of this particular list. It is worth
+separating the property from the list, because everything the instrument offers
+follows from it and nothing follows from the specific four assertions we chose.
+
+\begin{definition}[Ladder]\label{def:ladder}
+Fix a set $\mathcal{S}$ of machine states, where a state is a machine at an
+instant. A \emph{ladder} of length $K$ is a sequence of predicates
+$r_1,\dots,r_K$ on $\mathcal{S}$ satisfying the \emph{demand condition}
+\[
+  r_{k+1}(s) = 1 \;\Longrightarrow\; r_k(s) = 1
+  \qquad\text{for every } s \in \mathcal{S},\ 1 \le k < K .
+\]
+The \emph{observation} at $s$ is the vector $r(s) = (r_1(s),\dots,r_K(s))$, and
+the \emph{first break} is
+$\rho(s) = \min\{k : r_k(s) = 0\}$, with $\rho(s) = K+1$ when no rung fails.
+\end{definition}
+
+The demand condition is not an empirical finding about scientific software. It
+is a constraint on what may be written down as a rung, and an assertion that
+fails it is disqualified rather than accommodated.
+
+\begin{proposition}[The index is the whole observation]\label{prop:sufficient}
+Under Definition~\ref{def:ladder}, $r$ takes exactly $K+1$ of the $2^K$ values
+in $\{0,1\}^K$, and $\rho$ is a bijection from that image onto
+$\{1,\dots,K+1\}$. Consequently $r(s)$ is recoverable from $\rho(s)$, and an
+audit that reports the integer discards nothing it observed.
+\end{proposition}
+
+\begin{proof}
+The demand condition forces $r(s)$ to be non-increasing in $k$, so it is a run
+of ones followed by a run of zeros; there are $K+1$ such vectors and each is
+determined by the position of the first zero, which is $\rho(s)$.
+\end{proof}
+
+This is the difference between a ladder and a checklist, and it is the whole
+practical case for the instrument. A badge scheme records an unordered set of
+attributes and a reader must hold all of them at once; a ladder records an
+ordinal, so audits of different artifacts on different machines can be compared,
+ranked and tabulated as numbers.
+
+\begin{proposition}[Refinement preserves the order]\label{prop:refine}
+Let $L'$ be obtained from a ladder $L$ by inserting further predicates so that
+the demand condition still holds and every rung of $L$ survives in its original
+relative position. Then for any two states $s, t$,
+\[
+  \rho_L(s) < \rho_L(t) \;\Longrightarrow\; \rho_{L'}(s) < \rho_{L'}(t).
+\]
+\end{proposition}
+
+\begin{proof}
+Write $k = \rho_L(s)$ and let $k'$ be the position of that rung in $L'$. Then
+$r'_{k'}(s) = 0$, so $\rho_{L'}(s) \le k'$. Since $\rho_L(t) > k$, every rung of
+$L$ up to and including $k$ holds at $t$; the rung at $k'$ therefore holds at
+$t$, so $\rho_{L'}(t) > k' \ge \rho_{L'}(s)$.
+\end{proof}
+
+Proposition~\ref{prop:refine} is what makes the instrument usable by more than
+one person. A four-rung audit and a seven-rung audit of the same two artifacts
+cannot be read off each other, but they cannot contradict each other about which
+artifact got further, provided the longer ladder refines the shorter one. A
+community can therefore lengthen the ladder without invalidating what has
+already been recorded against it.
+
+The cost is exactly as sharp. An assertion that is worth recording but is not
+comparable to the others cannot be inserted at all.
+
+\begin{proposition}[An incomparable assertion is not a rung]\label{prop:offladder}
+Let $a$ be a predicate on $\mathcal{S}$ that is incomparable to some rung $r_k$,
+in the sense that both $a \wedge \neg r_k$ and $r_k \wedge \neg a$ are satisfiable.
+Then no position in the sequence makes $L \cup \{a\}$ satisfy the demand
+condition, and the observation of the extended list is not determined by any
+single index.
+\end{proposition}
+
+\begin{proof}
+Placing $a$ below $r_k$ violates the condition at the state satisfying
+$r_k \wedge \neg a$; placing it above violates it at the state satisfying
+$a \wedge \neg r_k$. Both such states exist by hypothesis, and the two
+observations they produce differ in the coordinate of $a$ while agreeing on the
+first zero, so no function of a single index separates them.
+\end{proof}
+
+Corpus availability is such an assertion, which is why this study keeps it off
+the ladder rather than choosing a position for it. A corpus can be perfectly
+public, openly licensed and permanently archived while absent from the machine,
+and it can be present on a machine that has none of the runtime the source
+needs; both directions of Proposition~\ref{prop:offladder} are realised in
+practice. Calling that state either reachable or broken loses the distinction
+that matters, so we record the public status and the local status as two
+separate facts and report them beside the index rather than inside it.
 
 \subsection{The probe}
 
@@ -92,6 +178,187 @@ two, because a count of \NTrials{} paired outcomes distinguishes a small
 consistent advantage from a large but mixed one in a way a $p$ value does not.
 The simulation was run once at a recorded seed and is not re-run here; this study
 reads its output rather than regenerating it.
+
+\subsection{A third comparison, recorded twice over}
+
+The same project holds one further record, and it is unusual in a way this study
+exploits. It compares two locally written estimators for the same calibration
+problem across \CxConditions{} levels of timing noise at
+\CxTrialsPerCondition{} trials each, and it stores both a cell summary of the
+kind a paper prints and the individual paired trials that summary was computed
+from. Having both in one file is what makes them readable against each other;
+everywhere else in this project, and in most published work, one of the two is
+absent and a reader cannot tell whether the printed row and the underlying
+trials would name the same winner.
+
+The two estimators differ in which timing measurements they are given. One is
+fitted to both the microphone-to-source and the source-to-source time
+differences; the other to the source-to-source differences alone. Both are local
+Gauss--Newton implementations written inside this project. Neither is anyone's
+released code, and this study names them by what they are given rather than by
+whose method they resemble, because the comparison here is between ways of
+summarising a record and not between published methods. Nothing below should be
+read as a finding about either estimator as its authors published it, and no
+claim of novelty in acoustic localisation is made anywhere in this paper.
+
+The record declares its own display rule in a field: the median error is
+primary, the mean is labelled secondary and annotated as outlier-sensitive. That
+declaration is inherited, not made here, and the analysis below checks that it
+still says so before reading anything else. We compare three ways of reducing
+one condition's trials to a statement about which estimator was better: the mean
+over trials, the median over trials, and the per-trial paired comparison, tested
+with the same two-sided signed-rank procedure used for the offset sweep. Every
+quantity is a re-summary of the stored pairs; the simulation is not re-run, and
+each cell summary the record carries is re-derived from the trials it summarises
+before any of it is reported, so a file assembled from two different runs stops
+the build.
+
+Two trials of the \CxTrialsPerCondition{} at two of the conditions produced no
+error at all: one estimator diverged and its errors are written into the record
+as the bare token \texttt{NaN}, which the interchange format has no way to
+express. A strict reader rejects the file and a permissive one accepts a
+number-shaped thing that is not a number. We treat those values as absent rather
+than as large, count them, and check that the count of absent values equals the
+number of failed runs times the number of quantities a run reports.
+
+\subsection{Why a reproduced table is not a checked claim}
+
+The ladder stops at recomputing the published table. That is the strongest rung
+we could state, and it is still not the thing a reader wants.
+
+Let $D$ be the per-trial record of a paired comparison, let $T$ be a summary
+such as the mean or the median, and let $c$ map a summary to the conclusion
+drawn from it, here the name of the better estimator. What a paper prints is
+$T(D)$ and what it concludes is $c(T(D))$.
+
+\begin{proposition}[A summary determines only its own conclusion]\label{prop:disclosure}
+Fix summaries $T$ and $T'$. The conclusion $c(T'(D))$ is recoverable from
+$T(D)$ for every record $D$ only if $c \circ T'$ factors through $T$. For $T$
+the mean and $T'$ the median this fails: there are records $D, D'$ with
+$T(D) = T(D')$ and $c(T'(D)) \ne c(T'(D'))$.
+\end{proposition}
+
+\begin{proof}
+The second claim is a construction. Take two paired records with the same two
+arm means, and move mass within one arm from many trials to one, which leaves
+the mean fixed and moves the median across the other arm's median.
+\end{proof}
+
+The construction is unremarkable. What is not unremarkable is that the situation
+it describes occurs in the record described above, at a condition where nothing
+is missing and no handling decision has been made, and this study reports it as
+an observation rather than as a possibility.
+
+Proposition~\ref{prop:disclosure} says that reaching the top rung certifies the
+reproduction of a number and not of a claim, and that the gap between the two is
+closed only by disclosure of $D$ itself. We therefore record disclosure as a
+second off-ladder axis, beside corpus availability: it fails
+Proposition~\ref{prop:offladder} for the same reason, being satisfiable by work
+that cannot be run and unsatisfied by work that can.
+
+One further consequence concerns the trials that produced nothing. When one arm
+returns fewer usable trials than the other, an average over what remains is
+conditioned on that arm not having failed.
+
+\begin{corollary}[Complete-case averaging favours the arm that fails]\label{cor:completecase}
+Suppose failures in an arm are associated with larger error, in the sense that
+the error of a run conditioned on completing is stochastically smaller than the
+error of a run conditioned on nothing. Then the complete-case mean of that arm
+is smaller in expectation than its unconditional mean, so a comparison of
+complete-case means is biased towards whichever arm failed more often.
+\end{corollary}
+
+The direction matters for reading what follows. At the two conditions where a
+run was lost, the loss was in one arm, and dropping it can only have helped that
+arm; the conclusion the paired test reaches there is therefore reached against
+the drop rather than because of it.
+
+\subsection{A condition the design does not have}
+
+Disclosure closes the gap between a printed summary and the trials underneath
+it. It cannot close a second gap, which is between the trials that exist and the
+conditions nobody ran. This subsection states that gap and describes the sweep
+we ran to measure it, which is the one experiment in this paper performed for
+this manuscript rather than read out of an existing record.
+
+\begin{definition}[Break-even of a paired comparison]\label{def:breakeven}
+Let a paired comparison of two estimators be indexed by a nuisance parameter
+$\sigma \ge 0$, and let $m_A(\sigma)$ and $m_B(\sigma)$ be a summary of each
+arm's error, with $d(\sigma) = m_A(\sigma) - m_B(\sigma)$ so that $d < 0$ names
+arm $A$. Suppose $d(0) < 0$. The \emph{break-even} is
+\[
+  \sigma^\ast = \inf\{\, u > 0 : d(\sigma) > 0 \text{ for all } \sigma \ge u \,\},
+\]
+with $\sigma^\ast = \infty$ when no such $u$ exists. On a finite grid
+$G \subset [0,\infty)$ the break-even is \emph{located} if $d$ changes sign
+between two adjacent points of $G$, and \emph{censored above} $\max G$ if
+$d(\max G) \le 0$.
+\end{definition}
+
+Two features of the definition are doing work. It is stated for whatever summary
+$m$ a study uses, so a comparison has one break-even per summary rule rather than
+one break-even; and censoring is a distinct outcome from a large value, because
+a sweep that stops before the sign changes has not measured where it changes.
+
+\begin{proposition}[A grid, not a pair of estimators, fixes the reported sign]
+\label{prop:gridsign}
+Let $g = \min (G \setminus \{0\})$ and suppose $g \ge \sigma^\ast$. Then
+$d(\sigma) > 0$ at every non-zero point of $G$, and there exist comparisons
+$d$ and $\tilde d$ agreeing at every point of $G$ with $\sigma^\ast > 0$ for
+one and $\sigma^\ast = 0$ for the other. No function of the cells at $G$
+distinguishes them.
+\end{proposition}
+
+\begin{proof}
+The first claim is Definition~\ref{def:breakeven}. For the second, take any $d$
+with $d < 0$ on $(0, \sigma^\ast)$ and let $\tilde d$ agree with $d$ on $G$ and
+be positive on $(0, g)$; both are consistent with the cells, which constrain
+$d$ only at points of $G$. Any statistic computed from those cells takes the
+same value on both.
+\end{proof}
+
+The consequence is the one this paper cares about. A sweep reports a sign, the
+sign is a joint property of the estimators and the grid, and the grid is chosen
+by the same authors who report the sign --- ordinarily for good reasons, since a
+grid is placed where the modelled effect is expected to matter. Nothing in the
+cells warns a reader that the placement decided the answer.
+
+\begin{corollary}[One condition falsifies it]\label{cor:onecondition}
+If $\sigma^\ast > 0$, a single additional condition at any
+$\sigma \in (0, \sigma^\ast)$ makes $d(\sigma) < 0$ observable, and no
+quantity of additional trials at points of $G$ does.
+\end{corollary}
+
+This separates the two off-ladder axes cleanly. Disclosure of the per-trial
+record is recoverable after the fact, because the trials were run and can be
+released; a condition that was never run has no trials to disclose, and the only
+repair is a new experiment. That is why the sweep described next exists.
+
+To measure $\sigma^\ast$ we reran the offset comparison on a grid refined inside
+the interval the original design skipped, from zero up to its lowest non-zero
+condition, at \FineLevels{} dispersions and \FineTrials{} paired trials each.
+Both estimators are the original implementations, imported without modification;
+the prior width, the assumed measurement noise and the trial count are the values
+the original run fixed. What differs is the design. The refined grid is crossed
+with \FineRooms{} microphone arrays, one of them the array the original sweep
+used and the rest independently simulated at recorded seeds, so that a
+break-even can be reported as a range across rooms rather than as a single number
+from one. Each trial is seeded from a digest of its own cell --- design, array,
+dispersion, trial index --- so that a cell does not depend on the rest of the
+grid or on the order in which the grid was walked. \IndependenceCells{} cells
+were recomputed afterwards out of order, and again after a condition absent from
+the grid had been run, and reproduced bit for bit; that is the property
+Corollary~\ref{cor:onecondition} needs in practice, since a reader adding a
+condition should not have to rerun the ones already recorded. Every trial of
+every cell is stored, which is the disclosure this paper argues for applied to
+its own new record.
+
+One quantity was fixed before the sweep ran and is recorded in its output: the
+break-even predicted by interpolating the original sweep's own printed medians
+between its two lowest conditions, together with the tolerance
+(\PredictionTolerance{} ms) within which we agreed in advance to call the
+prediction successful. The prediction uses nothing the original record does not
+already print.
 
 \subsection{Evidence discipline}
 

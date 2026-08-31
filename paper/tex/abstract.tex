@@ -35,7 +35,39 @@ completely: the offset-aware estimator is worse by a factor of about
 \ZeroRatio{} in median error and wins \ZeroWins{} of \NTrials{} paired trials.
 The headline that the offset-aware method is better is therefore true on
 \NonZeroConditions{} of \NConditions{} conditions and severely false on the
-remaining one, which is the condition a comparison is least likely to report. No
-claim of novelty in acoustic localisation is made, no substitute runtime is
-treated as equivalent to the one required, and the audit describes one machine on
-one date rather than a permanent property of the work examined.
+remaining one, which is the condition a comparison is least likely to report. A
+third record shows that reaching the top rung would not have been enough. It
+stores both the summary a paper would print and the \CxPlanned{} paired trials
+behind it, for two locally written estimators at \CxConditions{} timing-noise
+levels. The mean over trials and the median over the same trials name different
+estimators at \CxDisagreeing{} of the \CxConditions{} levels, including one at
+which every planned trial returned an error in both arms so that no handling of
+failures is involved; a paired signed-rank test on those trials agrees with the
+median everywhere, and setting aside \CxFlipDepth{} trial in
+\CxTrialsPerCondition{} makes the mean agree too. Measured against the
+Cram\'er--Rao bound the same trials place both estimators at
+\CxEffMeanLow{} to \CxEffMeanHigh{} times the bound or at \CxEffMedianLow{} to
+\CxEffMedianHigh{} times it, depending only on the summary. Recomputing a
+published table therefore certifies a number and not a claim, so disclosure of
+the per-trial record is recorded as a second axis beside corpus availability;
+here it would have cost \CxBytesMinimal{} bytes, less than the summary it
+accompanies. A fourth result shows that disclosure is not sufficient either.
+The offset comparison places its reversal at a single condition because its grid
+steps from zero to \CoarseGapHigh{} milliseconds of dispersion with nothing in
+between; rerunning the same estimator code on \FineLevels{} dispersions inside
+that interval, crossed with \FineRooms{} independently simulated microphone
+arrays at \FineTrials{} paired trials per cell and \FinePairs{} trials in total,
+finds the offset-agnostic estimator ahead on median error out to between
+\ReversalLow{} and \ReversalHigh{} milliseconds depending on the array, and
+still ahead at the original grid's lowest non-zero condition in
+\AnchorAgnosticRooms{} of \FineRooms{} arrays. The sign a sweep reports is thus
+a joint property of the estimators and the grid, and the conditions a design
+skipped leave no trace in the trials it kept, so no amount of per-trial
+disclosure recovers them; one additional condition does, and its position was
+predictable from the original record's own printed medians to within
+\PredictionError{} milliseconds. No claim of novelty in acoustic localisation is
+made, no estimator compared here is anyone's released code, no substitute
+runtime is treated as equivalent to the one required, the refined sweep is a new
+run reported as an extension rather than as a pre-registered test, and the audit
+describes one machine on one date rather than a permanent property of the work
+examined.

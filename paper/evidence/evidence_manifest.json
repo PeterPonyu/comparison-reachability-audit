@@ -1,7 +1,7 @@
 {
   "schema": "evidence-manifest/v1",
   "state": "BOUND",
-  "bound_utc": "2026-08-28T11:46:33Z",
+  "bound_utc": "2026-08-28T18:55:15Z",
   "allowed_roots": [
     "data",
     "paper/evidence"
@@ -103,6 +103,22 @@
       "note": "the project's own record of display-metric rules, blockers and the archive disposition",
       "bytes": 3943,
       "sha256": "c27189a95b4f2b1cf8b6c09b5b8148c1a39fe4332a23b17dd40577711061c797"
+    },
+    {
+      "id": "E-FINE",
+      "path": "data/e-fine/breakeven_sweep_20260828T185258Z.json",
+      "role": "live_observation",
+      "note": "refined dispersion grid inside the interval the coarse sweep skipped, crossed with 6 geometries, 40 paired trials per cell, every trial stored; run for this manuscript",
+      "bytes": 186240,
+      "sha256": "2929cb29383960fd6a107198eb4a576252c3961c339f70e91571f55df44f3e17"
+    },
+    {
+      "id": "E-CROSS",
+      "path": "data/e-cross/breakeven_crossing.json",
+      "role": "derived_table",
+      "note": "per-cell summaries, the located sign change under two summary rules, and the check of the prediction the coarse record fixes in advance",
+      "bytes": 58959,
+      "sha256": "c4d2e7891617aa1a64f60b1ac82d095b212a62a3ddb2c66bb28a7722f302538e"
     }
   ]
 }

@@ -40,3 +40,81 @@ wins none at all, which is a stronger and more specific statement than a small
 $p$ value: the reversal is unanimous across trials, not an average over a mixed
 outcome.%
 }
+
+\newcommand{\CapDisplayRule}{%
+One set of trials, three summaries, and the answers they give. A third
+comparison in the same project puts two locally written estimators for the same
+calibration problem against each other at \CxConditions{} levels of timing
+noise, \CxTrialsPerCondition{} paired trials each; one estimator is fitted to
+both available sets of time-difference measurements and the other to one of
+them. Each cell names the estimator that the summary in its row calls the better
+of the two, with the quantities that decide it. The three rows are not three
+experiments: they are three ways of reducing the same trials to a sentence. The
+top row is outlined where it names a different estimator from the two below it,
+which happens at \CxDisagreeing{} of the \CxConditions{} conditions, including
+one at which every planned trial returned an error in both arms so that no
+handling of failures is involved.%
+}
+
+\newcommand{\CapPairedTrials}{%
+The individual paired trials that the summaries above were computed from, which
+is the disclosure this study argues for, drawn once so that its value can be
+seen. Each point is one trial at one timing-noise level, positioned by the error
+each estimator produced on it; the diagonal is a tie, and points below it are
+trials won by the estimator given both measurement sets. The axes are
+logarithmic and share a range across the three panels. The cloud sits below the
+diagonal at every level while a small number of points sit two orders of
+magnitude above it, and that combination is the entire disagreement between the
+mean and the median. A short mark on the left axis is a trial on which one
+estimator diverged and returned no error at all, drawn at the error the other
+estimator did return, because such a trial has no position in the plane and
+placing it at an edge would invent a value for it.%
+}
+
+\newcommand{\CapInfluence}{%
+How much of a printed conclusion one trial in \CxTrialsPerCondition{} is
+carrying. The solid curve gives the gap between the two estimators' mean errors
+after setting aside each estimator's own largest trials, from none set aside up
+to five; the dashed curve is the same gap between medians at the same scale.
+Below zero a summary names the estimator given both measurement sets. At the
+levels where the mean disagrees with the median it crosses zero after a single
+trial is set aside, marked with a ring, so the conclusion a reader would draw
+from the mean is decided by one trial out of \CxTrialsPerCondition{} while the
+median moves hardly at all. Setting trials aside is a measurement of leverage
+here and not a proposal: no quantity reported as a result in this paper is
+computed from a trimmed sample.%
+}
+
+\newcommand{\CapBreakeven}{%
+What a refined grid finds in the interval a coarse one skipped. The comparison
+between an offset-agnostic and an offset-aware localisation estimator was rerun
+on a grid of \FineLevels{} offset dispersions crossed with \FineRooms{}
+independently simulated microphone arrays, \FineTrials{} paired trials in each
+cell, using the same estimator code as the coarse sweep and differing from it
+only in which conditions were run. Left: the difference between the two
+estimators' median errors, one line per array; below zero the offset-agnostic
+estimator is the better of the two. The upper row of ticks marks the conditions
+the coarse sweep places in this range, of which there are two, both at the ends;
+the lower row marks the \FineLevels{} conditions of the refined sweep. Right:
+the dispersion at which each array's ordering changes sign, located under two
+summaries of the same trials, with the dashed line at the position predicted
+beforehand from the coarse sweep's own printed numbers. Arrays whose ordering
+has not changed sign by the top of the refined grid are drawn as arrows leaving
+it, because a sweep that stops below a crossing has not measured one and
+recording its last condition as the answer would invent a measurement.%
+}
+
+\newcommand{\CapEfficiency}{%
+The same two estimators measured against the same theoretical bound, summarised
+two ways. The bound is the Cram\'er--Rao limit computed from the array geometry
+and the timing noise at each trial, so it is a property of the problem rather
+than of either estimator and it is identical under both summaries; all of the
+spread here comes from the numerator. Filled markers divide the mean error by
+the bound and hollow markers divide the median error by the same bound. Read
+through the mean, both estimators appear between \CxEffMeanLow{} and
+\CxEffMeanHigh{} times worse than the best any unbiased estimator could do, and
+which of them looks closer changes with the noise level. Read through the
+median, both sit between \CxEffMedianLow{} and \CxEffMedianHigh{} times the
+bound throughout. A median below the bound is not a contradiction, because the
+bound constrains the root mean square error and not the median.%
+}
