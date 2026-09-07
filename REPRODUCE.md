@@ -26,11 +26,11 @@ the build instead of producing a stale number.
 
 Some of these files recorded the paths of the machine that produced them. Those path strings and source links were refreshed before deposit; `REDACTION.md` states the rules, lists every file touched with both digests, and describes the check that proves no number changed.
 
-## Not redistributed
+## Not included
 
-The manuscript's evidence manifest binds one further artifact that this archive does not carry. No number in the manuscript is derived from that material; it is bound because the manuscript refers to the content, and held back for the reason below.
+This archive leaves out one extra file named in the paper's evidence list. The paper does not take any number from it.
 
-- The project's own working record of this direction. It is an internal narrative that names other directions, planning decisions and process labels, and the one number the manuscript took from it -- the size of the corpus that is not on disk -- is recorded first-hand in the inventory, which is redistributed. The figure code reads it from there.
+- A private working note. The one count the paper uses from it -- how large the missing corpus is -- is also written in the inventory file included here.
 
 ## Checking the archive without building it
 
@@ -47,5 +47,5 @@ and reports the first artifact that has drifted.
 bash build.sh
 ```
 
-Stage order is verify, regenerate, typeset. Each stage is a hard gate on the
-next.
+The steps are check the files, redraw the figures, then typeset. Each step
+must finish before the next one starts.
