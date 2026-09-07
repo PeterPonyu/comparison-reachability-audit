@@ -2,7 +2,7 @@
 
 Probe code, probe output, sweep results, figure code and manuscript source for an audit that records, rung by rung, where the reconstruction of a published acoustic-localisation comparison stops on an ordinary machine.
 
-This repository has not been deposited in a public archive, so it has no persistent identifier yet. One will be recorded here when an archive exists.
+Archived at [10.5281/zenodo.22647014](https://doi.org/10.5281/zenodo.22647014).
 
 Repository: https://github.com/PeterPonyu/comparison-reachability-audit
 
