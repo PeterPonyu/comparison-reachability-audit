@@ -4,6 +4,8 @@ Probe code, probe output, sweep results, figure code and manuscript source for a
 
 This repository has not been deposited in a public archive, so it has no persistent identifier yet. One will be recorded here when an archive exists.
 
+Repository: https://github.com/PeterPonyu/comparison-reachability-audit
+
 ## What is here
 
 - `paper/tex/` — manuscript source. The abstract, the methods and the figure
