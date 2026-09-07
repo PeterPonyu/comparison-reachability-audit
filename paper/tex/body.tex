@@ -13,7 +13,13 @@ build the code accompanying published papers have found the sticking points to b
 mundane and specific, and to sit at very different depths for different
 papers~\cite{collberg2016repeatability}. The literature on the reproducibility of
 computational work has argued for a decade that the useful unit is a gradation
-rather than a verdict~\cite{peng2011reproducible,baker2016reproducibility}.
+rather than a verdict~\cite{peng2011reproducible,baker2016reproducibility,
+donoho2010invitation,ince2012open,stodden2016science,goodman2016mean,
+plesser2018repro}. That argument now sits inside a wider accounting of why
+published findings fail to travel: low power, undisclosed flexibility, and
+selective reporting~\cite{ioannidis2005why,ioannidis2014true,button2013power,
+simmons2011false,head2015phacking,openscience2015repro,begley2012raise,
+nature2016reality,munafo2017manifesto}.
 
 This study takes that argument literally and treats the stopping point as the
 object to be recorded. The instrument is a ladder of \NRungs{} rungs, described
@@ -94,14 +100,23 @@ condition, and the record examined here contains enough to say where to put it.
 
 The position that computational claims should travel with the code and data that
 produced them is old enough to have infrastructure built around
-it~\cite{peng2011reproducible}. The infrastructure that arrived was largely
-binary. Artifact-evaluation programmes award badges for availability,
-functionality and reusability~\cite{acmbadging2020}, and each badge is a
-threshold: an artifact either clears it or it does not, and the reader who fails
-to reproduce something learns nothing about where they stopped. Surveys of
-researchers report a widespread sense that published results often cannot be
-reconstructed~\cite{baker2016reproducibility}, without saying at which step the
-reconstruction fails, because the survey instrument cannot ask that.
+it~\cite{claerbout1992electronic,fomel2009reproducible,peng2011reproducible,
+donoho2010invitation,ince2012open,vandewalle2009repro,stodden2014practices,
+sandve2013ten,wilson2014best,wilson2017good,gundersen2021fundamental}. The
+infrastructure that arrived was largely binary. Artifact-evaluation programmes
+award badges for availability, functionality and
+reusability~\cite{acmbadging2020}, machine-learning venues have run reproduction
+challenges with the same threshold shape~\cite{pineau2021improving}, and each
+badge is a threshold: an artifact either clears it or it does not, and the
+reader who fails to reproduce something learns nothing about where they stopped.
+Surveys of researchers report a widespread sense that published results often
+cannot be reconstructed~\cite{baker2016reproducibility,nature2016reality,
+hutson2018ai,gundersen2018state}, without saying at which step the
+reconstruction fails, because the survey instrument cannot ask that. Attempts to
+re-run published computational science as a community
+practice~\cite{rougier2017rescience,landis2012transparent,nosek2015culture,
+benureau2018rerun,haibekains2020transparency,heil2021reproducibility}
+likewise grade a finished artifact, not a stopping point.
 
 The studies that did try to run the code found the answer to be specific and
 mundane. Collberg and Proebsting attempted to build the artifacts of several
@@ -116,10 +131,12 @@ not.
 
 Work on capturing the execution environment --- containers, declarative
 environment specifications, workflow systems --- attacks the same problem from
-the other end, by trying to make rung three hold by construction. It is
-complementary to an audit and does not replace one: a container image is itself
-an artifact that can be absent, stale, or built for an architecture the reader
-does not have, and the question of where a given reader stops remains
+the other end, by trying to make rung three hold by
+construction~\cite{boettiger2015docker,kurtzer2017singularity,
+stodden2014practices,sandve2013ten}.
+It is complementary to an audit and does not replace one: a container image is
+itself an artifact that can be absent, stale, or built for an architecture the
+reader does not have, and the question of where a given reader stops remains
 empirical. The break we record here, a commercial numerical runtime the source
 is written for, is also the case those tools address least well, since the
 licence is not something an image can carry.
@@ -128,9 +145,10 @@ licence is not something an image can carry.
 
 The distinction this paper draws between a resolvable identifier and a local
 asset has an analogue in data-management practice, where findability and
-accessibility are separated from actual retrieval. The corpus used by the
-audited line of work is deposited with a permanent identifier and is openly
-downloadable~\cite{locata}, and it is nonetheless absent here. What
+accessibility are separated from actual retrieval~\cite{wilkinson2016fair}. The
+corpus used by the audited line of work is deposited with a permanent identifier
+and is openly downloadable~\cite{locata,lollmann2018locata}, and it is
+nonetheless absent here. What
 Proposition~\ref{prop:offladder} adds is a reason not to fold that fact into the
 ladder: an assertion that can hold when a lower rung fails, and fail when a
 higher one holds, has no insertion position that preserves the demand
@@ -142,11 +160,13 @@ they are measuring something that has no single scale.
 
 The second and third results of this paper join a much older discussion. That
 the arithmetic mean is not resistant to a single extreme observation, and that
-rank-based and median-based summaries are, is elementary; the paired signed-rank
-test we use throughout is one of the standard responses to
-it~\cite{wilcoxon1945individual}. What the literature has less to say about is
-the reporting question, which is not which summary is correct but what a reader
-can do when only one of them was printed.
+rank-based and median-based summaries are, is elementary~\cite{huber1964robust};
+the paired signed-rank test we use throughout is one of the standard responses
+to it~\cite{wilcoxon1945individual,dixon1946sign,dietterich1998approximate}, and
+the intervals we report beside it are the ordinary bootstrap and binomial
+constructions~\cite{efron1979bootstrap,clopper1934use}. What the literature has
+less to say about is the reporting question, which is not which summary is
+correct but what a reader can do when only one of them was printed.
 Proposition~\ref{prop:disclosure} states the gap, and the record examined in
 Section~\ref{sec:display} realises it: at a condition where every trial
 completed in both arms, the mean and the median of the same forty pairs name
@@ -161,11 +181,26 @@ factor of roughly eight between the two readings of the same trials against the
 same bound.
 
 Pre-registration and protocol-first reporting address a neighbouring failure, in
-which the summary is chosen after the data are seen. We do not allege that here
+which the summary is chosen after the data are seen~\cite{nosek2018preregistration,
+gelman2014garden,simmons2011false,amrhein2019retire}. We do not allege that here
 and have no way to; the record we read declares its display rule in a field, and
 declares the median primary. The problem we describe survives an honest
 declaration, because the reader of a published table does not receive the trials
 the declaration was applied to.
+
+\subsection{Acoustic localisation, and what a reconstruction is asked to recompute}
+
+The audited comparison sits in a line of work whose estimator is a time-delay
+construction. The classical estimator of a delay from two sensors is a
+generalised cross-correlation~\cite{knapp1976gcc}; later array methods and
+challenge corpora built evaluation practice around that
+family~\cite{allen1979image,lollmann2018locata,locata,
+scheibler2018pyroomacoustics}. Signal-processing
+venues were also among the first to treat a recomputable table as part of the
+publication rather than as an optional
+appendix~\cite{vandewalle2009repro}. The ladder below does not evaluate those
+estimators. It asks a prior question: how far a reader on an ordinary machine
+gets toward the table those papers would have the reader recompute.
 
 \section{Methods}
 \input{methods}
