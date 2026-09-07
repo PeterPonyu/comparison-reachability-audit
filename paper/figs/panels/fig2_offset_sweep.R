@@ -10,13 +10,18 @@ f2 <- data.frame(
   median_err = c(sr$naive_median_err_m, sr$aware_median_err_m)
 )
 
+SWEEP_TRIALS <- single_valued(sr$n_trials, "how many paired trials each offset condition ran")
+
 p <- ggplot(f2, aes(offset, median_err, colour = arm, shape = arm)) +
   # Finite bounds: an infinite ymin is undefined once the axis is log-scaled.
   annotate("rect", xmin = -3.2, xmax = 2.5, ymin = 5e-4, ymax = 5,
            fill = "grey90", alpha = 0.7) +
-  annotate("text", x = 3.4, y = 0.006,
-           label = "no offsets present:\nthe offset-aware method\nestimates what is not there",
-           hjust = 0, size = 2.4, colour = "grey25", lineheight = 0.95) +
+  geom_vline(xintercept = 0, linetype = "22", linewidth = 0.4, colour = "grey25") +
+  annotate("label", x = 1.35, y = 0.0045,
+           label = sprintf("zero-offset cell\nn = %d paired trials", SWEEP_TRIALS),
+           hjust = 0, size = 2.35, colour = "grey25", fill = "white",
+           label.padding = unit(0.08, "lines"),
+           lineheight = 0.95) +
   geom_line(linewidth = 0.5) +
   geom_point(size = 2, fill = "white", stroke = 0.5) +
   scale_colour_manual(values = arm_colours, name = NULL) +

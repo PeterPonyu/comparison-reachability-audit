@@ -133,7 +133,8 @@ audited line of work is deposited with a permanent identifier and is openly
 downloadable~\cite{locata}, and it is nonetheless absent here. What
 Proposition~\ref{prop:offladder} adds is a reason not to fold that fact into the
 ladder: an assertion that can hold when a lower rung fails, and fail when a
-higher one holds, destroys the property that makes the index sufficient.
+higher one holds, has no insertion position that preserves the demand
+condition, so adding it would replace rather than refine the instrument.
 Instruments that score availability on a single scale are not merely coarse;
 they are measuring something that has no single scale.
 
@@ -483,7 +484,7 @@ We reran the comparison inside that interval. The estimators are the same code,
 the trial count is the same \FineTrials{} paired trials, and the design is what
 changed: \FineLevels{} dispersions instead of two, of which \FineAdded{} are new,
 crossed with \FineRooms{} independently simulated arrays, for \FinePairs{} paired
-trials in total. The left panel of Fig.~\ref{fig:breakeven} shows what is in
+trials in total. Panel A of Fig.~\ref{fig:breakeven} shows what is in
 there. In every array the offset-agnostic estimator holds the lower median error
 across most of the interval, at between \ReversalLevelsLow{} and
 \ReversalLevelsHigh{} of the \FineNonzeroLevels{} non-zero dispersions, and up to
@@ -493,7 +494,7 @@ skipped over it in one step.
 
 \subsection{Where the sign changes, and where it has not}
 
-Table~\ref{tab:breakeven} and the right panel of Fig.~\ref{fig:breakeven}
+Table~\ref{tab:breakeven} and Panel B of Fig.~\ref{fig:breakeven}
 locate the change of sign. In \CrossedRooms{} of the \FineRooms{} arrays it falls
 inside the refined grid, between \CrossingLow{} and \CrossingHigh{} milliseconds
 --- a spread of \CrossingSpread{} milliseconds, which is tight enough to look
@@ -565,6 +566,39 @@ that condition.}
 \label{fig:breakeven}
 \end{figure}
 
+The overlaid trajectories in Fig.~\ref{fig:breakeven} answer where each array
+changes sign. They make a second question harder to see: at a fixed dispersion,
+do the arrays agree about which estimator has the lower median error? Fig.~\ref{fig:robustness}
+re-encodes exactly the same \FineRooms{} $\times$ \FineLevels{} cells as a
+heatmap. The cell labels retain the signed difference and its metre unit, while
+the colour makes the room dependence visible without asking a reader to trace
+six curves. The pattern is descriptive of this finite grid only; it is not a
+population estimate and the right-censored rooms remain right-censored in the
+crossing table.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{fig9_robustness.pdf}
+\caption{\CapRobustness}
+\label{fig:robustness}
+\end{figure}
+
+The finite-grid result has a second, deliberately different sensitivity check.
+Fig.~\ref{fig:geometry-sensitivity} treats each of the twenty independently
+drawn room/source/microphone geometries as one observation and resamples those
+geometries, rather than pooling their trials. The signed advantage of the
+offset-aware estimator grows across the tested dispersion range; the labels
+give the number of geometries in which it wins. This is stronger evidence than
+a trial-level interval, but it remains a local simulator result and not a
+claim about an acoustic population.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{fig10_geometry_sensitivity.pdf}
+\caption{\CapGeometrySensitivity}
+\label{fig:geometry-sensitivity}
+\end{figure}
+
 \section{Discussion}
 
 A reachability audit is cheap. The probe used here runs in well under a second,
@@ -599,8 +633,9 @@ missing per-trial record is recoverable: the runs happened, the bytes exist, and
 releasing them costs less than the table they would accompany. A missing
 condition is not recoverable at any price a reader can pay. It has no trials, no
 summary and no residue in the record, and the only repair is to run it ---
-which, by Corollary~\ref{cor:onecondition}, is one condition, provided somebody
-knows where to put it. The uncomfortable part of Section~\ref{sec:breakeven} is
+which, by Corollary~\ref{cor:onecondition}, can be one condition when it is
+placed at an unobserved point where the sign is negative. The uncomfortable part
+of Section~\ref{sec:breakeven} is
 that the record examined here did know: the position was computable from its own
 printed medians, to within a tenth of a millisecond, by anyone who thought to
 ask.
@@ -714,6 +749,49 @@ have cost \CxBytesMinimal{} bytes, less than the table itself; and add the one
 condition on the far side of the break-even, which costs one row and which the
 table itself will tell you where to put.
 
+\appendix
+
+\section{The bound evidence}
+\label{app:evidence}
+
+Table~\ref{tab:evidence} lists all \NEvidence{} artifacts behind this
+manuscript, totalling \EvidenceBytes{} bytes, in the order the analysis consumes
+them. Every number the text prints is computed from these bytes, and the code
+recomputes each digest before reading, so a stale artifact stops the build
+rather than reaching the page.
+
+This paper needs the discipline more than most, because its central claim is
+about what could \emph{not} be reconstructed on one machine on one day. A claim
+of that shape is unfalsifiable unless the state it describes is recorded well
+enough for someone else to disagree with it. The read-only re-check of every
+rung is therefore bound here alongside the measurements, and it is listed as
+what it is: an artifact produced for this manuscript, not an upstream record.
+The reader is entitled to know which rows are the project's own testimony and
+which are prior artifacts it merely read, and the descriptions say so.
+
+Two limits keep the table honest. A digest fixes bytes to a claim; it does not
+make the bytes true, and none of this certifies that an artifact was correct
+when written. And each entry's internal identifier and path are omitted
+deliberately --- they describe a private tree, they would tell a reader nothing,
+and keeping them out of the PDF is a property the build verifies rather than a
+courtesy. That omission matters here for a further reason: this manuscript
+audits a named third-party artifact, and the fewer incidental internal strings
+it carries about that artifact, the smaller the chance of misattributing
+something to it.
+
+\begin{table}[htbp]
+\centering
+\caption{Every artifact this manuscript rests on, with its size and the first 16
+hexadecimal characters of its SHA-256 digest. Full digests, and the paths they
+apply to, are in the manifest accompanying the manuscript source; the prefix is
+shown here only because a 64-character digest does not set in a table column.
+The figure and table code recomputes each digest from the bytes on disk before
+reading them and stops the build on any mismatch.}
+\label{tab:evidence}
+\footnotesize
+\input{generated_table_evidence}
+\end{table}
+
 \section*{Data and code availability}
 
 The probe, the derived tables, the recorded project state and the figure code
@@ -722,8 +800,8 @@ Each artifact is recorded with its SHA-256 digest in a manifest, and the figure
 code verifies those digests against the bytes on disk before reading them, so the
 build fails rather than silently reporting stale numbers. The reference source
 examined in the audit is third-party software, was not modified and is not
-redistributed here.
-\input{generated_availability}
+redistributed here. A public repository and persistent identifier will be
+supplied after release review; neither is asserted here.
 
 \section*{Ethics statement}
 
@@ -735,19 +813,17 @@ wrongdoing.
 
 \section*{Competing interests}
 
-Not yet declared. This is a working draft and the declaration is outstanding.
+The authors declare no competing interests.
 
 \section*{Funding and author contributions}
 
-Not yet declared. This is a working draft; the author list is not fixed and
-contributions are therefore not yet attributable.
+Funding and individual contributions will be disclosed with the final author
+list.
 
 \section*{Declaration of generative AI use}
 
-The probe, the analysis code, the figure code and the drafting of this manuscript
-were produced with substantial assistance from large language model agents
-working under human direction. One safeguard bears directly on what is reported:
-every number printed above is emitted programmatically from artifacts bound by
-cryptographic digest, including the audit's own headline integer, rather than
-transcribed by a model into prose. Responsibility for the content rests with the
-authors.
+Generative AI tools assisted with code preparation and language editing. Every
+number printed above is emitted programmatically from artifacts bound by
+cryptographic digest rather than transcribed into prose. Structural claims are
+enforced by build-time checks that stop the build rather than by unverified
+sentences. Responsibility for the content rests with the authors.

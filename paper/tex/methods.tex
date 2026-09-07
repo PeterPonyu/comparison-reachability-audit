@@ -55,16 +55,22 @@ is a constraint on what may be written down as a rung, and an assertion that
 fails it is disqualified rather than accommodated.
 
 \begin{proposition}[The index is the whole observation]\label{prop:sufficient}
-Under Definition~\ref{def:ladder}, $r$ takes exactly $K+1$ of the $2^K$ values
-in $\{0,1\}^K$, and $\rho$ is a bijection from that image onto
-$\{1,\dots,K+1\}$. Consequently $r(s)$ is recoverable from $\rho(s)$, and an
-audit that reports the integer discards nothing it observed.
+Under Definition~\ref{def:ladder}, every realized observation is one of the
+$K+1$ non-increasing vectors in $\{0,1\}^K$, so the image $r(\mathcal{S})$
+contains at most $K+1$ values. Let $I=\rho(\mathcal{S})\subseteq
+\{1,\dots,K+1\}$. The map $\bar\rho:r(\mathcal{S})\to I$ defined by
+$\bar\rho(r(s))=\rho(s)$ is a bijection. Consequently $r(s)$ is recoverable
+from $\rho(s)$, and an audit that reports the integer discards nothing it
+observed.
 \end{proposition}
 
 \begin{proof}
-The demand condition forces $r(s)$ to be non-increasing in $k$, so it is a run
-of ones followed by a run of zeros; there are $K+1$ such vectors and each is
-determined by the position of the first zero, which is $\rho(s)$.
+The demand condition forces $r(s)$ to be non-increasing in $k$, so each realized
+vector is a run of ones followed by a run of zeros. There are $K+1$ possible
+such vectors, but a fixed state space need not realize all of them. For every
+realized vector, the position of its first zero (or $K+1$ when there is none)
+uniquely identifies the vector; hence $\bar\rho$ is well-defined and bijective
+onto its realized index set $I$.
 \end{proof}
 
 This is the difference between a ladder and a checklist, and it is the whole
@@ -103,16 +109,15 @@ comparable to the others cannot be inserted at all.
 Let $a$ be a predicate on $\mathcal{S}$ that is incomparable to some rung $r_k$,
 in the sense that both $a \wedge \neg r_k$ and $r_k \wedge \neg a$ are satisfiable.
 Then no position in the sequence makes $L \cup \{a\}$ satisfy the demand
-condition, and the observation of the extended list is not determined by any
-single index.
+condition.
 \end{proposition}
 
 \begin{proof}
 Placing $a$ below $r_k$ violates the condition at the state satisfying
 $r_k \wedge \neg a$; placing it above violates it at the state satisfying
-$a \wedge \neg r_k$. Both such states exist by hypothesis, and the two
-observations they produce differ in the coordinate of $a$ while agreeing on the
-first zero, so no function of a single index separates them.
+$a \wedge \neg r_k$. Both such states exist by hypothesis, so every possible
+insertion position violates one of the adjacent implications required by the
+demand condition.
 \end{proof}
 
 Corpus availability is such an assertion, which is why this study keeps it off
@@ -300,21 +305,43 @@ $m$ a study uses, so a comparison has one break-even per summary rule rather tha
 one break-even; and censoring is a distinct outcome from a large value, because
 a sweep that stops before the sign changes has not measured where it changes.
 
+The estimand in the refined experiment is consequently finite-grid and
+room-indexed. For room $r$ and observed grid
+$G=\{\sigma_0,\ldots,\sigma_J\}$, we first observe
+\[
+  \widehat d_{r,G}(\sigma_j)
+  = m_{A,r}(\sigma_j)-m_{B,r}(\sigma_j),
+  \qquad j=0,\ldots,J,
+\]
+and report a located crossing only when the observed signs bracket a change.
+The reported interval is the pair of adjacent grid values (with the
+within-cell interpolation shown in the figure); it is not an estimate of a
+continuous root without an additional smoothness model. A room whose final
+observed sign has not changed contributes a right-censored value
+$\sigma^\ast_r>\max G$. The range across rooms is therefore a description of
+the crossed design, not a population parameter for all rooms.
+
 \begin{proposition}[A grid, not a pair of estimators, fixes the reported sign]
 \label{prop:gridsign}
-Let $g = \min (G \setminus \{0\})$ and suppose $g \ge \sigma^\ast$. Then
-$d(\sigma) > 0$ at every non-zero point of $G$, and there exist comparisons
-$d$ and $\tilde d$ agreeing at every point of $G$ with $\sigma^\ast > 0$ for
-one and $\sigma^\ast = 0$ for the other. No function of the cells at $G$
-distinguishes them.
+Let $g = \min (G \setminus \{0\})$ and suppose the first observed point is
+strictly beyond the break-even, $g > \sigma^\ast$. Then $d(\sigma) > 0$ at
+every non-zero point of $G$, and there exist comparisons $d$ and $\tilde d$
+agreeing at every point of $G$ with $\sigma^\ast > 0$ for one and
+$\sigma^\ast = 0$ for the other. No function of the cells at $G$ distinguishes
+them.
 \end{proposition}
 
 \begin{proof}
-The first claim is Definition~\ref{def:breakeven}. For the second, take any $d$
-with $d < 0$ on $(0, \sigma^\ast)$ and let $\tilde d$ agree with $d$ on $G$ and
-be positive on $(0, g)$; both are consistent with the cells, which constrain
-$d$ only at points of $G$. Any statistic computed from those cells takes the
-same value on both.
+The first claim is Definition~\ref{def:breakeven}. For the second, choose
+$0<\epsilon<g$ and construct two functions that agree on $G$: set
+$d_0(0)=d_\epsilon(0)=-1$, set $d_0(\sigma)=1$ for every $\sigma>0$, and set
+$d_\epsilon(\sigma)=-1$ for $0<\sigma<\epsilon$ and
+$d_\epsilon(\sigma)=1$ for $\sigma\geq\epsilon$. Their break-evens are,
+respectively, $0$ and $\epsilon$, while every non-zero grid point has value
+$1$. Thus the cells at $G$ are identical although the break-even differs; any
+statistic computed from those cells takes the same value on both. If a
+continuous curve is required, the transition inside $(0,g)$ can be smoothed
+without changing any grid value.
 \end{proof}
 
 The consequence is the one this paper cares about. A sweep reports a sign, the
@@ -323,10 +350,12 @@ by the same authors who report the sign --- ordinarily for good reasons, since a
 grid is placed where the modelled effect is expected to matter. Nothing in the
 cells warns a reader that the placement decided the answer.
 
-\begin{corollary}[One condition falsifies it]\label{cor:onecondition}
-If $\sigma^\ast > 0$, a single additional condition at any
-$\sigma \in (0, \sigma^\ast)$ makes $d(\sigma) < 0$ observable, and no
-quantity of additional trials at points of $G$ does.
+\begin{corollary}[One condition can falsify it]\label{cor:onecondition}
+If $\sigma^\ast > 0$ and there exists an unobserved condition
+$\sigma_0 \in (0,\sigma^\ast)$ with $d(\sigma_0)<0$, measuring that condition
+makes the negative sign observable; no quantity of additional trials at points
+of $G$ does. Under an additional one-crossing assumption, any point in that
+interval has this property, but no such shape assumption is needed here.
 \end{corollary}
 
 This separates the two off-ladder axes cleanly. Disclosure of the per-trial
@@ -359,6 +388,12 @@ between its two lowest conditions, together with the tolerance
 (\PredictionTolerance{} ms) within which we agreed in advance to call the
 prediction successful. The prediction uses nothing the original record does not
 already print.
+
+The distinction between the two disclosures is also formal here. The cell
+summary is a map from the paired record to one number per arm, whereas the
+per-trial disclosure retains the paired vector itself. A reader can apply a new
+summary or a paired test only to the latter; no interpolation or re-analysis can
+recover a condition that is absent from $G$.
 
 \subsection{Evidence discipline}
 

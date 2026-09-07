@@ -29,16 +29,16 @@
       "path": "data/e-paired/offset_sweep_paired_test.json",
       "role": "derived_table",
       "note": "extracted paired test per condition, with the source script, seed and timestamp of the sweep",
-      "bytes": 3531,
-      "sha256": "e81e6d772d228d2d0639d86e3a139088fea2341bed7b036089e4ffcc521f293f"
+      "bytes": 3527,
+      "sha256": "d7dc168a809a944e554da72f68b6b10e7cf2cd36cfc8f9bc31c841a0faf525ab"
     },
     {
       "id": "E-INVENTORY",
       "path": "data/e-inventory/inventory.json",
       "role": "recorded_state",
       "note": "what the project itself records as present, blocked, and why",
-      "bytes": 1934,
-      "sha256": "a08fc117afabc1715670b6d18b1a2b24fdde1e132b1f28c5f7be27c766133f6f"
+      "bytes": 1930,
+      "sha256": "cd9e0a1a7cb2b8c33c92f6550e4cee8e15e3f00fca93277154d9deea044c36d8"
     },
     {
       "id": "E-BRIDGE",
@@ -93,16 +93,8 @@
       "path": "data/e-complement/hybrid_gn_python_vs_su.json",
       "role": "derived_table",
       "note": "independent re-implementation run, explicitly flagged as not the published table",
-      "bytes": 148676,
-      "sha256": "d240f0308b9526fb27c8b8e098a9dedc471110d4d9dc77334ed5f34bf5160e79"
-    },
-    {
-      "id": "E-WAREHOUSE",
-      "path": "data/e-warehouse/002-acoustic-field.md",
-      "role": "narrative_record",
-      "note": "the project's own record of display-metric rules, blockers and the archive disposition",
-      "bytes": 3943,
-      "sha256": "c27189a95b4f2b1cf8b6c09b5b8148c1a39fe4332a23b17dd40577711061c797"
+      "bytes": 148674,
+      "sha256": "202b9f5df4b283095471aad53d91f5512c9ac19179592d926d1bb45de1e6ad32"
     },
     {
       "id": "E-FINE",
@@ -119,6 +111,14 @@
       "note": "per-cell summaries, the located sign change under two summary rules, and the check of the prediction the coarse record fixes in advance",
       "bytes": 58959,
       "sha256": "c4d2e7891617aa1a64f60b1ac82d095b212a62a3ddb2c66bb28a7722f302538e"
+    },
+    {
+      "id": "E-GEOM20",
+      "path": "data/e-geom20/geometry_level_interval.json",
+      "role": "derived_table",
+      "note": "geometry-level bootstrap sensitivity audit over the existing 20 independent room/source/microphone geometries; resampling unit is geometry, not trial",
+      "bytes": 2100,
+      "sha256": "7ac67231683afa1d47b14bb81619175a68e8612d23d5dca2b6f316c258c32e97"
     }
   ]
 }

@@ -11,20 +11,26 @@ the build instead of producing a stale number.
 |---|---|---|---|
 | `paper/evidence/reachability_probe.json` | live_observation | 1839 | `09a5c564f369cf30…` |
 | `data/e-sweep/offset_sweep_results.json` | raw_sweep | 4941 | `bea4b6733963dadd…` |
-| `data/e-paired/offset_sweep_paired_test.json` | derived_table | 3531 | `e81e6d772d228d2d…` |
-| `data/e-inventory/inventory.json` | recorded_state | 1934 | `a08fc117afabc171…` |
+| `data/e-paired/offset_sweep_paired_test.json` | derived_table | 3527 | `d7dc168a809a944e…` |
+| `data/e-inventory/inventory.json` | recorded_state | 1930 | `cd9e0a1a7cb2b8c3…` |
 | `data/e-bridge/hybrid_tdoa_bridge.json` | recorded_state | 1253 | `42498d6f993ddc1d…` |
 | `data/e-primary/paper_primary.json` | recorded_state | 337 | `1fb96a8e854c6f93…` |
 | `data/e-sotacopy/sota_copy.json` | recorded_state | 304 | `ee61d33aa06acfa9…` |
 | `data/e-static/static.json` | recorded_state | 585 | `a1c9a9f0fcb6a96e…` |
 | `data/e-naive/naive.json` | derived_table | 357 | `3dc6ad94eca0e9a0…` |
 | `data/e-aware/simple.json` | derived_table | 382 | `83aa34405d56a939…` |
-| `data/e-complement/hybrid_gn_python_vs_su.json` | derived_table | 148676 | `d240f0308b9526fb…` |
-| `data/e-warehouse/002-acoustic-field.md` | narrative_record | 3943 | `c27189a95b4f2b1c…` |
+| `data/e-complement/hybrid_gn_python_vs_su.json` | derived_table | 148674 | `202b9f5df4b28309…` |
 | `data/e-fine/breakeven_sweep_20260828T185258Z.json` | live_observation | 186240 | `2929cb29383960fd…` |
 | `data/e-cross/breakeven_crossing.json` | derived_table | 58959 | `c4d2e7891617aa1a…` |
+| `data/e-geom20/geometry_level_interval.json` | derived_table | 2100 | `7ac67231683afa1d…` |
 
 Some of these files recorded the paths of the machine that produced them. Those path strings and source links were refreshed before deposit; `REDACTION.md` states the rules, lists every file touched with both digests, and describes the check that proves no number changed.
+
+## Not redistributed
+
+The manuscript's evidence manifest binds one further artifact that this archive does not carry. No number in the manuscript is derived from that material; it is bound because the manuscript refers to the content, and held back for the reason below.
+
+- The project's own working record of this direction. It is an internal narrative that names other directions, planning decisions and process labels, and the one number the manuscript took from it -- the size of the corpus that is not on disk -- is recorded first-hand in the inventory, which is redistributed. The figure code reads it from there.
 
 ## Checking the archive without building it
 

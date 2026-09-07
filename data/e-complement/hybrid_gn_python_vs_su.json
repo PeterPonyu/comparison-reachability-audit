@@ -15,7 +15,7 @@
   "paper": "arXiv:2403.05791",
   "not_novelty_claim": true,
   "not_octave_as_matlab": true,
-  "disposition": "S4_ARCHIVE_complement",
+  "disposition": "ARCHIVED_complement",
   "title": "Python TDOA-M/S GN vs TDOA-S-only (Su) median RMSE vs TDOA noise (MATLAB-free complement; not a paper table)",
   "primary_display_metric": "median_rmse",
   "secondary_display_metric": "mean_rmse",

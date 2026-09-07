@@ -1,0 +1,67 @@
+{
+  "schema": "002.geometry-level-interval.v1",
+  "source": "source-tree/002-acoustic-field/results/multigeometry_sweep_results.json",
+  "source_timestamp_utc": "2026-07-14T00:39:44Z",
+  "n_geometries": 20,
+  "resampling_unit": "independent room/source/microphone geometry",
+  "bootstrap_repetitions": 10000,
+  "seed": 20260904,
+  "levels": {
+    "10": {
+      "mean_naive_minus_aware_m": 0.38419217909538605,
+      "geometry_wins_aware": 17,
+      "geometry_wins_total": 20,
+      "bootstrap95_geometry_mean_m": [
+        0.24273211325097496,
+        0.5312333244016811
+      ],
+      "min_geometry_delta_m": -0.12686498122862355,
+      "max_geometry_delta_m": 1.1171626319561065
+    },
+    "20": {
+      "mean_naive_minus_aware_m": 1.090849704990698,
+      "geometry_wins_aware": 20,
+      "geometry_wins_total": 20,
+      "bootstrap95_geometry_mean_m": [
+        0.9649883455144986,
+        1.213364573521357
+      ],
+      "min_geometry_delta_m": 0.4992327630856025,
+      "max_geometry_delta_m": 1.579652958546213
+    },
+    "30": {
+      "mean_naive_minus_aware_m": 1.6930738053124077,
+      "geometry_wins_aware": 20,
+      "geometry_wins_total": 20,
+      "bootstrap95_geometry_mean_m": [
+        1.5331784407840319,
+        1.8527417554194527
+      ],
+      "min_geometry_delta_m": 1.085766304154262,
+      "max_geometry_delta_m": 2.284237030282049
+    },
+    "50": {
+      "mean_naive_minus_aware_m": 2.8676951324516446,
+      "geometry_wins_aware": 20,
+      "geometry_wins_total": 20,
+      "bootstrap95_geometry_mean_m": [
+        2.5055844968229826,
+        3.253190711325494
+      ],
+      "min_geometry_delta_m": 1.5707405599875406,
+      "max_geometry_delta_m": 4.690100311925776
+    },
+    "75": {
+      "mean_naive_minus_aware_m": 3.8405306821612855,
+      "geometry_wins_aware": 20,
+      "geometry_wins_total": 20,
+      "bootstrap95_geometry_mean_m": [
+        3.344649707053364,
+        4.355615760811004
+      ],
+      "min_geometry_delta_m": 2.013444302363439,
+      "max_geometry_delta_m": 6.123071637702015
+    }
+  },
+  "plot": "results/geometry_level_interval_plot.pdf"
+}

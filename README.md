@@ -14,6 +14,12 @@ This repository has not been deposited in a public archive, so it has no persist
 - `data/` — the 14 artifacts the manifest names, at the bytes that
   were hashed.
 
+## Not redistributed
+
+The manuscript's evidence manifest binds one further artifact that this archive does not carry. No number in the manuscript is derived from that material; it is bound because the manuscript refers to the content, and held back for the reason below.
+
+- The project's own working record of this direction. It is an internal narrative that names other directions, planning decisions and process labels, and the one number the manuscript took from it -- the size of the corpus that is not on disk -- is recorded first-hand in the inventory, which is redistributed. The figure code reads it from there.
+
 ## Rebuild
 
 ```bash

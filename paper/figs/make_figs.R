@@ -31,7 +31,6 @@ probe <- read_bound$json("E-PROBE")
 sweep <- read_bound$json("E-SWEEP")
 paired <- read_bound$json("E-PAIRED")
 inventory <- read_bound$json("E-INVENTORY")
-warehouse <- read_bound$text("E-WAREHOUSE")
 
 ## ---------------------------------------------------------------------------
 ## The ladder. Built once because both the figure and the table label it.
@@ -44,6 +43,7 @@ names(status_colours) <- c(REACHABLE, BROKEN)
 
 rungs <- probe$rungs
 vendor <- rungs$observed[[2]]
+assert_probe_matches_bridge(vendor, read_bound$json("E-BRIDGE"))
 ladder <- build_ladder(rungs, REACHABLE, BROKEN)
 FIRST_BREAK <- probe$first_break
 
@@ -61,6 +61,17 @@ if (!identical(as.integer(FIRST_BREAK), as.integer(min(ladder$y[!ladder$reachabl
 sr <- sweep$results
 pr <- paired$rows
 assert_sweep_matches_paired(sr, pr)
+
+# The two ladder-tier summaries record one condition of this same sweep. Nothing
+# in the manuscript displays them: they carry means, and the display rule keeps
+# means out of the headline quantities. They were bound anyway, and until now
+# nothing read them -- which is the state in which an artifact can go stale
+# without anyone noticing, because a digest only proves the bytes have not
+# changed, not that they still agree with what the analysis says. Reading them
+# here as a consistency check is what makes binding them mean something.
+assert_tier_summaries_match_sweep(sr,
+                                  read_bound$json("E-NAIVE"),
+                                  read_bound$json("E-AWARE"))
 
 arm_labels <- c(naive = "Offset-agnostic least squares",
                 aware = "Offset-aware maximum a posteriori")
@@ -216,6 +227,7 @@ CX_FLIP_DEPTH <- vapply(split(CX_INFLUENCE, CX_INFLUENCE$sigma_s), function(g) {
 
 fine <- read_bound$json("E-FINE")
 cross <- read_bound$json("E-CROSS")
+geom20 <- read_bound$json("E-GEOM20")
 
 assert_derived_reads_the_bound_raw(cross, manifest, "E-FINE")
 assert_grid_is_crossed(fine)
@@ -233,6 +245,25 @@ room_label <- function(id) if (identical(id, RECORDED_ROOM)) "as recorded" else
   paste("seed", sub("^draw-", "", id))
 
 FINE_GAP <- breakeven_frame(ROOMS, room_label)
+
+## The stored 20-geometry audit is a sensitivity analysis at the independent
+## geometry level. Keep it separate from the six-room finite-grid estimand:
+## this figure must not inherit FINE_GAP's room labels or trial denominator.
+if (!identical(as.integer(geom20$n_geometries), 20L) ||
+    !identical(geom20$resampling_unit, "independent room/source/microphone geometry")) {
+  stop("E-GEOM20 is not the expected geometry-level audit")
+}
+GEOM20_LEVELS <- do.call(rbind, lapply(names(geom20$levels), function(level) {
+  row <- geom20$levels[[level]]
+  data.frame(offset = as.numeric(level), mean_gap = row$mean_naive_minus_aware_m,
+             lower = row$bootstrap95_geometry_mean_m[[1]],
+             upper = row$bootstrap95_geometry_mean_m[[2]],
+             aware_wins = row$geometry_wins_aware,
+             n_geometry = row$geometry_wins_total)
+}))
+if (any(!is.finite(unlist(GEOM20_LEVELS[c("offset", "mean_gap", "lower", "upper")])))) {
+  stop("E-GEOM20 contains a non-finite plotting quantity")
+}
 CROSS_ANCHOR <- cross$at_the_coarse_grid_anchor
 CROSS_MEDIAN <- cross$crossing_by_median
 CROSS_PREDICTION <- cross$prediction_check
@@ -277,7 +308,8 @@ FINE_NONZERO_LEVELS <- sum(fine$levels_ms > 0)
 for (unit in c("fig1_reachability_ladder.R", "fig2_offset_sweep.R",
                "fig3_paired_wins.R", "fig4_display_rule.R",
                "fig5_paired_trials.R", "fig6_influence.R",
-               "fig7_efficiency.R", "fig8_breakeven.R")) {
+               "fig7_efficiency.R", "fig8_breakeven.R",
+               "fig9_robustness.R", "fig10_geometry_sensitivity.R")) {
   source(file.path("figs", "panels", unit))
 }
 
@@ -290,10 +322,15 @@ zero_pair <- pr[pr$offset_std_ms == 0, ]
 worst <- sr[which.max(sr$offset_std_ms), ]
 worst_pair <- pr[which.max(pr$offset_std_ms), ]
 
-# Derived from the bound warehouse text rather than retyped, so a change to the
-# recorded corpus size cannot silently disagree with the manuscript.
-corpus_gb <- regmatches(paste(warehouse, collapse = " "),
-                        regexpr("[0-9]+(?=GB)", paste(warehouse, collapse = " "), perl = TRUE))
+# Derived from the bound inventory rather than retyped, so a change to the
+# recorded corpus size cannot silently disagree with the manuscript. The
+# inventory is the first-party record of what is and is not on disk, which is
+# the fact this number states.
+locata <- inventory$blockers$locata
+corpus_gb <- regmatches(locata, regexpr("[0-9]+(?=GB)", locata, perl = TRUE))
+if (length(corpus_gb) != 1L) {
+  stop("the bound inventory does not record exactly one corpus size in GB")
+}
 
 blocked_tiers <- sum(vapply(
   list(read_bound$json("E-PRIMARY"), read_bound$json("E-SOTACOPY"),
@@ -391,7 +428,9 @@ write_generated(c(
   macro("RuleSepLow", fmt(min(RULE_SEPARATION), 2)),
   macro("RuleSepHigh", fmt(max(RULE_SEPARATION), 2)),
   macro("IndependenceCells", CROSS_INDEPENDENCE$cells_rechecked),
-  macro("InsertedLevel", fmt(CROSS_INDEPENDENCE$inserted_level_ms, 2))
+  macro("InsertedLevel", fmt(CROSS_INDEPENDENCE$inserted_level_ms, 2)),
+  macro("NEvidence", nrow(manifest$entries)),
+  macro("EvidenceBytes", format(sum(manifest$entries$bytes), big.mark = ","))
 ), "generated_numbers.tex")
 
 ## The ladder again, as a table, so each rung's observation can be read in full.
@@ -536,7 +575,11 @@ write_generated(c(
   "\\end{tabular}"
 ), "generated_table_breakeven.tex")
 
-message(sprintf(paste("wrote 8 figures to figs/out and 6 generated tex files to tex/",
+## The manifest itself, so the evidence discipline can be checked rather than believed.
+
+write_generated(evidence_table(manifest), "generated_table_evidence.tex")
+
+message(sprintf(paste("wrote 9 figures to figs/out and 6 generated tex files to tex/",
                       "(first break at rung %d; %d of %d conditions read differently",
                       "under different summaries; the ordering changes sign inside",
                       "the refined grid in %d of %d rooms)"),

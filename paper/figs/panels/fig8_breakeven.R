@@ -1,11 +1,11 @@
 # Figure 8. The interval the coarse grid skipped, and what is inside it.
 #
-# Left: the gap between the two arms across the refined grid, one line per
+# Panel A: the gap between the two arms across the refined grid, one line per
 # room. Below the zero line is the offset-agnostic estimator named. The two
 # rows of ticks above the curves are the two designs: the coarse sweep has two
 # conditions in this range, at the ends, and this sweep has twelve.
 #
-# Right: where the sign change actually sits, per room and per summary rule,
+# Panel B: where the sign change actually sits, per room and per summary rule,
 # with the rooms that never crossed drawn as arrows leaving the grid rather
 # than as a point at its edge, because a sweep that stops short of a crossing
 # has not measured one.
@@ -18,6 +18,7 @@ names(gap_room_colours) <- room_order
 anchor <- CROSS_ANCHOR$offset_std_ms
 coarse_here <- sort(cross$coarse_grid_ms[cross$coarse_grid_ms <= anchor])
 refined_here <- sort(unique(FINE_GAP$offset))
+FINE_TRIALS <- single_valued(FINE_GAP$n, "how many paired trials each refined cell ran")
 
 gap_span <- range(FINE_GAP$gap)
 row_refined <- gap_span[2] + 0.22
@@ -51,6 +52,8 @@ left <- ggplot(FINE_GAP, aes(offset, gap, colour = room)) +
                      limits = c(-0.05, anchor + 0.05)) +
   scale_y_continuous(name = "Median error, agnostic minus aware (m)",
                      limits = c(gap_span[1] - 0.02, row_coarse + 0.22)) +
+  labs(subtitle = sprintf("%d rooms × %d levels × %d paired trials per cell",
+                          length(room_order), length(refined_here), FINE_TRIALS)) +
   guides(colour = guide_legend(nrow = 2, byrow = TRUE)) +
   rtx_theme() +
   theme(legend.position = "bottom", legend.key.width = unit(0.16, "in"),
@@ -65,9 +68,33 @@ crossing_long <- rbind(
 crossing_long$room <- factor(crossing_long$room, levels = rev(room_order))
 censored <- CROSSINGS[is.na(CROSSINGS$median_ms), ]
 censored$room <- factor(censored$room, levels = rev(room_order))
+crossing_long$value_label <- sprintf("%.2f", crossing_long$at)
+crossing_long$label_x <- crossing_long$at
+crossing_long$label_hjust <- -0.18
+crossing_long$label_vjust <- -0.65
+for (room in levels(crossing_long$room)) {
+  rows <- which(crossing_long$room == room & is.finite(crossing_long$at))
+  if (length(rows) == 2L && diff(range(crossing_long$at[rows])) < 0.6) {
+    median_row <- rows[crossing_long$rule[rows] == "median of the trials"]
+    paired_row <- rows[crossing_long$rule[rows] == "paired per-trial count"]
+    crossing_long$label_x[median_row] <- crossing_long$at[median_row] - 0.10
+    crossing_long$label_hjust[median_row] <- 1.05
+    crossing_long$label_vjust[median_row] <- -1.05
+    crossing_long$label_x[paired_row] <- crossing_long$at[paired_row] + 0.08
+    crossing_long$label_hjust[paired_row] <- -0.05
+    crossing_long$label_vjust[paired_row] <- 1.35
+  }
+}
 
 rule_colours <- c("#1B7837", "#762A83")
 names(rule_colours) <- c("median of the trials", "paired per-trial count")
+
+# Keep the explanatory note in its own top strip.  The crossing labels already
+# carry hand-tuned x offsets for close pairs, so sharing their y-band with a
+# long annotation makes the note look like a third crossing value at print
+# size.
+coarse_note_x <- 0.15
+coarse_note_y <- length(room_order) + 0.95
 
 right <- ggplot(crossing_long, aes(at, room, colour = rule, shape = rule)) +
   geom_vline(xintercept = CROSS_PREDICTION$predicted_crossing_ms,
@@ -81,8 +108,16 @@ right <- ggplot(crossing_long, aes(at, room, colour = rule, shape = rule)) +
            hjust = 1, vjust = 0.5, size = 2.2, colour = "grey35", lineheight = 0.95,
            label = "no crossing below the\ncoarse sweep's lowest condition") +
   geom_point(size = 2, na.rm = TRUE) +
-  annotate("text", x = CROSS_PREDICTION$predicted_crossing_ms - 0.15,
-           y = length(room_order) + 0.95, hjust = 1, vjust = 1, size = 2.3,
+  geom_text(aes(x = label_x, label = value_label, hjust = label_hjust,
+                vjust = label_vjust, group = rule),
+            position = position_identity(),
+            size = 2.05, show.legend = FALSE, na.rm = TRUE) +
+  geom_text(data = censored,
+            aes(x = censored_above, y = room, label = paste0(">", fmt(censored_above, 1))),
+            inherit.aes = FALSE, hjust = 1.05, vjust = -0.65,
+            size = 2.05, colour = "grey35") +
+  annotate("text", x = coarse_note_x, y = coarse_note_y,
+           hjust = 0, vjust = 0.5, size = 2.3,
            colour = "grey30", lineheight = 0.95,
            label = "where the coarse\nrecord says to look") +
   scale_colour_manual(values = rule_colours, name = NULL) +
@@ -96,6 +131,7 @@ right <- ggplot(crossing_long, aes(at, room, colour = rule, shape = rule)) +
         legend.margin = margin(0, 0, 0, 0),
         panel.grid.major.y = element_line(linewidth = 0.2, colour = "grey92"))
 
-p <- patchwork::wrap_plots(left, right, widths = c(1.3, 1))
+p <- patchwork::wrap_plots(panel_label(left, "A"), panel_label(right, "B"),
+                           widths = c(1.3, 1))
 
 save_fig(p, "fig8_breakeven", FIGURE_TEXT_WIDTH_IN, 3.8)

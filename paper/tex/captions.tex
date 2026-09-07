@@ -26,14 +26,16 @@ exactly, while the offset-aware estimator pays a floor cost for estimating
 nuisance parameters that are not present. At every condition where offsets do
 exist, the offset-aware estimator is the better of the two and its error is
 nearly flat, while the offset-agnostic error grows with the dispersion it
-ignores.%
+ignores. The vertical rule and shaded band identify the single zero-offset
+condition; each marker is a condition median, not an unpaired sample estimate.%
 }
 
 \newcommand{\CapWins}{%
 The same comparison counted per trial rather than summarised by a median. Bars
 give the number of the \NTrials{} paired trials at each condition on which the
 offset-aware estimator produced the smaller error, and the dashed line marks the
-count expected if the two estimators were indistinguishable. Where offsets are
+50\% reference count expected if the two estimators were indistinguishable.
+Where offsets are
 present the offset-aware estimator wins a clear majority but never all trials,
 so the advantage is consistent rather than absolute. Where offsets are absent it
 wins none at all, which is a stronger and more specific statement than a small
@@ -91,17 +93,19 @@ between an offset-agnostic and an offset-aware localisation estimator was rerun
 on a grid of \FineLevels{} offset dispersions crossed with \FineRooms{}
 independently simulated microphone arrays, \FineTrials{} paired trials in each
 cell, using the same estimator code as the coarse sweep and differing from it
-only in which conditions were run. Left: the difference between the two
+only in which conditions were run. Panel A: the difference between the two
 estimators' median errors, one line per array; below zero the offset-agnostic
 estimator is the better of the two. The upper row of ticks marks the conditions
 the coarse sweep places in this range, of which there are two, both at the ends;
-the lower row marks the \FineLevels{} conditions of the refined sweep. Right:
+the lower row marks the \FineLevels{} conditions of the refined sweep. Panel B:
 the dispersion at which each array's ordering changes sign, located under two
 summaries of the same trials, with the dashed line at the position predicted
 beforehand from the coarse sweep's own printed numbers. Arrays whose ordering
 has not changed sign by the top of the refined grid are drawn as arrows leaving
 it, because a sweep that stops below a crossing has not measured one and
-recording its last condition as the answer would invent a measurement.%
+recording its last condition as the answer would invent a measurement. Numeric
+labels in Panel B are interpolated crossing locations in milliseconds; values
+shown as greater than 5 denote the right-censored rooms, not measured values.%
 }
 
 \newcommand{\CapEfficiency}{%
@@ -117,4 +121,34 @@ which of them looks closer changes with the noise level. Read through the
 median, both sit between \CxEffMedianLow{} and \CxEffMedianHigh{} times the
 bound throughout. A median below the bound is not a contradiction, because the
 bound constrains the root mean square error and not the median.%
+}
+
+\newcommand{\CapRobustness}{%
+Cell-level robustness of the refined break-even sweep. Each tile is one of the
+\FineRooms{} independently simulated microphone arrays at one of the
+\FineLevels{} offset dispersions, with \FineTrials{} paired trials in the cell.
+The value and colour are the median error of the offset-agnostic estimator minus
+the median error of the offset-aware estimator, in metres: blue means the
+agnostic estimator is lower, red means the aware estimator is lower, and the
+white midpoint denotes values near zero. An exact tie is zero. The printed
+values are cell medians rounded to 0.1 m, except that
+values with absolute magnitude below 0.05 m are shown to 0.01 m and values
+with absolute magnitude below 0.01 m to 0.001 m, so their sign remains visible without a misleading
+signed zero. A displayed zero from rounding is not an exact tie. They are not
+fitted means or interpolated crossings. This is a descriptive view of the
+measured grid; it
+does not generalise the ordering beyond these six arrays and twelve conditions,
+and it does not turn a censored crossing into an observed one.%
+}
+
+\newcommand{\CapGeometrySensitivity}{%
+Independent-geometry sensitivity, not a trial-level confidence interval. Each
+point is the mean naive localisation error minus the mean offset-aware error at
+one true offset dispersion, computed separately for each of twenty independently
+drawn room/source/microphone geometries and then averaged. The shaded band is a
+95\% percentile bootstrap over those twenty geometries; the labels are the
+number of geometries in which offset-aware has the lower mean error out of 20.
+Positive values favour the offset-aware estimator. The panel is a sensitivity
+analysis of the local simulator and does not estimate a field or population
+effect.%
 }

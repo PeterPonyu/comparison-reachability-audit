@@ -13,8 +13,15 @@
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{placeins}
+% Keep engine-generated PDF metadata deterministic across bindings.
+\pdfsuppressptexinfo=-1
+
 \usepackage[hidelinks]{hyperref}
-\hypersetup{pdftitle={Citable, obtainable, unrunnable: recording where the reconstruction of a published comparison actually stops},pdfauthor={Zeyu Fu},pdfsubject={Citable, obtainable, unrunnable: recording where the reconstruction of a published comparison actually stops}}
+% Blind copies are compiled with \ANONYMOUS defined; the identified
+% build is the default.  hyperref writes the name into the PDF /Author
+% key as well as the title page, so both go through this one macro.
+\ifdefined\ANONYMOUS\newcommand{\PDFAUTHOR}{}\else\newcommand{\PDFAUTHOR}{Zeyu Fu}\fi
+\hypersetup{pdftitle={Citable, obtainable, unrunnable: recording where the reconstruction of a published comparison actually stops},pdfauthor={\PDFAUTHOR},pdfsubject={Citable, obtainable, unrunnable: recording where the reconstruction of a published comparison actually stops}}
 \numberwithin{equation}{section}
 
 \graphicspath{{../figs/out/}}
@@ -43,10 +50,17 @@
 \title{Citable, obtainable, unrunnable: recording where the reconstruction of a
 published comparison actually stops}
 
+\ifdefined\ANONYMOUS
+% No \address and no [amu] key: elsarticle prints a superscript
+% affiliation marker for every keyed author, so an empty keyed author
+% leaves a dangling marker and an empty entry in the /Author key.
+\author{Author and affiliation withheld for blind review}
+\else
 \author[amu]{Zeyu Fu\corref{cor1}}
 \ead{fuzeyu99@126.com}
 \cortext[cor1]{Corresponding author. ORCID: 0009-0001-8329-0108.}
 \address[amu]{Army Medical University, Chongqing, China}
+\fi
 
 \begin{abstract}
 \input{abstract}

@@ -1,73 +1,30 @@
 %% Self-contained. No \ref, no \cref, no section numbers, no "see above".
 %% One falsifiable question, the bounded answer, and the scope it does not leave.
 
-Computational work is usually described as reproducible or not, and artifact
-badges reinforce that binary by certifying that code was made available.
-Availability is not runnability, and a reader who cannot run an artifact is
-rarely told which specific step stopped them. This study proposes recording the
-stopping point itself as a checkable object, and applies the instrument to one
-published comparison in acoustic sensor calibration. The instrument is a ladder
-of \NRungs{} rungs, each an assertion that can be independently verified on a
-given machine: that a citable record exists, that the reference source can be
-obtained at a fixed revision, that the runtime the source requires is available,
-and that the published table can be recomputed. The ladder is monotone, so a
-break propagates to every rung above it, and the informative quantity is the
-index of the first break rather than a pass or fail verdict. A read-only probe
-re-checks every rung against the live machine instead of trusting a previously
-recorded status, and its output is what this study reports. On the machine
-audited, rungs one and two hold: the reference source is present at a revision
-matching its recorded pin, with all \EntryPoints{} of its entry points found.
-Rung \FirstBreak{} breaks, because the proprietary interpreter the source
-requires is not installed, and a frequently suggested free substitute is also
-absent and would not be treated as equivalent if it were. Rung \NRungs{} is
-therefore unreachable and no table is synthesised in its place. Corpus
-availability is tracked as a separate axis and behaves differently: the
-evaluation corpus is publicly archived and openly downloadable at roughly
-\CorpusGB{} gigabytes, and is nonetheless absent locally, so a resolvable link
-is recorded as distinct from a local asset. The locally reproducible part of the
-same project supplies a second, substantive result. A comparison of an
-offset-agnostic least-squares estimator against an offset-aware maximum a
-posteriori estimator over \NConditions{} conditions and \NTrials{} paired trials
-each supports the expected conclusion at every condition where unknown
-per-channel offsets are present, by median error and by paired signed-rank test.
-At the one condition where no offsets are present, the ordering reverses
-completely: the offset-aware estimator is worse by a factor of about
-\ZeroRatio{} in median error and wins \ZeroWins{} of \NTrials{} paired trials.
-The headline that the offset-aware method is better is therefore true on
-\NonZeroConditions{} of \NConditions{} conditions and severely false on the
-remaining one, which is the condition a comparison is least likely to report. A
-third record shows that reaching the top rung would not have been enough. It
-stores both the summary a paper would print and the \CxPlanned{} paired trials
-behind it, for two locally written estimators at \CxConditions{} timing-noise
-levels. The mean over trials and the median over the same trials name different
-estimators at \CxDisagreeing{} of the \CxConditions{} levels, including one at
-which every planned trial returned an error in both arms so that no handling of
-failures is involved; a paired signed-rank test on those trials agrees with the
-median everywhere, and setting aside \CxFlipDepth{} trial in
-\CxTrialsPerCondition{} makes the mean agree too. Measured against the
-Cram\'er--Rao bound the same trials place both estimators at
-\CxEffMeanLow{} to \CxEffMeanHigh{} times the bound or at \CxEffMedianLow{} to
-\CxEffMedianHigh{} times it, depending only on the summary. Recomputing a
-published table therefore certifies a number and not a claim, so disclosure of
-the per-trial record is recorded as a second axis beside corpus availability;
-here it would have cost \CxBytesMinimal{} bytes, less than the summary it
-accompanies. A fourth result shows that disclosure is not sufficient either.
-The offset comparison places its reversal at a single condition because its grid
-steps from zero to \CoarseGapHigh{} milliseconds of dispersion with nothing in
-between; rerunning the same estimator code on \FineLevels{} dispersions inside
-that interval, crossed with \FineRooms{} independently simulated microphone
-arrays at \FineTrials{} paired trials per cell and \FinePairs{} trials in total,
-finds the offset-agnostic estimator ahead on median error out to between
-\ReversalLow{} and \ReversalHigh{} milliseconds depending on the array, and
-still ahead at the original grid's lowest non-zero condition in
-\AnchorAgnosticRooms{} of \FineRooms{} arrays. The sign a sweep reports is thus
-a joint property of the estimators and the grid, and the conditions a design
-skipped leave no trace in the trials it kept, so no amount of per-trial
-disclosure recovers them; one additional condition does, and its position was
-predictable from the original record's own printed medians to within
-\PredictionError{} milliseconds. No claim of novelty in acoustic localisation is
-made, no estimator compared here is anyone's released code, no substitute
-runtime is treated as equivalent to the one required, the refined sweep is a new
-run reported as an extension rather than as a pre-registered test, and the audit
-describes one machine on one date rather than a permanent property of the work
-examined.
+Computational reproducibility is often reduced to a binary badge, although a
+reader can be stopped by a particular missing step. We audit one published
+comparison in acoustic sensor calibration with a four-rung ladder: a citable
+record, a fixed source revision, an available runtime, and a recomputable
+table. A read-only probe found the recorded revision and all
+\EntryPoints{} entry points, but rung \FirstBreak{} failed because the
+proprietary interpreter was absent; free substitutes were absent and are not
+treated as equivalent. The top rung is therefore unreachable. The evaluation
+corpus is downloadable at about \CorpusGB{} GB but is not local, demonstrating
+that a resolvable link and a local asset are separate claims.
+
+The companion analyses expose what a verdict hides.
+Across \NConditions{} conditions and \NTrials{} paired trials, the offset-aware
+estimator wins at the \NonZeroConditions{} nonzero-offset conditions, whereas
+at zero offset its median error is about \ZeroRatio{} times larger and it wins
+\ZeroWins{} trials. In a separate three-level record, mean and median disagree
+at \CxDisagreeing{} levels; removing \CxFlipDepth{} trial makes the summaries
+agree, while the paired signed-rank test agrees with the median. A
+sweep over \FineLevels{} levels, \FineRooms{} arrays, and \FineTrials{} trials
+places the reversal at \ReversalLow{}--\ReversalHigh{} ms and leaves the
+offset-agnostic estimator ahead at the original nonzero condition in
+\AnchorAgnosticRooms{} of \FineRooms{} arrays.
+
+The contribution is an auditable stopping-point and disclosure protocol, not a
+novelty claim about acoustic localisation. The sweep is an extension,
+and all results describe one machine on one date; no substitute runtime is
+treated as equivalent.

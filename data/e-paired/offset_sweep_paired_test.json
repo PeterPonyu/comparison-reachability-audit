@@ -2,7 +2,7 @@
   "direction": "002",
   "name": "offset_sweep_paired_test",
   "status": "ok",
-  "disposition": "S4_ARCHIVE",
+  "disposition": "ARCHIVED",
   "scooped_localization": true,
   "source": "data/e-sweep/offset_sweep_results.json",
   "source_script": "02_localization_baseline_vs_offsetaware.py",
@@ -10,7 +10,7 @@
   "source_timestamp_utc": "2026-08-18T15:32:01Z",
   "n_trials_per_condition": 40,
   "test": "scipy.stats.wilcoxon two-sided paired per trial (naive_err, aware_err)",
-  "note": "Extracted from on-disk offset_sweep_results.json. Not a novelty claim. Localization is scooped prior art (S4 ARCHIVE).",
+  "note": "Extracted from on-disk offset_sweep_results.json. Not a novelty claim. Localization is scooped prior art (archived).",
   "rows": [
     {
       "offset_std_ms": 0,

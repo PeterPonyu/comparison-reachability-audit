@@ -1,7 +1,7 @@
 {
   "direction": "002",
   "package_id": "002-cpu-acoustic",
-  "disposition": "S4_ARCHIVE",
+  "disposition": "ARCHIVED",
   "disposition_note": "Localization claim scooped (async-array / TDOA self-calibration). Copy workflow may keep the Python SSL suite; do not reopen as novelty.",
   "cpu_only": true,
   "sku_4090": false,
@@ -20,7 +20,7 @@
   "blockers": {
     "srp_phat": "No SRP-PHAT runner in this experiment. Script 01 persists TOA only (sim_data.npz has no waveforms). pyroomacoustics.doa.SRP is unused. A new SRP table would not be an existing-code result.",
     "hybrid_tdoa_matlab": "MATLAB runtime required; official Hybrid-TDOA table missing_matlab. Vendor is reference-only. Do not invent a license or Octave substitute.",
-    "locata": "LOCATA (~19GB) is not on disk; S4 ARCHIVE (localization scooped)."
+    "locata": "LOCATA (~19GB) is not on disk; archived (localization scooped)."
   },
   "hybrid_tdoa_vendor": {
     "present": true,
