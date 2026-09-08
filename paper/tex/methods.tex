@@ -135,8 +135,8 @@ The project being audited already carried a recorded status for each of these
 questions. That record is not what this study reports, because a recorded status
 ages: a runtime can be installed, a corpus can be fetched, a pinned revision can
 be moved. Instead a read-only probe re-checks each rung against the live machine
-and writes what it observed with a timestamp, and the manuscript binds the probe
-output.
+and writes what it observed with a timestamp, and the manuscript records the probe
+output with its checksum.
 
 The probe resolves the required interpreter and the common substitute on the
 executable search path; confirms that the reference source directory exists,
@@ -372,7 +372,7 @@ the original run fixed. What differs is the design. The refined grid is crossed
 with \FineRooms{} microphone arrays, one of them the array the original sweep
 used and the rest independently simulated at recorded seeds, so that a
 break-even can be reported as a range across rooms rather than as a single number
-from one. Each trial is seeded from a digest of its own cell --- design, array,
+from one. Each trial is seeded from a hash of its own cell --- design, array,
 dispersion, trial index --- so that a cell does not depend on the rest of the
 grid or on the order in which the grid was walked. \IndependenceCells{} cells
 were recomputed afterwards out of order, and again after a condition absent from
@@ -398,9 +398,9 @@ recover a condition that is absent from $G$.
 \subsection{Evidence discipline}
 
 No number in this manuscript is typed by hand. Every artifact it rests on,
-including the probe output, is recorded with its SHA-256 digest in a manifest
+including the probe output, is recorded with its SHA-256 checksum in a manifest
 that accompanies the manuscript source. The figure and table code verifies each
-digest against the bytes on disk before reading them and aborts on any mismatch,
+checksum against the bytes on disk before reading them and aborts on any mismatch,
 and it emits both the figures and the numeric macros that the text prints. Even
-the corpus size quoted above is extracted from the bound project record rather
+the corpus size quoted above is extracted from the recorded project inventory rather
 than retyped, so the manuscript cannot disagree with the record it cites.

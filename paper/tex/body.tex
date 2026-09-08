@@ -176,7 +176,7 @@ Localisation studies routinely report error against the Cram\'er--Rao bound as a
 measure of how much of the available information an estimator recovers, and the
 comparison is usually made through a root-mean-square error. That choice
 inherits the sensitivity of the mean while appearing to be a property of the
-estimator, and Fig.~\ref{fig:efficiency} shows what it costs on this record: a
+estimator, and the efficiency analysis reported below shows what it costs on this record: a
 factor of roughly eight between the two readings of the same trials against the
 same bound.
 
@@ -227,7 +227,7 @@ audit's outcome is the integer \FirstBreak{} together with the observation
 justifying it.
 
 The project's own recorded state agrees, and it records \BlockedTiers{} distinct
-blocked tiers for three unrelated reasons: one blocked by the missing runtime,
+blocked comparisons for three unrelated reasons: one blocked by the missing runtime,
 one blocked by a dependency on both that runtime and the absent corpus, and one
 blocked because the simulation retains only derived timing measurements and no
 waveforms, so a whole family of signal-domain baselines cannot be run from the
@@ -554,7 +554,7 @@ milliseconds apart. In the last section the choice of summary decided which
 estimator was named; here it decides where the boundary between them is. The
 quantity has changed and the dependence has not.
 
-\subsection{The record knew where to look}
+\subsection{The break-even was derivable from the printed medians}
 
 One number was fixed before the sweep ran. Interpolating the original sweep's
 own printed medians between its two lowest conditions puts the break-even at
@@ -786,25 +786,25 @@ table itself will tell you where to put.
 
 \appendix
 
-\section{The bound evidence}
+\section{Source artifacts and their checksums}
 \label{app:evidence}
 
 Table~\ref{tab:evidence} lists all \NEvidence{} artifacts behind this
 manuscript, totalling \EvidenceBytes{} bytes, in the order the analysis consumes
 them. Every number the text prints is computed from these bytes, and the code
-recomputes each digest before reading, so a stale artifact stops the build
+recomputes each checksum before reading, so a stale artifact stops the build
 rather than reaching the page.
 
 This paper needs the discipline more than most, because its central claim is
 about what could \emph{not} be reconstructed on one machine on one day. A claim
 of that shape is unfalsifiable unless the state it describes is recorded well
 enough for someone else to disagree with it. The read-only re-check of every
-rung is therefore bound here alongside the measurements, and it is listed as
+rung is therefore recorded here alongside the measurements, and it is listed as
 what it is: an artifact produced for this manuscript, not an upstream record.
 The reader is entitled to know which rows are the project's own testimony and
 which are prior artifacts it merely read, and the descriptions say so.
 
-Two limits keep the table honest. A digest fixes bytes to a claim; it does not
+Two limits keep the table honest. A checksum fixes bytes to a claim; it does not
 make the bytes true, and none of this certifies that an artifact was correct
 when written. And each entry's internal identifier and path are omitted
 deliberately --- they describe a private tree, they would tell a reader nothing,
@@ -817,10 +817,10 @@ something to it.
 \begin{table}[htbp]
 \centering
 \caption{Every artifact this manuscript rests on, with its size and the first 16
-hexadecimal characters of its SHA-256 digest. Full digests, and the paths they
+hexadecimal characters of its SHA-256 checksum. Full checksums, and the paths they
 apply to, are in the manifest accompanying the manuscript source; the prefix is
-shown here only because a 64-character digest does not set in a table column.
-The figure and table code recomputes each digest from the bytes on disk before
+shown here only because a 64-character checksum does not set in a table column.
+The figure and table code recomputes each checksum from the bytes on disk before
 reading them and stops the build on any mismatch.}
 \label{tab:evidence}
 \footnotesize
@@ -831,8 +831,8 @@ reading them and stops the build on any mismatch.}
 
 The probe, the derived tables, the recorded project state and the figure code
 that produces every number in this manuscript accompany the manuscript source.
-Each artifact is recorded with its SHA-256 digest in a manifest, and the figure
-code verifies those digests against the bytes on disk before reading them, so the
+Each artifact is recorded with its SHA-256 checksum in a manifest, and the figure
+code verifies those checksums against the bytes on disk before reading them, so the
 build fails rather than silently reporting stale numbers. The reference source
 examined in the audit is third-party software, was not modified and is not
 redistributed here.
@@ -869,7 +869,7 @@ and editing.
 \section*{Declaration of generative AI use}
 
 Generative AI tools assisted with code preparation and language editing. Every
-number printed above is emitted programmatically from artifacts bound by
-cryptographic digest rather than transcribed into prose. Structural claims are
+number printed above is emitted programmatically from artifacts tied to the manuscript by cryptographic
+checksum rather than transcribed into prose. Structural claims are
 enforced by build-time checks that stop the build rather than by unverified
 sentences. Responsibility for the content rests with the authors.
