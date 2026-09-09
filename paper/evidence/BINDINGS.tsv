@@ -18,3 +18,4 @@ E-GEOM20	data/e-geom20/geometry_level_interval.json	derived_table	geometry-level
 E-MICCOUNT	data/e-miccount/miccount_sweep_results.json	raw_sweep	microphone-count x offset sensitivity sweep; descriptive-only robustness readout
 E-REVERB	data/e-reverb/reverb_severity_sweep_results.json	raw_sweep	reverberation-severity x offset sensitivity sweep; descriptive-only robustness readout
 E-JOINT	data/e-joint/joint_posterior_results.json	derived_table	joint-posterior calibration case study with SBC coverage and divergence diagnostics
+E-FINE400	data/e-fine400/breakeven_400.json	derived_table	400-trial re-evaluation of the fine grid; labelled sensitivity; the registered crossing remains the n=40 record

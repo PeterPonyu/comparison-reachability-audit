@@ -18,7 +18,8 @@ suppressPackageStartupMessages({
 })
 
 for (unit in c("rtx_theme.R", "lib/evidence.R", "lib/emit.R", "lib/ladder.R",
-               "lib/sweep.R", "lib/complement.R", "lib/breakeven.R")) {
+               "lib/sweep.R", "lib/complement.R", "lib/breakeven.R",
+               "lib/fine400.R")) {
   source(file.path("figs", unit))
 }
 
@@ -302,6 +303,50 @@ CROSSINGS <- do.call(rbind, lapply(ROOMS, function(room) {
 FINE_NONZERO_LEVELS <- sum(fine$levels_ms > 0)
 
 ## ---------------------------------------------------------------------------
+## A 400-trial re-evaluation of the same grid, read as a sensitivity.
+##
+## The registered quantity is the crossing above, located on 40 trials per
+## cell. This record re-runs the same 72 cells to 400 trials under the same
+## seeding rule, so its first 40 trials in every cell are the registered draw;
+## that is asserted, not assumed. What it adds is how far the located crossing
+## moves at ten times the trials. It replaces nothing: CROSSINGS and every
+## macro above stay as they were, and everything derived here is named
+## "FourHundred" so no sentence can quote it as the crossing.
+## ---------------------------------------------------------------------------
+
+fine400 <- read_bound$json("E-FINE400")
+assert_fine400_is_the_same_design(fine400, fine, manifest, "E-FINE")
+assert_fine400_shape(fine400)
+assert_fine400_first_trials_are_the_registered_draw(fine400, fine, ROOMS)
+
+FINE400_CROSSINGS <- fine400_crossings(fine400)
+FINE400_CROSSINGS$room <- vapply(FINE400_CROSSINGS$geometry, room_label, character(1))
+if (!identical(FINE400_CROSSINGS$room, CROSSINGS$room)) {
+  stop("the 400-trial crossings are not in the registered array order")
+}
+FINE400_CROSSED <- FINE400_CROSSINGS[FINE400_CROSSINGS$crossed, ]
+if (nrow(FINE400_CROSSED) == 0L) {
+  stop("no array crossed inside the grid at 400 trials; the range the text quotes is gone")
+}
+# The registered interval is the unrounded settled range of the 40-trial record,
+# so the count is of the actual positions and not of their two-decimal labels.
+REGISTERED_INTERVAL <- CROSS_MEDIAN$settled_range_ms
+FINE400_INSIDE <- sum(FINE400_CROSSED$settled_ms >= REGISTERED_INTERVAL[1] &
+                      FINE400_CROSSED$settled_ms <= REGISTERED_INTERVAL[2])
+FINE400_CENSORED <- sum(!FINE400_CROSSINGS$crossed)
+FINE400_RECORDED <- FINE400_CROSSINGS[FINE400_CROSSINGS$geometry == RECORDED_ROOM, ]
+if (nrow(FINE400_RECORDED) != 1L || !isTRUE(FINE400_RECORDED$crossed)) {
+  stop("the recorded array did not cross inside the grid at 400 trials; ",
+       "the sentence comparing it with the registered prediction is gone")
+}
+FINE400_RECORDED_GAP <- abs(FINE400_RECORDED$settled_ms - CROSS_PREDICTION$predicted_crossing_ms)
+# "Ten times as many" is a number too; it is computed, and refused if it is not whole.
+FINE400_RATIO <- fine400$n_trials_per_cell / fine$n_trials_per_cell
+if (!isTRUE(all.equal(FINE400_RATIO, round(FINE400_RATIO)))) {
+  stop("the 400-trial record is not a whole multiple of the registered trial count")
+}
+
+## ---------------------------------------------------------------------------
 ## Figures. Each panel reads the objects above and writes one file.
 ## ---------------------------------------------------------------------------
 
@@ -309,7 +354,8 @@ for (unit in c("fig1_reachability_ladder.R", "fig2_offset_sweep.R",
                "fig3_paired_wins.R", "fig4_display_rule.R",
                "fig5_paired_trials.R", "fig6_influence.R",
                "fig7_efficiency.R", "fig8_breakeven.R",
-               "fig9_robustness.R", "fig10_geometry_sensitivity.R")) {
+               "fig9_robustness.R", "fig10_geometry_sensitivity.R",
+               "fig13_fine400.R")) {
   source(file.path("figs", "panels", unit))
 }
 
@@ -429,6 +475,20 @@ write_generated(c(
   macro("RuleSepHigh", fmt(max(RULE_SEPARATION), 2)),
   macro("IndependenceCells", CROSS_INDEPENDENCE$cells_rechecked),
   macro("InsertedLevel", fmt(CROSS_INDEPENDENCE$inserted_level_ms, 2)),
+
+  ## The 400-trial re-evaluation. A labelled sensitivity: none of these feeds
+  ## a registered macro, and the registered crossing macros above are unchanged.
+  macro("FineFourHundredTrials", fine400$n_trials_per_cell),
+  macro("FineFourHundredCells", nrow(fine400$cells)),
+  macro("FineFourHundredRegisteredTrials", fine$n_trials_per_cell),
+  macro("FineFourHundredRatio", formatC(FINE400_RATIO, format = "d")),
+  macro("CrossingFourHundredCrossed", nrow(FINE400_CROSSED)),
+  macro("CrossingFourHundredCensored", FINE400_CENSORED),
+  macro("CrossingFourHundredLo", fmt(min(FINE400_CROSSED$settled_ms), 2)),
+  macro("CrossingFourHundredHi", fmt(max(FINE400_CROSSED$settled_ms), 2)),
+  macro("CrossingFourHundredInside", FINE400_INSIDE),
+  macro("CrossingFourHundredRecorded", fmt(FINE400_RECORDED$settled_ms, 2)),
+  macro("CrossingFourHundredRecordedGap", fmt(FINE400_RECORDED_GAP, 2)),
   macro("NEvidence", nrow(manifest$entries)),
   macro("EvidenceBytes", format(sum(manifest$entries$bytes), big.mark = ","))
 ), "generated_numbers.tex")
@@ -579,9 +639,12 @@ write_generated(c(
 
 write_generated(evidence_table(manifest), "generated_table_evidence.tex")
 
-message(sprintf(paste("wrote 10 figures to figs/out and 6 generated tex files to tex/",
+message(sprintf(paste("wrote 11 figures to figs/out and 6 generated tex files to tex/",
                       "(first break at rung %d; %d of %d conditions read differently",
                       "under different summaries; the ordering changes sign inside",
-                      "the refined grid in %d of %d rooms)"),
+                      "the refined grid in %d of %d rooms; at 400 trials per cell,",
+                      "a labelled sensitivity, %d of %d cross and %d land inside the",
+                      "registered interval)"),
                 FIRST_BREAK, CX_DISAGREEING, length(CX_COMPARISONS),
-                CROSS_MEDIAN$geometries_that_crossed, length(ROOMS)))
+                CROSS_MEDIAN$geometries_that_crossed, length(ROOMS),
+                nrow(FINE400_CROSSED), length(ROOMS), FINE400_INSIDE))

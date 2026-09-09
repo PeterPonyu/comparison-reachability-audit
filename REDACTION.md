@@ -51,6 +51,7 @@ checks.
 | `data/e-aware/simple.json` | 1 | 0 | `17910cc8cc0834ae…` | `83aa34405d56a939…` |
 | `data/e-complement/hybrid_gn_python_vs_su.json` | 1 | 0 | `d240f0308b9526fb…` | `202b9f5df4b28309…` |
 | `data/e-geom20/geometry_level_interval.json` | 1 | 0 | `9bd14f721b452cbc…` | `7ac67231683afa1d…` |
+| `data/e-fine400/breakeven_400.json` | 8 | 0 | `ad28d3790fea9d89…` | `ef8c03cff631ec9e…` |
 | `paper/evidence/probe_reachability.py` | 3 | 0 | `4cf83f92dd9657e3…` | `abac4707c9e23245…` |
 
 ## Scripts

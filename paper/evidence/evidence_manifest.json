@@ -1,7 +1,7 @@
 {
   "schema": "evidence-manifest/v1",
   "state": "BOUND",
-  "bound_utc": "2026-08-28T18:55:15Z",
+  "bound_utc": "2026-09-09T08:30:50Z",
   "allowed_roots": [
     "data",
     "paper/evidence"
@@ -143,6 +143,14 @@
       "note": "joint-posterior calibration case study with SBC coverage and divergence diagnostics",
       "bytes": 9786,
       "sha256": "3fff057fb9115c3343c2f4018cb404dc609d4b519782e0c7e9111fda86971174"
+    },
+    {
+      "id": "E-FINE400",
+      "path": "data/e-fine400/breakeven_400.json",
+      "role": "derived_table",
+      "note": "400-trial re-evaluation of the fine grid; labelled sensitivity; the registered crossing remains the n=40 record",
+      "bytes": 1645691,
+      "sha256": "ef8c03cff631ec9efeebfcb12cd12cd2a588305e190ed0a2d224d621f16c594f"
     }
   ]
 }

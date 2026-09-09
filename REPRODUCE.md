@@ -26,6 +26,7 @@ the build instead of producing a stale number.
 | `data/e-miccount/miccount_sweep_results.json` | raw_sweep | 28440 | `725b7db4c48c3c0e…` |
 | `data/e-reverb/reverb_severity_sweep_results.json` | raw_sweep | 17671 | `352d1567c8b6937c…` |
 | `data/e-joint/joint_posterior_results.json` | derived_table | 9786 | `3fff057fb9115c33…` |
+| `data/e-fine400/breakeven_400.json` | derived_table | 1645691 | `ef8c03cff631ec9e…` |
 
 Some of these files recorded the paths of the machine that produced them. Those path strings and source links were refreshed before deposit; `REDACTION.md` states the rules, lists every file touched with both digests, and describes the check that proves no number changed.
 

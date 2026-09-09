@@ -1,3 +1,9 @@
+%% Draft-only owner placeholder (ruling R15, 2026-09-09). Prints ONLY when the
+%% build defines \DRAFTTODO (e.g. pdflatex "\def\DRAFTTODO{1}\input{main}");
+%% every packet build leaves it undefined, so no unconfirmed declaration text
+%% reaches a PDF. The owner replaces each use with the confirmed sentence.
+\providecommand{\ownertodo}[1]{\ifdefined\DRAFTTODO[TODO-OWNER: #1]\fi}
+
 %% Independent caption file. Every caption is self-contained: readable without
 %% the body text, without cross-references, and without float numbers.
 
@@ -139,6 +145,27 @@ fitted means or interpolated crossings. This is a descriptive view of the
 measured grid; it
 does not generalise the ordering beyond these six arrays and twelve conditions,
 and it does not turn a censored crossing into an observed one.%
+}
+
+\newcommand{\CapFineFourHundred}{%
+A sensitivity, not a replacement: the registered break-even beside a re-evaluation
+of the same cells on more trials. Each row is one of the \FineRooms{} simulated
+arrays. The filled marker is the registered crossing, located on
+\FineFourHundredRegisteredTrials{} paired trials per cell; the hollow marker
+applies the same rule --- the median gap between the two estimators per cell,
+interpolated linearly, settled where the sign turns positive for the last time
+--- to the same \FineFourHundredCells{} cells read on \FineFourHundredTrials{}
+paired trials each. The first \FineFourHundredRegisteredTrials{} trials of every
+cell in the larger run are the registered draw, by construction of the seeding
+rule, and are checked to be identical before anything is drawn. The shaded band
+is the registered interval, spanning the registered crossings of the arrays that
+crossed; the dashed line is the position predicted beforehand from the coarse
+record. An array whose ordering has not changed sign by the top of the grid, or
+is not positive at its last level, is drawn as an arrow leaving the grid under
+that trial count rather than as a point. The \FineFourHundredTrials{}-trial
+positions are neither pre-registered nor a replacement for the registered
+crossing; they report how far the located position moves when each cell is read
+on \FineFourHundredRatio{} times as many trials.%
 }
 
 \newcommand{\CapGeometrySensitivity}{%

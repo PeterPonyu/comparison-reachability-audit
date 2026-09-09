@@ -50,9 +50,9 @@ the \emph{first break} is
 $\rho(s) = \min\{k : r_k(s) = 0\}$, with $\rho(s) = K+1$ when no rung fails.
 \end{definition}
 
-The demand condition is not an empirical finding about scientific software. It
-is a constraint on what may be written down as a rung, and an assertion that
-fails it is disqualified rather than accommodated.
+The demand condition is a constraint on what may be written down as a rung,
+rather than an empirical finding about scientific software, and an assertion
+that fails it is disqualified rather than accommodated.
 
 \begin{proposition}[The index is the whole observation]\label{prop:sufficient}
 Under Definition~\ref{def:ladder}, every realized observation is one of the
@@ -148,9 +148,9 @@ nothing, and executes no vendor code. Its output records the first broken rung
 directly, so the headline of the audit is a number the probe computed rather than
 a reading of prose.
 
-Reporting a probe of this kind is itself a design choice worth stating: an audit
-whose evidence is a recollection cannot be re-run, and an audit that cannot be
-re-run cannot be contradicted.
+Reporting a probe of this kind is itself a design choice worth stating: a probe
+can be re-run where a recollection cannot, and only an audit that can be re-run
+can be contradicted.
 
 \subsection{The comparison that does remain reproducible}
 
@@ -199,12 +199,13 @@ trials would name the same winner.
 The two estimators differ in which timing measurements they are given. One is
 fitted to both the microphone-to-source and the source-to-source time
 differences; the other to the source-to-source differences alone. Both are local
-Gauss--Newton implementations written inside this project. Neither is anyone's
+Gauss--Newton implementations written inside this project rather than anyone's
 released code, and this study names them by what they are given rather than by
 whose method they resemble, because the comparison here is between ways of
-summarising a record and not between published methods. Nothing below should be
-read as a finding about either estimator as its authors published it, and no
-claim of novelty in acoustic localisation is made anywhere in this paper.
+summarising a record and not between published methods. The findings below are
+about the summaries of these two local implementations and leave every
+published estimator as its authors published it; the paper claims no novelty in
+acoustic localisation.
 
 The record declares its own display rule in a field: the median error is
 primary, the mean is labelled secondary and annotated as outlier-sensitive. That
@@ -229,7 +230,7 @@ number of failed runs times the number of quantities a run reports.
 \subsection{Why a reproduced table is not a checked claim}
 
 The ladder stops at recomputing the published table. That is the strongest rung
-we could state, and it is still not the thing a reader wants.
+we could state, and what a reader wants lies one step beyond it.
 
 Let $D$ be the per-trial record of a paired comparison, let $T$ be a summary
 such as the mean or the median, and let $c$ map a summary to the conclusion
@@ -249,10 +250,10 @@ arm means, and move mass within one arm from many trials to one, which leaves
 the mean fixed and moves the median across the other arm's median.
 \end{proof}
 
-The construction is unremarkable. What is not unremarkable is that the situation
-it describes occurs in the record described above, at a condition where nothing
-is missing and no handling decision has been made, and this study reports it as
-an observation rather than as a possibility.
+The construction is elementary. What matters is that the situation it describes
+occurs in the record described above, at a condition where nothing is missing
+and no handling decision has been made, and this study reports it as an
+observation rather than as a possibility.
 
 Proposition~\ref{prop:disclosure} says that reaching the top rung certifies the
 reproduction of a number and not of a claim, and that the gap between the two is
