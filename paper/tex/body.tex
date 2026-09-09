@@ -561,18 +561,18 @@ quantity has changed and the dependence has not.
 One number was fixed before the sweep ran. Interpolating the original sweep's
 own printed medians between its two lowest conditions puts the break-even at
 \PredictedCrossing{} milliseconds. In the array that sweep was run on, the
-measured value is \MeasuredCrossing{} --- an error of \PredictionError{}
-milliseconds, well inside the \PredictionTolerance{} millisecond tolerance we
-agreed to in advance.
+\NTrials{}-trial extension measures \MeasuredCrossing{} milliseconds --- a
+point estimate \PredictionError{} milliseconds from that prediction, inside
+the \PredictionTolerance{} millisecond tolerance we agreed to in advance.
 
-This is the sharpest form of the paper's argument that we can state. The missing
-information was not expensive. It was not even missing: it is derivable from the
-numbers the record already prints. A reader holding the coarse table could have
-computed, to within a tenth of a millisecond, the condition whose absence made
-the headline read the way it does. What they could not do is run it, because
-Corollary~\ref{cor:onecondition} is not satisfiable by anything a reader has ---
-not the summary, not the per-trial record, not the code. The trials at a
-condition nobody ran do not exist.
+That agreement is a point hit on one room at \NTrials{} trials, not a
+precision claim about the crossing. The missing information was not expensive.
+It was not even missing: it is derivable from the numbers the record already
+prints. A reader holding the coarse table could have located a candidate
+condition whose absence made the headline read the way it does. What they
+could not do is run it, because Corollary~\ref{cor:onecondition} is not
+satisfiable by anything a reader has --- not the summary, not the per-trial
+record, not the code. The trials at a condition nobody ran do not exist.
 
 We take some care not to over-read the agreement. The prediction succeeds for
 the array the original sweep used, and \CensoredRooms{} of the other arrays have
@@ -673,9 +673,10 @@ summary and no residue in the record, and the only repair is to run it ---
 which, by Corollary~\ref{cor:onecondition}, can be one condition when it is
 placed at an unobserved point where the sign is negative. The uncomfortable part
 of Section~\ref{sec:breakeven} is
-that the record examined here did know: the position was computable from its own
-printed medians, to within a tenth of a millisecond, by anyone who thought to
-ask.
+that the record examined here did know: a point estimate of the position was
+computable from its own printed medians, on the \NTrials{}-trial extension
+and inside the stated \PredictionTolerance{} millisecond tolerance, by anyone
+who thought to ask.
 
 The point about summaries is the one that changes what we would build next. A ladder whose
 top rung is ``the published table recomputes'' treats reproduction as the end of

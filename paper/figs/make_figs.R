@@ -579,7 +579,7 @@ write_generated(c(
 
 write_generated(evidence_table(manifest), "generated_table_evidence.tex")
 
-message(sprintf(paste("wrote 9 figures to figs/out and 6 generated tex files to tex/",
+message(sprintf(paste("wrote 10 figures to figs/out and 6 generated tex files to tex/",
                       "(first break at rung %d; %d of %d conditions read differently",
                       "under different summaries; the ordering changes sign inside",
                       "the refined grid in %d of %d rooms)"),

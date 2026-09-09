@@ -1,6 +1,6 @@
 # Citable, obtainable, unrunnable: recording where the reconstruction of a published comparison actually stops
 
-Probe code, probe output, sweep results, figure code and manuscript source for an audit that records, rung by rung, where the reconstruction of a published acoustic-localisation comparison stops on an ordinary machine.
+Probe code, reachability and sensitivity sweeps, figure code and manuscript source for a reproducibility audit that records, rung by rung, where reconstruction of a published acoustic-localisation comparison stops on one ordinary machine and date. Sensitivity panels are descriptive; the stopping rung is not a universal method verdict.
 
 Archived at [10.5281/zenodo.22647014](https://doi.org/10.5281/zenodo.22647014).
 
@@ -11,7 +11,7 @@ Repository: https://github.com/PeterPonyu/comparison-reachability-audit
 - `paper/tex/` — manuscript source
 - `paper/figs/` — the R code that draws the figures and writes the printed numbers
 - `paper/evidence/` — a file list with SHA-256 hashes
-- `data/` — the 14 data files named in that list
+- `data/` — the 17 data files named in that list
 
 ## Not included
 

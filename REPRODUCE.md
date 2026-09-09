@@ -23,6 +23,9 @@ the build instead of producing a stale number.
 | `data/e-fine/breakeven_sweep_20260828T185258Z.json` | live_observation | 186240 | `2929cb29383960fd…` |
 | `data/e-cross/breakeven_crossing.json` | derived_table | 58959 | `c4d2e7891617aa1a…` |
 | `data/e-geom20/geometry_level_interval.json` | derived_table | 2100 | `7ac67231683afa1d…` |
+| `data/e-miccount/miccount_sweep_results.json` | raw_sweep | 28440 | `725b7db4c48c3c0e…` |
+| `data/e-reverb/reverb_severity_sweep_results.json` | raw_sweep | 17671 | `352d1567c8b6937c…` |
+| `data/e-joint/joint_posterior_results.json` | derived_table | 9786 | `3fff057fb9115c33…` |
 
 Some of these files recorded the paths of the machine that produced them. Those path strings and source links were refreshed before deposit; `REDACTION.md` states the rules, lists every file touched with both digests, and describes the check that proves no number changed.
 

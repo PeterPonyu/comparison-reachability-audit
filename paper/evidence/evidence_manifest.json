@@ -119,6 +119,30 @@
       "note": "geometry-level bootstrap sensitivity audit over the existing 20 independent room/source/microphone geometries; resampling unit is geometry, not trial",
       "bytes": 2100,
       "sha256": "7ac67231683afa1d47b14bb81619175a68e8612d23d5dca2b6f316c258c32e97"
+    },
+    {
+      "id": "E-MICCOUNT",
+      "path": "data/e-miccount/miccount_sweep_results.json",
+      "role": "raw_sweep",
+      "note": "microphone-count x offset sensitivity sweep; descriptive-only robustness readout",
+      "bytes": 28440,
+      "sha256": "725b7db4c48c3c0e022f44eb9229a28fbc21ea7aab60c31f50e57d16d607fa48"
+    },
+    {
+      "id": "E-REVERB",
+      "path": "data/e-reverb/reverb_severity_sweep_results.json",
+      "role": "raw_sweep",
+      "note": "reverberation-severity x offset sensitivity sweep; descriptive-only robustness readout",
+      "bytes": 17671,
+      "sha256": "352d1567c8b6937c9e99f5348996facd870a3fc9109d2809c34b75b6b8e33f4a"
+    },
+    {
+      "id": "E-JOINT",
+      "path": "data/e-joint/joint_posterior_results.json",
+      "role": "derived_table",
+      "note": "joint-posterior calibration case study with SBC coverage and divergence diagnostics",
+      "bytes": 9786,
+      "sha256": "3fff057fb9115c3343c2f4018cb404dc609d4b519782e0c7e9111fda86971174"
     }
   ]
 }

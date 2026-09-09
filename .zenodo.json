@@ -1,6 +1,6 @@
 {
   "title": "Citable, obtainable, unrunnable: recording where the reconstruction of a published comparison actually stops",
-  "description": "Probe code, probe output, sweep results, figure code and manuscript source for an audit that records, rung by rung, where the reconstruction of a published acoustic-localisation comparison stops on an ordinary machine. Code is MIT; manuscript text, figures and recorded result data are CC-BY-4.0. Third-party simulators and datasets are not redistributed.",
+  "description": "Probe code, reachability and sensitivity sweeps, figure code and manuscript source for a reproducibility audit that records, rung by rung, where reconstruction of a published acoustic-localisation comparison stops on one ordinary machine and date. Sensitivity panels are descriptive; the stopping rung is not a universal method verdict. Code is MIT; manuscript text, figures and recorded result data are CC-BY-4.0. Third-party simulators and datasets are not redistributed.",
   "upload_type": "dataset",
   "access_right": "open",
   "license": "MIT",
