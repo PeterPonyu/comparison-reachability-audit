@@ -19,19 +19,34 @@ f7$sigma <- factor(paste0(f7$sigma, " \u00b5s"),
                    levels = paste0(sigma_us(cx_sigma), " \u00b5s"))
 f7$rule <- factor(f7$rule, levels = c(RULE_MEAN, RULE_MEDIAN))
 
+# The two median-rule values at one condition sit within a few per cent of the
+# bound and of each other, so their labels are pushed apart vertically: the
+# larger of the pair reads above its marker and the smaller below it.  The
+# mean-rule values are far apart and read to the right of their markers.
+f7$label_hjust <- -0.35
+f7$label_vjust <- 0.4
+for (s in levels(f7$sigma)) {
+  rows <- which(f7$sigma == s & f7$rule == RULE_MEDIAN)
+  upper <- rows[which.max(f7$ratio[rows])]
+  lower <- rows[which.min(f7$ratio[rows])]
+  f7$label_hjust[c(upper, lower)] <- 0.5
+  f7$label_vjust[upper] <- -1.1
+  f7$label_vjust[lower] <- 2.1
+}
+
 p <- ggplot(f7, aes(sigma, ratio, colour = arm, shape = rule)) +
-  geom_hline(yintercept = 1, colour = "grey35", linewidth = 0.35) +
-  annotate("text", x = 2.5, y = 1, label = "at the bound", hjust = 0.5, vjust = 1.7,
-           size = 2.4, colour = "grey30") +
-  geom_line(aes(group = interaction(arm, rule)), linewidth = 0.4, alpha = 0.6) +
-  geom_point(size = 2.1) +
-  geom_text(aes(label = ratio_label(ratio)), size = 2.2, hjust = -0.32,
-            show.legend = FALSE) +
+  geom_hline(yintercept = 1, colour = "grey35", linewidth = 0.4) +
+  annotate("text", x = 3.55, y = 1, label = "at the bound", hjust = 1, vjust = -0.6,
+           size = FIGURE_ANNOTATION_SIZE, colour = "grey30") +
+  geom_line(aes(group = interaction(arm, rule)), linewidth = 0.45, alpha = 0.6) +
+  geom_point(size = 2.2, stroke = 0.7) +
+  geom_text(aes(label = ratio_label(ratio), hjust = label_hjust, vjust = label_vjust),
+            size = FIGURE_ANNOTATION_SIZE, show.legend = FALSE) +
   scale_colour_manual(values = cx_colours, name = NULL) +
   scale_shape_manual(values = c(16, 1), name = NULL) +
   scale_x_discrete(name = "Timing-noise standard deviation",
                    expand = expansion(add = c(0.55, 0.75))) +
-  scale_y_log10(name = "Error over the bound", expand = expansion(mult = 0.14)) +
+  scale_y_log10(name = "Error over the bound", expand = expansion(mult = 0.16)) +
   guides(colour = guide_legend(order = 1), shape = guide_legend(order = 2)) +
   rtx_theme() +
   theme(legend.position = "bottom", legend.box = "vertical",

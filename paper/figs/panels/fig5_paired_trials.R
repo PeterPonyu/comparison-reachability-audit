@@ -24,23 +24,26 @@ lost$at <- ifelse(is.finite(lost$full), lost$full, lost$reduced)
 f5 <- f5[is.finite(f5$full) & is.finite(f5$reduced), ]
 
 span <- range(c(f5$full, f5$reduced))
+log_breaks <- c(0.01, 0.1, 1, 10)
+log_labels <- c("0.01", "0.1", "1", "10")
 
 p <- ggplot(f5, aes(reduced, full)) +
-  geom_abline(slope = 1, intercept = 0, colour = "grey45", linewidth = 0.35) +
-  geom_point(aes(colour = full < reduced), size = 1.1, alpha = 0.85) +
-  geom_rug(data = lost, aes(x = NULL, y = at), sides = "l", colour = "#B2182B",
+  geom_abline(slope = 1, intercept = 0, colour = "grey45", linewidth = 0.4) +
+  geom_point(aes(colour = full < reduced), size = 1.2, alpha = 0.85) +
+  geom_rug(data = lost, aes(x = NULL, y = at), sides = "l", colour = COLOUR_AGNOSTIC,
            linewidth = 0.9, length = unit(0.075, "npc"), inherit.aes = FALSE) +
   facet_wrap(~sigma, nrow = 1) +
-  scale_colour_manual(values = c(`TRUE` = "#1B7837", `FALSE` = "#762A83"),
+  scale_colour_manual(values = c(`TRUE` = COLOUR_FULL, `FALSE` = COLOUR_REDUCED),
+                      breaks = c("TRUE", "FALSE"),
                       labels = c(`TRUE` = "both sets better on this trial",
                                  `FALSE` = "one set better on this trial"),
                       name = NULL) +
   scale_x_log10(name = "Error with one measurement set (m, log scale)",
-                limits = span) +
-  scale_y_log10(name = "Error with both\nmeasurement sets (m)", limits = span) +
+                limits = span, breaks = log_breaks, labels = log_labels) +
+  scale_y_log10(name = "Error with both\nmeasurement sets (m, log scale)",
+                limits = span, breaks = log_breaks, labels = log_labels) +
   coord_fixed() +
   rtx_theme() +
-  theme(legend.position = "bottom", legend.margin = margin(t = -4),
-        strip.text = element_text(size = 8))
+  theme(legend.position = "bottom", legend.margin = margin(t = -4))
 
 save_fig(p, "fig5_paired_trials", FIGURE_TEXT_WIDTH_IN, 2.9)

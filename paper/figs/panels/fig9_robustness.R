@@ -10,6 +10,14 @@ if (!nrow(robust) || any(!is.finite(robust$gap))) {
   stop("the refined crossing grid has no finite cell-level gaps to plot")
 }
 robust$room <- factor(robust$room, levels = rev(unique(robust$room)))
+# The grid is not evenly spaced: its levels sit a quarter of a millisecond
+# apart at the low end and half a millisecond apart above one.  Tiles of one
+# width per level, labelled with the level, keep every cell the same size and
+# every label inside its own tile; tiles drawn in data units would overlap
+# where the levels are close.
+level_label <- function(x) sub("\\.?0+$", "", sprintf("%.2f", x))
+level_values <- sort(unique(robust$offset))
+robust$level <- factor(level_label(robust$offset), levels = level_label(level_values))
 # Keep the sign of cells that are close to the zero crossing.  One decimal is
 # enough for the larger gaps; three decimals for the tiniest gaps avoid a
 # misleading signed zero, while two decimals for the remaining near-zero cells
@@ -19,28 +27,31 @@ format_gap_label <- function(x) {
          ifelse(abs(x) < 0.05, sprintf("%+.2f", x), sprintf("%+.1f", x)))
 }
 robust$label <- format_gap_label(robust$gap)
-robust$label_colour <- ifelse(abs(robust$gap) >= 0.75, "white", "grey20")
+robust$label_colour <- ifelse(abs(robust$gap) >= 1.0, "white", "grey15")
 
-p <- ggplot(robust, aes(x = offset, y = room, fill = gap)) +
-  geom_tile(colour = "white", linewidth = 0.35, width = 0.96, height = 0.88) +
-  geom_text(aes(label = label, colour = label_colour), size = 2.15,
+# Negative cells (agnostic lower error) take the agnostic estimator's colour
+# and positive cells the aware estimator's, so the heatmap reads with the same
+# key as the sweep figures; white is the zero midpoint.  The scale spans the
+# measured range and nothing more, so the key does not suggest positive gaps
+# the grid never produced.
+p <- ggplot(robust, aes(x = level, y = room, fill = gap)) +
+  geom_tile(colour = "white", linewidth = 0.5, width = 0.96, height = 0.9) +
+  geom_text(aes(label = label, colour = label_colour), size = FIGURE_CELL_SIZE,
             show.legend = FALSE) +
   scale_colour_identity() +
-  scale_fill_gradient2(low = "#2166AC", mid = "white", high = "#B2182B",
-                       midpoint = 0, name = "Agnostic minus aware\nmedian error (m)") +
-  scale_x_continuous(name = "Dispersion of unknown offsets (ms)",
-                     breaks = seq(0, max(robust$offset), by = 1),
-                     labels = sprintf("%.0f", seq(0, max(robust$offset), by = 1)),
-                     expand = expansion(mult = c(0.01, 0.02))) +
-  scale_y_discrete(name = NULL, expand = expansion(add = c(0.15, 0.15))) +
-  labs(subtitle = sprintf("%d rooms × %d levels × %d paired trials per cell; blue = agnostic lower error",
-                          length(unique(robust$room)), length(unique(robust$offset)),
-                          single_valued(robust$n, "paired trials per refined cell"))) +
+  scale_fill_gradient2(low = COLOUR_AGNOSTIC, mid = "white", high = COLOUR_AWARE,
+                       midpoint = 0,
+                       name = "Median error,\nagnostic minus\naware (m)") +
+  scale_x_discrete(name = "Dispersion of the unknown per-channel offsets (ms)",
+                   expand = expansion(add = 0.05)) +
+  scale_y_discrete(name = NULL, expand = expansion(add = 0.05)) +
   rtx_theme() +
-  theme(axis.text.x = element_text(size = 7.2),
-        axis.text.y = element_text(size = 7.5),
-        legend.position = "right", legend.text = element_text(size = 7),
-        legend.title = element_text(size = 7.5, lineheight = 0.9),
-        plot.subtitle = element_text(size = 7.1, colour = "grey25"))
+  theme(panel.grid.major = element_blank(),
+        panel.border = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position = "right",
+        legend.key.height = unit(0.32, "in"),
+        legend.key.width = unit(0.14, "in"),
+        legend.title = element_text(lineheight = 0.95))
 
 save_fig(p, "fig9_robustness", FIGURE_TEXT_WIDTH_IN, 3.55)

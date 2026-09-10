@@ -16,6 +16,7 @@
 \usepackage{placeins}
 \usepackage{caption}
 \usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
 % Keep engine-generated PDF metadata deterministic across bindings.
 \pdfsuppressptexinfo=-1
 
@@ -26,6 +27,18 @@
 
 \graphicspath{{../figs/out/}}
 \setlength{\emergencystretch}{2em}
+\setlength{\headheight}{14pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape Citable, obtainable, unrunnable}
+\ifdefined\ANONYMOUS
+\fancyhead[R]{\small\itshape Anonymous}
+\else
+\fancyhead[R]{\small\itshape Zeyu Fu}
+\fi
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
 
 \renewcommand{\topfraction}{0.9}
 \renewcommand{\bottomfraction}{0.7}

@@ -17,13 +17,15 @@ p <- ggplot(f2, aes(offset, median_err, colour = arm, shape = arm)) +
   annotate("rect", xmin = -3.2, xmax = 2.5, ymin = 5e-4, ymax = 5,
            fill = "grey90", alpha = 0.7) +
   geom_vline(xintercept = 0, linetype = "22", linewidth = 0.4, colour = "grey25") +
-  annotate("label", x = 1.35, y = 0.0045,
-           label = sprintf("zero-offset cell\nn = %d paired trials", SWEEP_TRIALS),
-           hjust = 0, size = 2.35, colour = "grey25", fill = "white",
-           label.padding = unit(0.08, "lines"),
+  # The note sits to the right of the zero-offset marker, clear of the rising
+  # agnostic curve, which passes through the earlier position of this label.
+  annotate("label", x = 3.0, y = 0.0022,
+           label = sprintf("zero-offset condition\nn = %d paired trials", SWEEP_TRIALS),
+           hjust = 0, size = FIGURE_ANNOTATION_SIZE, colour = "grey25", fill = "white",
+           border.colour = NA, label.padding = unit(0.08, "lines"),
            lineheight = 0.95) +
   geom_line(linewidth = 0.5) +
-  geom_point(size = 2, fill = "white", stroke = 0.5) +
+  geom_point(size = 2, fill = "white", stroke = 0.6) +
   scale_colour_manual(values = arm_colours, name = NULL) +
   scale_shape_manual(values = c(21, 24), name = NULL) +
   scale_x_continuous(name = "Dispersion of the unknown per-channel offsets (ms)",
@@ -35,7 +37,8 @@ p <- ggplot(f2, aes(offset, median_err, colour = arm, shape = arm)) +
                       short = unit(0.03, "in"), mid = unit(0.045, "in"),
                       long = unit(0.06, "in")) +
   rtx_theme() +
-  theme(legend.position = c(0.99, 0.03), legend.justification = c(1, 0),
+  theme(legend.position = "inside",
+        legend.position.inside = c(0.99, 0.03), legend.justification = c(1, 0),
         legend.background = element_rect(fill = "white", colour = "grey70",
                                          linewidth = 0.25),
         legend.margin = margin(2, 4, 2, 4))

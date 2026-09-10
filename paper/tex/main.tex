@@ -1,20 +1,52 @@
 %% Working draft. Structure is generated; prose is authored here.
 %% Build from the repository root with: bash scripts/build_paper.sh <this paper dir>
 \documentclass[11pt]{article}
+% The figures are emitted by cairo as PDF 1.7; declare the same version so
+% pdfTeX includes them without a per-figure version warning.
+\pdfminorversion=7
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amssymb,amsthm}
+\usepackage{array}
 \usepackage{booktabs}
 \usepackage{graphicx}
 \usepackage{tikz}
+\usepackage{placeins}
+\usepackage{caption}
 \usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
 % Suppress non-rendered local compilation metadata from the PDF.
 \pdfsuppressptexinfo=-1
+
 \usepackage[hidelinks]{hyperref}
+% Blind-review copies are compiled as
+%   pdflatex "\def\ANONYMOUS{1}\input{main}"
+% Identified output is the default.  hyperref writes the name into the PDF
+% /Author key as well as the title page, so both go through this one macro.
+\ifdefined\ANONYMOUS\newcommand{\PDFAUTHOR}{}\else\newcommand{\PDFAUTHOR}{Zeyu Fu}\fi
+\hypersetup{
+  pdftitle={Citable, obtainable, unrunnable: recording where the reconstruction of a published comparison actually stops},
+  pdfauthor={\PDFAUTHOR},
+  pdfsubject={Citable, obtainable, unrunnable: recording where the reconstruction of a published comparison actually stops},
+  pdfkeywords={reproducibility, computational reconstruction, acoustic localisation, artifact availability, audit}
+}
 \numberwithin{equation}{section}
 
 \graphicspath{{../figs/out/}}
+\setlength{\emergencystretch}{2em}
+\setlength{\headheight}{14pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape Citable, obtainable, unrunnable}
+\ifdefined\ANONYMOUS
+\fancyhead[R]{\small\itshape Anonymous}
+\else
+\fancyhead[R]{\small\itshape Zeyu Fu}
+\fi
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
 
 \renewcommand{\topfraction}{0.9}
 \renewcommand{\bottomfraction}{0.7}
@@ -22,15 +54,25 @@
 \renewcommand{\floatpagefraction}{0.8}
 \setcounter{topnumber}{2}
 \setcounter{totalnumber}{3}
+\captionsetup[table]{skip=5pt}
+\captionsetup[figure]{skip=4pt}
 
 %% Numbers and tables are emitted by the figure code from hash-bound evidence.
 \input{generated_numbers}
 \input{captions}
 \input{theorems}
+\newcommand{\generatedtable}[1]{\input{#1}}
 
 \title{Citable, obtainable, unrunnable: recording where the reconstruction of a
 published comparison actually stops}
-\author{Anonymous authors}
+\ifdefined\ANONYMOUS
+\author{Author and affiliation withheld for blind review}
+\else
+\author{Zeyu Fu\\
+Army Medical University, Chongqing, China\\
+\texttt{fuzeyu99@126.com}\\
+ORCID: 0009-0001-8329-0108}
+\fi
 \date{}
 
 \begin{document}
@@ -40,9 +82,13 @@ published comparison actually stops}
 \input{abstract}
 \end{abstract}
 
+\paragraph{Keywords} reproducibility, computational reconstruction, acoustic localisation, artifact availability, audit
+
 \input{body}
 
+{\footnotesize
 \bibliographystyle{unsrt}
 \bibliography{references}
+}
 
 \end{document}

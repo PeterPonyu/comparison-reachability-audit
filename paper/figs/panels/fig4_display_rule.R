@@ -5,15 +5,23 @@
 # was better, and the top row disagrees with the two below it at two of the
 # three conditions.
 
+# Each cell names its winner and shows the two quantities that decide it, each
+# tagged with the arm it belongs to, so the reader does not have to infer which
+# of the two numbers is the winner's from the order they happen to be printed in.
+TAG_FULL <- "both"
+TAG_REDUCED <- "one"
 f4 <- do.call(rbind, lapply(CX_COMPARISONS, function(x) {
   data.frame(
     sigma = sigma_us(x$sigma_s),
     rule = factor(DISPLAY_RULES, levels = rev(DISPLAY_RULES)),
     winner = unname(x$by_rule[DISPLAY_RULES]),
     detail = c(
-      sprintf("%s vs %s m", fmt(x$a$mean, 3), fmt(x$b$mean, 3)),
-      sprintf("%s vs %s m", fmt(x$a$median, 3), fmt(x$b$median, 3)),
-      sprintf("%d of %d, p = %s", x$wins_a, x$n_pairs, p_cell(x$p_two_sided))
+      sprintf("%s %s m vs %s %s m", TAG_FULL, fmt(x$a$mean, 3),
+              TAG_REDUCED, fmt(x$b$mean, 3)),
+      sprintf("%s %s m vs %s %s m", TAG_FULL, fmt(x$a$median, 3),
+              TAG_REDUCED, fmt(x$b$median, 3)),
+      sprintf("%s won %d/%d, p = %s", TAG_FULL, x$wins_a, x$n_pairs,
+              p_cell(x$p_two_sided))
     )
   )
 }))
@@ -25,21 +33,22 @@ majority <- vapply(split(f4$winner, f4$sigma), function(w) names(sort(table(w),
                    decreasing = TRUE))[1], character(1))
 f4$odd <- f4$winner != majority[as.character(f4$sigma)]
 
+cx_tints <- c(oi_tint(COLOUR_FULL, 0.30), oi_tint(COLOUR_REDUCED, 0.30))
+names(cx_tints) <- c(CX_FULL, CX_REDUCED)
+
 p <- ggplot(f4, aes(sigma, rule)) +
   geom_tile(aes(fill = winner), colour = "white", linewidth = 1.1) +
   geom_tile(data = f4[f4$odd, ], fill = NA, colour = "black", linewidth = 0.8) +
-  geom_text(aes(label = paste0(winner, "\n", detail)), size = 2.35,
-            lineheight = 1.15, colour = "grey15") +
-  scale_fill_manual(values = c("#CBE6D0", "#E4D3EC"), guide = "none",
+  geom_text(aes(label = paste0(winner, "\n", detail)), size = FIGURE_CELL_SIZE,
+            lineheight = 1.2, colour = "grey10") +
+  scale_fill_manual(values = cx_tints, guide = "none",
                     limits = c(CX_FULL, CX_REDUCED)) +
   # The micro sign is a literal in the shared family rather than a plotmath
   # `mu`: plotmath resolves symbols through the device's own font handling, and
   # Cairo answers that by embedding a second family for this one glyph.
   scale_x_discrete(name = "Timing-noise standard deviation (\u03bcs)") +
   scale_y_discrete(name = NULL) +
-  labs(subtitle = "Which estimator each rule names as the better one") +
   rtx_theme() +
-  theme(plot.subtitle = element_text(size = FIGURE_SUBTITLE_SIZE, colour = "grey25"),
-        panel.grid.major = element_blank())
+  theme(panel.grid.major = element_blank())
 
 save_fig(p, "fig4_display_rule", FIGURE_TEXT_WIDTH_IN, 2.5)

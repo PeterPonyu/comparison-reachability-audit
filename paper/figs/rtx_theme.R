@@ -28,9 +28,38 @@ FIGURE_LEGEND_TEXT_SIZE <- 7.8
 FIGURE_STRIP_TEXT_SIZE <- 8.4
 FIGURE_TITLE_SIZE <- 10.7
 FIGURE_SUBTITLE_SIZE <- 8.2
-FIGURE_ANNOTATION_SIZE <- 2.40
-FIGURE_CELL_SIZE <- 2.25
-FIGURE_PANEL_LABEL_SIZE <- 11.6
+# geom text is sized in millimetres; 2.5 mm is 7.1 pt, the smallest type the
+# print standard allows at final size, and no in-panel annotation goes below
+# it.  The larger step is for text that has to be read as a heading inside a
+# panel (the ladder rungs).
+FIGURE_ANNOTATION_SIZE <- 2.50
+FIGURE_CELL_SIZE <- 2.50
+FIGURE_HEADING_SIZE <- 2.95
+FIGURE_PANEL_LABEL_SIZE <- 10
+
+# One colour-blind-safe palette for every figure (Okabe & Ito 2008).  Each
+# semantic pair in the paper is fixed here once so the same estimator is the
+# same colour on every page: the arms of the offset sweep, the two locally
+# written estimators of the third comparison, and the summary rules.  Tints
+# for filled cells are the same hues mixed towards white so text set on them
+# stays legible.
+OKABE_ITO <- c(black = "#000000", orange = "#E69F00", skyblue = "#56B4E9",
+               green = "#009E73", yellow = "#F0E442", blue = "#0072B2",
+               vermillion = "#D55E00", purple = "#CC79A7")
+oi_tint <- function(colour, amount = 0.35) {
+  rgb <- grDevices::col2rgb(colour)
+  grDevices::rgb(t(255 - amount * (255 - rgb)), maxColorValue = 255)
+}
+COLOUR_AGNOSTIC <- OKABE_ITO[["vermillion"]]
+COLOUR_AWARE <- OKABE_ITO[["blue"]]
+COLOUR_FULL <- OKABE_ITO[["green"]]
+COLOUR_REDUCED <- OKABE_ITO[["purple"]]
+COLOUR_RULE_MEAN <- OKABE_ITO[["orange"]]
+COLOUR_RULE_MEDIAN <- OKABE_ITO[["black"]]
+COLOUR_RULE_PAIRED <- OKABE_ITO[["skyblue"]]
+COLOUR_ROOMS <- unname(OKABE_ITO[c("orange", "skyblue", "green", "blue",
+                                   "vermillion", "purple")])
+SHAPE_ROOMS <- c(16, 17, 15, 18, 8, 7)
 
 # Resolve the family before any panel is built.  A `family` string alone is not
 # enough: on a different host Cairo can silently substitute a fallback when a

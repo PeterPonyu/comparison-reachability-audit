@@ -7,22 +7,22 @@
 if (!exists("GEOM20_LEVELS")) stop("geometry-level audit was not loaded")
 
 p <- ggplot(GEOM20_LEVELS, aes(x = offset, y = mean_gap)) +
-  geom_hline(yintercept = 0, colour = "grey35", linewidth = 0.35) +
-  geom_ribbon(aes(ymin = lower, ymax = upper), fill = "#2166AC", alpha = 0.16,
+  geom_hline(yintercept = 0, colour = "grey35", linewidth = 0.4) +
+  geom_ribbon(aes(ymin = lower, ymax = upper), fill = COLOUR_AWARE, alpha = 0.16,
               colour = NA) +
-  geom_line(colour = "#2166AC", linewidth = 0.7) +
-  geom_point(colour = "#2166AC", fill = "white", shape = 21, size = 2.4,
+  geom_line(colour = COLOUR_AWARE, linewidth = 0.7) +
+  geom_point(colour = COLOUR_AWARE, fill = "white", shape = 21, size = 2.4,
              stroke = 0.7) +
   geom_text(aes(label = sprintf("%d/%d", aware_wins, n_geometry)),
-            vjust = -0.9, size = 2.35, family = FIGURE_FONT_FAMILY) +
-  scale_x_continuous(name = "True offset dispersion (ms)",
+            vjust = -0.9, size = FIGURE_ANNOTATION_SIZE, family = FIGURE_FONT_FAMILY) +
+  annotate("text", x = max(GEOM20_LEVELS$offset), y = 0, hjust = 1, vjust = -0.6,
+           size = FIGURE_ANNOTATION_SIZE, colour = "grey30",
+           label = "above zero the offset-aware estimator has the lower mean error") +
+  scale_x_continuous(name = "Dispersion of the unknown per-channel offsets (ms)",
                      breaks = GEOM20_LEVELS$offset,
                      expand = expansion(mult = c(0.04, 0.05))) +
-  scale_y_continuous(name = "Naive error minus offset-aware error (m)",
-                     expand = expansion(mult = c(0.06, 0.12))) +
-  labs(subtitle = "Point = mean across independent geometries; band = 95% geometry bootstrap; labels = aware wins / 20") +
-  rtx_theme() +
-  theme(plot.subtitle = element_text(size = FIGURE_SUBTITLE_SIZE, colour = "grey25"),
-        axis.text.x = element_text(size = FIGURE_AXIS_TEXT_SIZE))
+  scale_y_continuous(name = "Mean error, agnostic minus aware (m)",
+                     expand = expansion(mult = c(0.08, 0.12))) +
+  rtx_theme()
 
 save_fig(p, "fig10_geometry_sensitivity", FIGURE_TEXT_WIDTH_IN, 3.15)

@@ -11,8 +11,9 @@
 Reachability of a published comparison, as observed on one machine on
 \ProbeDate{} by a read-only probe rather than read off a previously recorded
 status. Each rung is an assertion that can be checked independently, and the
-rungs are ordered by how much they demand. Green marks a rung that holds here and
-red marks one that does not. The ladder is monotone, so the first break makes
+rungs are ordered by how much they demand. A blue-green fill marks a rung that
+holds here and an orange fill marks one that does not. The ladder is monotone, so
+the first break makes
 every rung above it unreachable and the informative quantity is the index of that
 break rather than a count of failures. The grey strip records a fact that is
 deliberately not a rung: the evaluation corpus is public, openly downloadable and
@@ -56,7 +57,9 @@ calibration problem against each other at \CxConditions{} levels of timing
 noise, \CxTrialsPerCondition{} paired trials each; one estimator is fitted to
 both available sets of time-difference measurements and the other to one of
 them. Each cell names the estimator that the summary in its row calls the better
-of the two, with the quantities that decide it. The three rows are not three
+of the two, with the quantities that decide it, tagged \emph{both} for the
+estimator given both measurement sets and \emph{one} for the estimator given one.
+The three rows are not three
 experiments: they are three ways of reducing the same trials to a sentence. The
 top row is outlined where it names a different estimator from the two below it,
 which happens at \CxDisagreeing{} of the \CxConditions{} conditions, including
@@ -134,9 +137,11 @@ Cell-level robustness of the refined break-even sweep. Each tile is one of the
 \FineRooms{} independently simulated microphone arrays at one of the
 \FineLevels{} offset dispersions, with \FineTrials{} paired trials in the cell.
 The value and colour are the median error of the offset-agnostic estimator minus
-the median error of the offset-aware estimator, in metres: blue means the
-agnostic estimator is lower, red means the aware estimator is lower, and the
-white midpoint denotes values near zero. An exact tie is zero. The printed
+the median error of the offset-aware estimator, in metres: orange means the
+agnostic estimator is lower, blue means the aware estimator is lower, and the
+white midpoint denotes values near zero. The tiles are equal in size although the
+dispersions are not equally spaced; the axis names each level. An exact tie is
+zero. The printed
 values are cell medians rounded to 0.1 m, except that
 values with absolute magnitude below 0.05 m are shown to 0.01 m and values
 with absolute magnitude below 0.01 m to 0.001 m, so their sign remains visible without a misleading
@@ -170,8 +175,9 @@ on \FineFourHundredRatio{} times as many trials.%
 
 \newcommand{\CapGeometrySensitivity}{%
 Independent-geometry sensitivity, not a trial-level confidence interval. Each
-point is the mean naive localisation error minus the mean offset-aware error at
-one true offset dispersion, computed separately for each of twenty independently
+point is the mean localisation error of the offset-agnostic estimator minus that
+of the offset-aware estimator at one true offset dispersion, computed separately
+for each of twenty independently
 drawn room/source/microphone geometries and then averaged. The shaded band is a
 95\% percentile bootstrap over those twenty geometries; the labels are the
 number of geometries in which offset-aware has the lower mean error out of 20.

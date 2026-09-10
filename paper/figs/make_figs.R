@@ -39,7 +39,10 @@ inventory <- read_bound$json("E-INVENTORY")
 
 REACHABLE <- "reachable here"
 BROKEN <- "not reachable here"
-status_colours <- c("#D9EAD3", "#F6CFCF")
+# Green for a rung that holds and red for one that does not, as the caption
+# says; the hues are the palette's bluish green and vermillion, which stay
+# distinct under every common colour-vision deficiency, tinted for fills.
+status_colours <- c(oi_tint(OKABE_ITO[["green"]]), oi_tint(OKABE_ITO[["vermillion"]]))
 names(status_colours) <- c(REACHABLE, BROKEN)
 
 rungs <- probe$rungs
@@ -76,7 +79,7 @@ assert_tier_summaries_match_sweep(sr,
 
 arm_labels <- c(naive = "Offset-agnostic least squares",
                 aware = "Offset-aware maximum a posteriori")
-arm_colours <- c("#B2182B", "#2166AC")
+arm_colours <- c(COLOUR_AGNOSTIC, COLOUR_AWARE)
 names(arm_colours) <- arm_labels
 
 ## ---------------------------------------------------------------------------
@@ -97,7 +100,7 @@ assert_declared_display(cx)
 # assert something about their work that this record cannot support.
 CX_FULL <- "Both measurement sets"
 CX_REDUCED <- "One measurement set"
-cx_colours <- c("#1B7837", "#762A83")
+cx_colours <- c(COLOUR_FULL, COLOUR_REDUCED)
 names(cx_colours) <- c(CX_FULL, CX_REDUCED)
 
 # A figure has room for the full name in a legend; a table column three across

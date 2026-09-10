@@ -236,6 +236,23 @@ identifier matches the pin recorded for it, and all \EntryPoints{} recorded entr
 points are on disk. The availability of this work is complete by the standard a
 badge applies, and an artifact badge asserting availability would be accurate.
 
+\begin{table}[tbp]
+\centering
+\caption{The reachability ladder as observed on one machine on \ProbeDate{} by a
+read-only probe. The ladder is monotone, so the first broken rung determines
+every rung above it.}
+\label{tab:ladder}
+\small
+\input{generated_table_ladder}
+\end{table}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{fig1_reachability_ladder.pdf}
+\caption{\CapLadder}
+\label{fig:ladder}
+\end{figure}
+
 The first break is at rung \FirstBreak{}. The source is written for a commercial
 numerical computing environment that is absent from this machine, and the free
 interpreter most often proposed in its place is absent as well. The second fact
@@ -255,23 +272,6 @@ from the stored data. That third blocker is instructive precisely because it has
 nothing to do with licensing. Reachability breaks for mundane, various and
 specific reasons, which is the argument for recording the specific reason rather
 than a verdict.
-
-\begin{table}[tbp]
-\centering
-\caption{The reachability ladder as observed on one machine on \ProbeDate{} by a
-read-only probe. The ladder is monotone, so the first broken rung determines
-every rung above it.}
-\label{tab:ladder}
-\small
-\input{generated_table_ladder}
-\end{table}
-
-\begin{figure}[tbp]
-\centering
-\includegraphics[width=\linewidth]{fig1_reachability_ladder.pdf}
-\caption{\CapLadder}
-\label{fig:ladder}
-\end{figure}
 
 \subsection{Why the corpus is a separate axis}
 
